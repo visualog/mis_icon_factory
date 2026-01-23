@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이콘 팩토리 - 두께 편집기</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            padding: 20px 40px;
+            background: var(--card);
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        #icon-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .icon-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .icon-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .icon-card svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .icon-name {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #64748b;
+            word-break: break-all;
+        }
+
+        button {
+            padding: 10px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        input[type="range"] {
+            width: 200px;
+        }
+
+        .status-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>💎 아이콘 팩토리</h1>
+        <div class="controls">
+            <label>선 두께 (Stroke Width): <strong id="val">1.6</strong>px</label>
+            <input type="range" id="widthSlider" min="0.5" max="3" step="0.1" value="1.6">
+            <button id="buildBtn">나만의 웹폰트 빌드하기</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div id="icon-grid">
+            <!-- 아이콘들이 여기에 렌더링됩니다 -->
+        </div>
+    </div>
+
+    <div id="status" class="status-badge"></div>
+
+    <script>
+        const grid = document.getElementById('icon-grid');
+        const slider = document.getElementById('widthSlider');
+        const valText = document.getElementById('val');
+        const buildBtn = document.getElementById('buildBtn');
+        const status = document.getElementById('status');
+
+        async function loadIcons() {
+            const res = await fetch('/api/icons');
+            const icons = await res.json();
+
+            for (const icon of icons) {
+                const card = document.createElement('div');
+                card.className = 'icon-card';
+
+                // SVG를 fetch로 가져와서 동적으로 stroke-width 수정 가능하게 처리
+                const svgRes = await fetch(`/line-icons/${encodeURIComponent(icon)}`);
+                let svgText = await svgRes.text();
+
+                card.innerHTML = `
+                    <div class="svg-container">${svgText}</div>
+                    <div class="icon-name">${icon}</div>
+                `;
+                grid.appendChild(card);
+            }
+            updateStroke(slider.value);
+        }
+
+        function updateStroke(width) {
+            valText.innerText = width;
+            const svgs = document.querySelectorAll('svg');
+            svgs.forEach(svg => {
+                const paths = svg.querySelectorAll('path, rect, circle, line');
+                paths.forEach(p => {
+                    // 기존 속성들을 제거하여 초기화(리셋) 처리합니다.
+                    p.removeAttribute('stroke-width');
+                    p.removeAttribute('stroke');
+
+                    // 선택한 두께를 일괄 적용합니다.
+                    p.setAttribute('stroke', 'currentColor');
+                    p.setAttribute('stroke-width', width);
+                    p.setAttribute('stroke-linejoin', 'round');
+                    p.setAttribute('stroke-linecap', 'round');
+                });
+            });
+        }
+
+        slider.addEventListener('input', (e) => updateStroke(e.target.value));
+
+        buildBtn.addEventListener('click', async () => {
+            if (!confirm(`현재 두께(${slider.value}px)로 웹폰트를 다시 빌드하시겠습니까?`)) return;
+
+            buildBtn.disabled = true;
+            showStatus('🚀 빌드 시작 중...', '#3b82f6');
+
+            try {
+                const res = await fetch('/api/build', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ strokeWidth: slider.value })
+                });
+                const result = await res.json();
+
+                if (result.success) {
+                    showStatus('✅ 빌드 완료! dist_font_custom 폴더를 확인하세요.', '#10b981');
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (err) {
+                showStatus('❌ 오류: ' + err.message, '#ef4444');
+            } finally {
+                buildBtn.disabled = false;
+            }
+        });
+
+        function showStatus(text, color) {
+            status.innerText = text;
+            status.style.backgroundColor = color;
+            status.style.display = 'block';
+            if (color !== '#3b82f6') { // 로딩 중이 아닐 때만 5초 후 사라짐
+                setTimeout(() => status.style.display = 'none', 5000);
+            }
+        }
+
+        loadIcons();
+    </script>
+</body>
+
+</html>

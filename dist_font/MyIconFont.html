@@ -1,0 +1,2763 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MyIconFont</title>
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #fcfcfc;
+            color: #333;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .tabs {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .tab-btn {
+            padding: 10px 24px;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .tab-btn.active {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+
+        .preview {
+            width: 120px;
+            display: inline-block;
+            margin: 12px;
+            background: #fff;
+            border: 1px solid #efefef;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .preview:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border-color: #ddd;
+        }
+
+        .preview .inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            background: #f9f9f9;
+            font-size: 32px;
+            color: #222;
+        }
+
+        .preview .inner i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1em;
+            height: 1em;
+            line-height: 1;
+            /* 아이콘이 위로 치우치는 경향이 있을 경우 수직 보정 */
+            vertical-align: middle;
+            transform: translateY(0.05em);
+        }
+
+        .preview.hidden {
+            display: none;
+        }
+
+        .label {
+            display: block;
+            padding: 10px 5px;
+            font-size: 11px;
+            font-family: 'SF Mono', Monaco, monospace;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: #fff;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        /* 버튼 샘플 모달 스타일 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
+        }
+
+        .sample-title {
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        /* 사용자 요청 버튼 스타일 */
+        .sample-button {
+            height: 40px;
+            /* User: 10(40px) */
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            /* User: 2(8px) */
+            font-size: 14px;
+            /* User: 14px */
+            line-height: 20px;
+            /* User: 20px */
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .sample-button:hover {
+            background: #333;
+        }
+
+        .sample-button i {
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1em;
+            height: 1em;
+            line-height: 1;
+            transform: translateY(0.08em);
+            /* 베이스라인 정렬을 위한 미세 조정 */
+        }
+
+        /* 두께 조절 시뮬레이션 관련 스타일 */
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .controls label {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .stroke-weight-icon {
+            /* 이 속성은 폰트 테두리에 선을 추가하여 굵게 만듭니다. */
+            -webkit-text-stroke: 0px transparent;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="MyIconFont.css" />
+</head>
+
+<body>
+
+    <h1>MyIconFont</h1>
+    <div class="tabs">
+        <div class="tab-btn active" onclick="filterIcons('all')">전체</div>
+        <div class="tab-btn" onclick="filterIcons('line')">라인 (Line)</div>
+        <div class="tab-btn" onclick="filterIcons('fill')">필 (Fill)</div>
+    </div>
+
+    <!-- 두께 조정 슬라이더 UI -->
+    <div class="controls">
+        <label>시각적 두께 조절 (Stroke Simulation):</label>
+        <input type="range" id="strokeSlider" min="0" max="1" step="0.1" value="0">
+        <span id="strokeVal">0px</span>
+    </div>
+
+    <script>
+        function filterIcons(filter) {
+            const icons = document.querySelectorAll('.preview');
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (event) event.target.classList.add('active');
+
+            icons.forEach(icon => {
+                const label = icon.querySelector('.label').innerText;
+                if (filter === 'all') { icon.classList.remove('hidden'); }
+                else if (filter === 'line' && label.endsWith('_line')) { icon.classList.remove('hidden'); }
+                else if (filter === 'fill' && label.endsWith('_fill')) { icon.classList.remove('hidden'); }
+                else { icon.classList.add('hidden'); }
+            });
+        }
+
+        // 아이콘 클릭 이벤트 리스너 (이벤트 위임 사용)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.addEventListener('click', (e) => {
+                const preview = e.target.closest('.preview');
+                if (preview) {
+                    const iconClass = preview.querySelector('i').className;
+                    const iconName = preview.querySelector('.label').innerText;
+                    showSample(iconClass, iconName);
+                }
+            });
+
+            document.getElementById('modalOverlay').addEventListener('click', (e) => {
+                if (e.target.id === 'modalOverlay') closeModal();
+            });
+        });
+
+        function showSample(iconClass, iconName) {
+            const modal = document.getElementById('modalOverlay');
+            const buttonContent = document.getElementById('buttonContent');
+            buttonContent.innerHTML = `<i class="${iconClass}"></i><span>${iconName}</span>`;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        // 두께 조절 로직
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('strokeSlider');
+            const strokeVal = document.getElementById('strokeVal');
+
+            slider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                strokeVal.innerText = val + 'px';
+
+                // 모든 아이콘 또는 특정 클래스에 적용
+                const icons = document.querySelectorAll('.preview .inner i, .sample-button i');
+                icons.forEach(i => {
+                    i.style.webkitTextStroke = `${val}px currentColor`;
+                });
+            });
+        });
+    </script>
+
+    <!-- 모달 구조 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div class="sample-title">버튼 샘플 (Button Sample)</div>
+            <div id="sampleArea">
+                <button class="sample-button" id="buttonContent">
+                    <!-- 아이콘 및 텍스트 주입 -->
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---window_line"></i>
+        </span>
+        <br>
+        <span class='label'>window_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---window_fill"></i>
+        </span>
+        <br>
+        <span class='label'>window_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---users_position_fill"></i>
+        </span>
+        <br>
+        <span class='label'>users_position_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---users_fill"></i>
+        </span>
+        <br>
+        <span class='label'>users_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---users-1_fill"></i>
+        </span>
+        <br>
+        <span class='label'>users-1_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---user_track_fill"></i>
+        </span>
+        <br>
+        <span class='label'>user_track_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---user_shield_fill"></i>
+        </span>
+        <br>
+        <span class='label'>user_shield_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---user_setting_fill"></i>
+        </span>
+        <br>
+        <span class='label'>user_setting_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---user_line"></i>
+        </span>
+        <br>
+        <span class='label'>user_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---user_fill"></i>
+        </span>
+        <br>
+        <span class='label'>user_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---user_check_fill"></i>
+        </span>
+        <br>
+        <span class='label'>user_check_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---user2_fill"></i>
+        </span>
+        <br>
+        <span class='label'>user2_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---upload_line"></i>
+        </span>
+        <br>
+        <span class='label'>upload_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---up_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>up_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---unstar_line"></i>
+        </span>
+        <br>
+        <span class='label'>unstar_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---unlock_line"></i>
+        </span>
+        <br>
+        <span class='label'>unlock_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---union_line"></i>
+        </span>
+        <br>
+        <span class='label'>union_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---underline_line"></i>
+        </span>
+        <br>
+        <span class='label'>underline_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---trash_time_line"></i>
+        </span>
+        <br>
+        <span class='label'>trash_time_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---tone_change_line"></i>
+        </span>
+        <br>
+        <span class='label'>tone_change_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---time_line"></i>
+        </span>
+        <br>
+        <span class='label'>time_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---time_fill"></i>
+        </span>
+        <br>
+        <span class='label'>time_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---thumbs_up_line"></i>
+        </span>
+        <br>
+        <span class='label'>thumbs_up_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---thumbs_up_fill"></i>
+        </span>
+        <br>
+        <span class='label'>thumbs_up_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---thumbs_down_line"></i>
+        </span>
+        <br>
+        <span class='label'>thumbs_down_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---thumbs_down_fill"></i>
+        </span>
+        <br>
+        <span class='label'>thumbs_down_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---tag_line"></i>
+        </span>
+        <br>
+        <span class='label'>tag_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---tag_fill"></i>
+        </span>
+        <br>
+        <span class='label'>tag_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---table_line"></i>
+        </span>
+        <br>
+        <span class='label'>table_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---table_chart_line"></i>
+        </span>
+        <br>
+        <span class='label'>table_chart_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---superscript_line"></i>
+        </span>
+        <br>
+        <span class='label'>superscript_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---summary_line"></i>
+        </span>
+        <br>
+        <span class='label'>summary_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---subscript_line"></i>
+        </span>
+        <br>
+        <span class='label'>subscript_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---strike_line"></i>
+        </span>
+        <br>
+        <span class='label'>strike_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---storage_line"></i>
+        </span>
+        <br>
+        <span class='label'>storage_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---storage_fill"></i>
+        </span>
+        <br>
+        <span class='label'>storage_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---stop_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>stop_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---step_fill"></i>
+        </span>
+        <br>
+        <span class='label'>step_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---star_line"></i>
+        </span>
+        <br>
+        <span class='label'>star_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---star_fill"></i>
+        </span>
+        <br>
+        <span class='label'>star_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---spell_check_line"></i>
+        </span>
+        <br>
+        <span class='label'>spell_check_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---smart_phone_line"></i>
+        </span>
+        <br>
+        <span class='label'>smart_phone_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---slash_line"></i>
+        </span>
+        <br>
+        <span class='label'>slash_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---shorter_line"></i>
+        </span>
+        <br>
+        <span class='label'>shorter_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---shield_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>shield_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---shield_line"></i>
+        </span>
+        <br>
+        <span class='label'>shield_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---shield_fill"></i>
+        </span>
+        <br>
+        <span class='label'>shield_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---share_line"></i>
+        </span>
+        <br>
+        <span class='label'>share_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---share_fill"></i>
+        </span>
+        <br>
+        <span class='label'>share_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---setting_line"></i>
+        </span>
+        <br>
+        <span class='label'>setting_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---setting_fill"></i>
+        </span>
+        <br>
+        <span class='label'>setting_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---server_2_fill"></i>
+        </span>
+        <br>
+        <span class='label'>server_2_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---server_1_fill"></i>
+        </span>
+        <br>
+        <span class='label'>server_1_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---send_time_line"></i>
+        </span>
+        <br>
+        <span class='label'>send_time_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---send_line"></i>
+        </span>
+        <br>
+        <span class='label'>send_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---send_fill"></i>
+        </span>
+        <br>
+        <span class='label'>send_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---semantic_search_fill"></i>
+        </span>
+        <br>
+        <span class='label'>semantic_search_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---search_plus_line"></i>
+        </span>
+        <br>
+        <span class='label'>search_plus_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---search_line"></i>
+        </span>
+        <br>
+        <span class='label'>search_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---schedule_fill"></i>
+        </span>
+        <br>
+        <span class='label'>schedule_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---rotate_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>rotate_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---rotate_line"></i>
+        </span>
+        <br>
+        <span class='label'>rotate_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---rotate_left_line"></i>
+        </span>
+        <br>
+        <span class='label'>rotate_left_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---refresh_line"></i>
+        </span>
+        <br>
+        <span class='label'>refresh_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---redo_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>redo_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---redo_line"></i>
+        </span>
+        <br>
+        <span class='label'>redo_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---redo_left_line"></i>
+        </span>
+        <br>
+        <span class='label'>redo_left_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---recovery_fill"></i>
+        </span>
+        <br>
+        <span class='label'>recovery_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---quote_line"></i>
+        </span>
+        <br>
+        <span class='label'>quote_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---question_mark_line"></i>
+        </span>
+        <br>
+        <span class='label'>question_mark_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---question_mark_fill"></i>
+        </span>
+        <br>
+        <span class='label'>question_mark_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---prompt_line"></i>
+        </span>
+        <br>
+        <span class='label'>prompt_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---prompt_fill"></i>
+        </span>
+        <br>
+        <span class='label'>prompt_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---print_line"></i>
+        </span>
+        <br>
+        <span class='label'>print_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---preview_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>preview_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---preview_line"></i>
+        </span>
+        <br>
+        <span class='label'>preview_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---preview_fill"></i>
+        </span>
+        <br>
+        <span class='label'>preview_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---precision_line"></i>
+        </span>
+        <br>
+        <span class='label'>precision_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---power_line"></i>
+        </span>
+        <br>
+        <span class='label'>power_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---point_fill"></i>
+        </span>
+        <br>
+        <span class='label'>point_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---plus_line"></i>
+        </span>
+        <br>
+        <span class='label'>plus_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---plus_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>plus_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---plus_circle_fill"></i>
+        </span>
+        <br>
+        <span class='label'>plus_circle_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---play_pause_line"></i>
+        </span>
+        <br>
+        <span class='label'>play_pause_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---play_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>play_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---pin_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>pin_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---pin_line"></i>
+        </span>
+        <br>
+        <span class='label'>pin_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---phone_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>phone_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---phone_line"></i>
+        </span>
+        <br>
+        <span class='label'>phone_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---people_line"></i>
+        </span>
+        <br>
+        <span class='label'>people_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---pause_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>pause_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---paperclip_line"></i>
+        </span>
+        <br>
+        <span class='label'>paperclip_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---organizational_chart_line"></i>
+        </span>
+        <br>
+        <span class='label'>organizational_chart_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---notification_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>notification_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---notification_line"></i>
+        </span>
+        <br>
+        <span class='label'>notification_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---notification_fill"></i>
+        </span>
+        <br>
+        <span class='label'>notification_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---notification_exception_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>notification_exception_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---notification_alert_fill"></i>
+        </span>
+        <br>
+        <span class='label'>notification_alert_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---movedocument_fill"></i>
+        </span>
+        <br>
+        <span class='label'>movedocument_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---mouse_line"></i>
+        </span>
+        <br>
+        <span class='label'>mouse_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---more_vertical_line"></i>
+        </span>
+        <br>
+        <span class='label'>more_vertical_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---more_line"></i>
+        </span>
+        <br>
+        <span class='label'>more_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---monitor_line"></i>
+        </span>
+        <br>
+        <span class='label'>monitor_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---monitor_2_fill"></i>
+        </span>
+        <br>
+        <span class='label'>monitor_2_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---monitor_1_fill"></i>
+        </span>
+        <br>
+        <span class='label'>monitor_1_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---minus_sm_line"></i>
+        </span>
+        <br>
+        <span class='label'>minus_sm_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---minus_lg_line"></i>
+        </span>
+        <br>
+        <span class='label'>minus_lg_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---memo_line"></i>
+        </span>
+        <br>
+        <span class='label'>memo_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---megaphone_line"></i>
+        </span>
+        <br>
+        <span class='label'>megaphone_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---megaphone_fill"></i>
+        </span>
+        <br>
+        <span class='label'>megaphone_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---masking_line"></i>
+        </span>
+        <br>
+        <span class='label'>masking_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---manual_book_fill"></i>
+        </span>
+        <br>
+        <span class='label'>manual_book_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---mail_time_line"></i>
+        </span>
+        <br>
+        <span class='label'>mail_time_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---mail_open_line"></i>
+        </span>
+        <br>
+        <span class='label'>mail_open_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---mail_line"></i>
+        </span>
+        <br>
+        <span class='label'>mail_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---mail_fill"></i>
+        </span>
+        <br>
+        <span class='label'>mail_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---log_fill"></i>
+        </span>
+        <br>
+        <span class='label'>log_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---lock_line"></i>
+        </span>
+        <br>
+        <span class='label'>lock_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---location_pin_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>location_pin_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---location_pin_line"></i>
+        </span>
+        <br>
+        <span class='label'>location_pin_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---list_line"></i>
+        </span>
+        <br>
+        <span class='label'>list_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---link_line"></i>
+        </span>
+        <br>
+        <span class='label'>link_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---line_height_line"></i>
+        </span>
+        <br>
+        <span class='label'>line_height_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---layers_fill"></i>
+        </span>
+        <br>
+        <span class='label'>layers_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---laptop_ip_line"></i>
+        </span>
+        <br>
+        <span class='label'>laptop_ip_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---laptop_ip_fill"></i>
+        </span>
+        <br>
+        <span class='label'>laptop_ip_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---laptop_globe_fill"></i>
+        </span>
+        <br>
+        <span class='label'>laptop_globe_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---language_change_line"></i>
+        </span>
+        <br>
+        <span class='label'>language_change_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---language_change2_line"></i>
+        </span>
+        <br>
+        <span class='label'>language_change2_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---keyhole_square_line"></i>
+        </span>
+        <br>
+        <span class='label'>keyhole_square_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---keyhole_off_square_line"></i>
+        </span>
+        <br>
+        <span class='label'>keyhole_off_square_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---keyhole_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>keyhole_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---key_line"></i>
+        </span>
+        <br>
+        <span class='label'>key_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---italic_line"></i>
+        </span>
+        <br>
+        <span class='label'>italic_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---information_line"></i>
+        </span>
+        <br>
+        <span class='label'>information_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---info_fill"></i>
+        </span>
+        <br>
+        <span class='label'>info_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---import_line"></i>
+        </span>
+        <br>
+        <span class='label'>import_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---image_off2_line"></i>
+        </span>
+        <br>
+        <span class='label'>image_off2_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---image_line"></i>
+        </span>
+        <br>
+        <span class='label'>image_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---html_line"></i>
+        </span>
+        <br>
+        <span class='label'>html_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---home_fill"></i>
+        </span>
+        <br>
+        <span class='label'>home_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---history_line"></i>
+        </span>
+        <br>
+        <span class='label'>history_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---highlight_color_line"></i>
+        </span>
+        <br>
+        <span class='label'>highlight_color_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---highlight_color2_line"></i>
+        </span>
+        <br>
+        <span class='label'>highlight_color2_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---heart_line"></i>
+        </span>
+        <br>
+        <span class='label'>heart_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---handle_line"></i>
+        </span>
+        <br>
+        <span class='label'>handle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---graph_fill"></i>
+        </span>
+        <br>
+        <span class='label'>graph_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---globe_fill"></i>
+        </span>
+        <br>
+        <span class='label'>globe_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---fullscreen_line"></i>
+        </span>
+        <br>
+        <span class='label'>fullscreen_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---fullscreen_exit_line"></i>
+        </span>
+        <br>
+        <span class='label'>fullscreen_exit_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---foot_step_fill"></i>
+        </span>
+        <br>
+        <span class='label'>foot_step_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---font_color_line"></i>
+        </span>
+        <br>
+        <span class='label'>font_color_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---folder_share_line"></i>
+        </span>
+        <br>
+        <span class='label'>folder_share_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---folder_line"></i>
+        </span>
+        <br>
+        <span class='label'>folder_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---folder_fill"></i>
+        </span>
+        <br>
+        <span class='label'>folder_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---folder2_line"></i>
+        </span>
+        <br>
+        <span class='label'>folder2_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---folder2_ban_line"></i>
+        </span>
+        <br>
+        <span class='label'>folder2_ban_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---filter_line"></i>
+        </span>
+        <br>
+        <span class='label'>filter_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---file_plus_line"></i>
+        </span>
+        <br>
+        <span class='label'>file_plus_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---file_fill"></i>
+        </span>
+        <br>
+        <span class='label'>file_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---fasoo_rule_fill"></i>
+        </span>
+        <br>
+        <span class='label'>fasoo_rule_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---face_(_)_line"></i>
+        </span>
+        <br>
+        <span class='label'>face_(_)_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---export_line"></i>
+        </span>
+        <br>
+        <span class='label'>export_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---expand_line"></i>
+        </span>
+        <br>
+        <span class='label'>expand_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---exit_line"></i>
+        </span>
+        <br>
+        <span class='label'>exit_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---exclamation_triangle_line"></i>
+        </span>
+        <br>
+        <span class='label'>exclamation_triangle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---exchange_updown_line"></i>
+        </span>
+        <br>
+        <span class='label'>exchange_updown_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---exchange_rightleft_line"></i>
+        </span>
+        <br>
+        <span class='label'>exchange_rightleft_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---exception_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>exception_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---etc_fill"></i>
+        </span>
+        <br>
+        <span class='label'>etc_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---education_fill"></i>
+        </span>
+        <br>
+        <span class='label'>education_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---edit_line"></i>
+        </span>
+        <br>
+        <span class='label'>edit_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---edit2_line"></i>
+        </span>
+        <br>
+        <span class='label'>edit2_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---drive_share_line"></i>
+        </span>
+        <br>
+        <span class='label'>drive_share_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---drive_share_fill"></i>
+        </span>
+        <br>
+        <span class='label'>drive_share_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---drive_line"></i>
+        </span>
+        <br>
+        <span class='label'>drive_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---download_line"></i>
+        </span>
+        <br>
+        <span class='label'>download_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---down_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>down_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---double_chevron_up_line"></i>
+        </span>
+        <br>
+        <span class='label'>double_chevron_up_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---double_chevron_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>double_chevron_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---double_chevron_left_line"></i>
+        </span>
+        <br>
+        <span class='label'>double_chevron_left_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---double_chevron_down_line"></i>
+        </span>
+        <br>
+        <span class='label'>double_chevron_down_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---dot_fill"></i>
+        </span>
+        <br>
+        <span class='label'>dot_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---document_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>document_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---document_line"></i>
+        </span>
+        <br>
+        <span class='label'>document_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---document_fill"></i>
+        </span>
+        <br>
+        <span class='label'>document_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---document2_line"></i>
+        </span>
+        <br>
+        <span class='label'>document2_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---detect_fill"></i>
+        </span>
+        <br>
+        <span class='label'>detect_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---detailed_information_line"></i>
+        </span>
+        <br>
+        <span class='label'>detailed_information_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---delete_line"></i>
+        </span>
+        <br>
+        <span class='label'>delete_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---delete_fill"></i>
+        </span>
+        <br>
+        <span class='label'>delete_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---data_lineage_line"></i>
+        </span>
+        <br>
+        <span class='label'>data_lineage_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---crown_line"></i>
+        </span>
+        <br>
+        <span class='label'>crown_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---crown_fill"></i>
+        </span>
+        <br>
+        <span class='label'>crown_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---create_approval_fill"></i>
+        </span>
+        <br>
+        <span class='label'>create_approval_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---cpu_line"></i>
+        </span>
+        <br>
+        <span class='label'>cpu_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---copy_line"></i>
+        </span>
+        <br>
+        <span class='label'>copy_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---compress_line"></i>
+        </span>
+        <br>
+        <span class='label'>compress_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---company_fill"></i>
+        </span>
+        <br>
+        <span class='label'>company_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---close_sm_line"></i>
+        </span>
+        <br>
+        <span class='label'>close_sm_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---close_lg_line"></i>
+        </span>
+        <br>
+        <span class='label'>close_lg_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---close_fill"></i>
+        </span>
+        <br>
+        <span class='label'>close_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---close_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>close_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---clipboard_plus_fill"></i>
+        </span>
+        <br>
+        <span class='label'>clipboard_plus_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---clipboard_play_fill"></i>
+        </span>
+        <br>
+        <span class='label'>clipboard_play_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---clipboard_check_fill"></i>
+        </span>
+        <br>
+        <span class='label'>clipboard_check_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---clipboard_blank_fill"></i>
+        </span>
+        <br>
+        <span class='label'>clipboard_blank_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---clear_formatting_line"></i>
+        </span>
+        <br>
+        <span class='label'>clear_formatting_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chevron_up_sm_line"></i>
+        </span>
+        <br>
+        <span class='label'>chevron_up_sm_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chevron_up_fill"></i>
+        </span>
+        <br>
+        <span class='label'>chevron_up_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chevron_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>chevron_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chevron_left_line"></i>
+        </span>
+        <br>
+        <span class='label'>chevron_left_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chevron_down_sm_line"></i>
+        </span>
+        <br>
+        <span class='label'>chevron_down_sm_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chevron_down_sm-1_line"></i>
+        </span>
+        <br>
+        <span class='label'>chevron_down_sm-1_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chevron_down_fill"></i>
+        </span>
+        <br>
+        <span class='label'>chevron_down_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---checked_shield_line"></i>
+        </span>
+        <br>
+        <span class='label'>checked_shield_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---check_line"></i>
+        </span>
+        <br>
+        <span class='label'>check_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---check_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>check_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---check_circle_fill"></i>
+        </span>
+        <br>
+        <span class='label'>check_circle_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_shield_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_shield_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_redo_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_redo_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_plus_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_plus_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_lock_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_lock_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_lines_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_lines_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_lines-1_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_lines-1_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_go_to_original_line"></i>
+        </span>
+        <br>
+        <span class='label'>chat_go_to_original_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat_fill"></i>
+        </span>
+        <br>
+        <span class='label'>chat_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---chat__alert_fill"></i>
+        </span>
+        <br>
+        <span class='label'>chat__alert_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---change_sorting_line"></i>
+        </span>
+        <br>
+        <span class='label'>change_sorting_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---card_two_line"></i>
+        </span>
+        <br>
+        <span class='label'>card_two_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---card_four_line"></i>
+        </span>
+        <br>
+        <span class='label'>card_four_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---camera_off_line"></i>
+        </span>
+        <br>
+        <span class='label'>camera_off_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---camera_line"></i>
+        </span>
+        <br>
+        <span class='label'>camera_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---camera_fill"></i>
+        </span>
+        <br>
+        <span class='label'>camera_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---calender_time_line"></i>
+        </span>
+        <br>
+        <span class='label'>calender_time_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---calendar_line"></i>
+        </span>
+        <br>
+        <span class='label'>calendar_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---calendar_fill"></i>
+        </span>
+        <br>
+        <span class='label'>calendar_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---calculator_line"></i>
+        </span>
+        <br>
+        <span class='label'>calculator_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---bug_line"></i>
+        </span>
+        <br>
+        <span class='label'>bug_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---briefcase_fill"></i>
+        </span>
+        <br>
+        <span class='label'>briefcase_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---bot_line"></i>
+        </span>
+        <br>
+        <span class='label'>bot_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---bot_fill"></i>
+        </span>
+        <br>
+        <span class='label'>bot_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---book_fill"></i>
+        </span>
+        <br>
+        <span class='label'>book_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---bold_line"></i>
+        </span>
+        <br>
+        <span class='label'>bold_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---bars_line"></i>
+        </span>
+        <br>
+        <span class='label'>bars_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---ban_line"></i>
+        </span>
+        <br>
+        <span class='label'>ban_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---backup_line"></i>
+        </span>
+        <br>
+        <span class='label'>backup_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---backup_fill"></i>
+        </span>
+        <br>
+        <span class='label'>backup_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---at_line"></i>
+        </span>
+        <br>
+        <span class='label'>at_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---arrow_up_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>arrow_up_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---arrow_up_right_fill"></i>
+        </span>
+        <br>
+        <span class='label'>arrow_up_right_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---arrow_up_line"></i>
+        </span>
+        <br>
+        <span class='label'>arrow_up_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---arrow_top_line"></i>
+        </span>
+        <br>
+        <span class='label'>arrow_top_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---arrow_down_line"></i>
+        </span>
+        <br>
+        <span class='label'>arrow_down_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---arrow_bottom_line"></i>
+        </span>
+        <br>
+        <span class='label'>arrow_bottom_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---archive_line"></i>
+        </span>
+        <br>
+        <span class='label'>archive_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---approval_fill"></i>
+        </span>
+        <br>
+        <span class='label'>approval_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---approval_cancel_fill"></i>
+        </span>
+        <br>
+        <span class='label'>approval_cancel_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---align_right_line"></i>
+        </span>
+        <br>
+        <span class='label'>align_right_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---align_line"></i>
+        </span>
+        <br>
+        <span class='label'>align_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---align_left_line"></i>
+        </span>
+        <br>
+        <span class='label'>align_left_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---align_center_line"></i>
+        </span>
+        <br>
+        <span class='label'>align_center_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---alert_octagon_line"></i>
+        </span>
+        <br>
+        <span class='label'>alert_octagon_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---alert_octagon_fill"></i>
+        </span>
+        <br>
+        <span class='label'>alert_octagon_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---alert_fill"></i>
+        </span>
+        <br>
+        <span class='label'>alert_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---alert_circle_line"></i>
+        </span>
+        <br>
+        <span class='label'>alert_circle_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---alarm_setting_line"></i>
+        </span>
+        <br>
+        <span class='label'>alarm_setting_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---ai_line"></i>
+        </span>
+        <br>
+        <span class='label'>ai_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---ai_fill"></i>
+        </span>
+        <br>
+        <span class='label'>ai_fill</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---add_person_line"></i>
+        </span>
+        <br>
+        <span class='label'>add_person_line</span>
+    </div>
+
+
+    <div class="preview">
+        <span class="inner">
+            <i class="icon-- icon---add_document_line"></i>
+        </span>
+        <br>
+        <span class='label'>add_document_line</span>
+    </div>
+
+
+</body>
+
+</html>
