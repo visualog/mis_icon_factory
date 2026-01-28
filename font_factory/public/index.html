@@ -355,181 +355,67 @@
             <span class="brand-logo">IconFactory</span>
         </div>
 
-        <div class="header-content">
-            <!-- Search Trigger & Input -->
-            <div class="search-container">
-                <button id="searchTrigger" class="icon-btn" aria-label="Search">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-                <div class="search-input-wrapper">
-                    <input type="text" id="searchInput" placeholder="Search..." class="search-input">
-                    <button id="searchClose" class="icon-btn-mini">×</button>
-                    <span id="countBadge" class="count-badge">0</span>
+        <div class="controls">
+            <!-- Stroke Control -->
+            <div class="control-item">
+                <span class="label">Weight</span>
+                <input type="range" id="widthSlider" min="1.0" max="2.0" step="0.25" value="1.25">
+                <div id="val" class="value-badge">Regular</div>
+            </div>
+
+            <!-- Size Control -->
+            <div class="control-item">
+                <span class="label">Size</span>
+                <div class="select-wrapper">
+                    <select id="sizeSelect"></select>
+                    <div class="select-arrow"></div>
                 </div>
             </div>
 
-            <!-- Controls (Should slide/fade when search is active) -->
-            <div class="controls" id="controlsPanel">
-                <div class="control-item">
-                    <span class="label">Weight</span>
-                    <input type="range" id="widthSlider" min="1.0" max="2.0" step="0.25" value="1.25">
-                    <div id="val" class="value-badge">Regular</div>
-                </div>
-
-                <div class="control-item">
-                    <span class="label">Size</span>
-                    <div class="select-wrapper">
-                        <select id="sizeSelect"></select>
-                        <div class="select-arrow"></div>
-                    </div>
-                </div>
-
-                <button id="buildBtn" class="btn-primary">
-                    <span>Build</span>
-                </button>
-            </div>
+            <!-- Action -->
+            <button id="buildBtn" class="btn-primary">
+                <span>Build Fonts</span>
+            </button>
         </div>
     </header>
 
     <style>
         /* ... Existing Styles ... */
 
-        /* Header Layout Fix */
+        /* Header Layout (Restored) */
         .app-header {
             justify-content: space-between;
-            overflow: hidden;
-            /* For smooth transition clipping */
             gap: 20px;
         }
 
-        .header-content {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            justify-content: flex-end;
-            position: relative;
-            height: 40px;
-            /* Constrain height */
-        }
-
-        /* Controls Panel Transition */
         .controls {
             display: flex;
             align-items: center;
             gap: 24px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 1;
-            transform: translateX(0);
         }
 
-        /* When search is active, hide controls */
-        .header-content.search-active .controls {
-            opacity: 0;
-            transform: translateX(50px);
-            pointer-events: none;
+        /* Selection Styles (Preserved) */
+        .icon-card.selected {
+            border: 2px solid var(--text-main);
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-card.selected::after {
+            content: '✓';
             position: absolute;
-            right: 0;
-        }
-
-        /* Search Container */
-        .search-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Search Button */
-        .icon-btn {
-            background: transparent;
-            border: 1px solid transparent;
+            top: 8px;
+            right: 8px;
+            background: var(--text-main);
+            color: white;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            color: var(--text-main);
-            transition: all 0.2s;
-        }
-
-        .icon-btn:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        /* Expandable Input Wrapper */
-        .search-input-wrapper {
-            position: absolute;
-            /* Overlay on top of trigger button area */
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%) scaleX(0);
-            /* Start hidden */
-            transform-origin: right center;
-            background: #F4F4F5;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            width: 380px;
-            /* Expanded Width */
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Active State */
-        .header-content.search-active .search-input-wrapper {
-            transform: translateY(-50%) scaleX(1);
-            opacity: 1;
-        }
-
-        /* Hide Trigger when active */
-        .header-content.search-active #searchTrigger {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .search-input {
-            border: none;
-            background: transparent;
-            font-family: var(--font-main);
-            font-size: 14px;
-            flex: 1;
-            outline: none;
-            color: var(--text-main);
-            margin-right: 8px;
-        }
-
-        .icon-btn-mini {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            color: var(--text-sub);
-            padding: 0 4px;
-        }
-
-        .icon-btn-mini:hover {
-            color: var(--text-main);
-        }
-
-        .count-badge {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-sub);
-            margin-left: 8px;
-            background: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* Hide old static search bar */
-        .search-bar-wrapper {
-            display: none;
+            font-size: 12px;
+            font-weight: bold;
         }
     </style>
 
@@ -553,36 +439,6 @@
         const buildBtn = document.getElementById('buildBtn');
         const status = document.getElementById('status');
         const statusMsg = document.getElementById('status-msg');
-
-        const searchInput = document.getElementById('searchInput');
-        const countBadge = document.getElementById('countBadge');
-
-        // Search Interaction
-        const searchTrigger = document.getElementById('searchTrigger');
-        const searchClose = document.getElementById('searchClose');
-        const headerContent = document.querySelector('.header-content'); // Container for toggling class
-
-        searchTrigger.addEventListener('click', () => {
-            headerContent.classList.add('search-active');
-            setTimeout(() => searchInput.focus(), 100); // Wait for transition
-        });
-
-        function closeSearch() {
-            headerContent.classList.remove('search-active');
-            searchInput.value = '';
-            // Reset filter
-            renderIcons(allIcons);
-            countBadge.innerText = allIcons.length;
-        }
-
-        searchClose.addEventListener('click', closeSearch);
-
-        // Close on Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && headerContent.classList.contains('search-active')) {
-                closeSearch();
-            }
-        });
 
         const sizes = [16, 20, 24, 32, 36, 40, 48, 64, 96, 128];
         const WEIGHT_NAMES_SHORT = {
@@ -609,7 +465,6 @@
             try {
                 const res = await fetch('/api/icons');
                 allIcons = await res.json(); // Store for filtering
-                countBadge.innerText = allIcons.length;
 
                 renderIcons(allIcons);
 
@@ -673,27 +528,9 @@
             if (selectedIcons.size > 0) {
                 buildBtn.querySelector('span').innerText = `Build ${selectedIcons.size} Selected`;
             } else {
-                buildBtn.querySelector('span').innerText = `Build All Fonts`;
+                buildBtn.querySelector('span').innerText = `Build Fonts`;
             }
         }
-
-        // Search Filter Logic
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.icon-card');
-            let visibleCount = 0;
-
-            cards.forEach(card => {
-                const name = card.dataset.name;
-                if (name.includes(query)) {
-                    card.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-            countBadge.innerText = visibleCount;
-        });
 
         function updateURL(key, value) {
             const url = new URL(window.location);
