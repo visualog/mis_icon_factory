@@ -18,8 +18,13 @@ const lineSrcDir = path.join(rootDir, 'line');
 const fillSrcDir = path.join(rootDir, 'fill');
 const outputDir = path.join(rootDir, 'dist_font_custom');
 
-async function buildAllWeights() {
+async function buildAllWeights(selectedIcons = []) {
     console.log("🚀 Starting Multi-Weight Font Build...");
+    if (selectedIcons.length > 0) {
+        console.log(`🎯 Building specific icons only: ${selectedIcons.length} icons selected`);
+    } else {
+        console.log("📦 Building ALL icons (Default)");
+    }
 
     // 1. 초기화
     await fs.remove(buildDir);
@@ -48,6 +53,12 @@ async function buildAllWeights() {
         const lineFiles = await fs.readdir(lineSrcDir);
         for (const file of lineFiles) {
             if (!file.endsWith('.svg')) continue;
+
+            // Selection Filtering
+            if (selectedIcons.length > 0 && !selectedIcons.includes(file)) {
+                continue;
+            }
+
             let content = await fs.readFile(path.join(lineSrcDir, file), 'utf-8');
 
             // 기존 속성 제거

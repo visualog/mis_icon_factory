@@ -29,8 +29,9 @@ app.post('/api/build', async (req, res) => {
     console.log("Requesting multi-weight build...");
 
     try {
+        const { selectedIcons } = req.body; // Array of filenames e.g. ["icon1.svg", "icon2.svg"]
         const { buildAllWeights } = require('./build-engine');
-        await buildAllWeights(); // 인자 없이 호출
+        await buildAllWeights(selectedIcons);
         res.json({ success: true, message: '멀티 웨이트 웹폰트 빌드가 성공적으로 완료되었습니다!' });
     } catch (err) {
         console.error(err);
