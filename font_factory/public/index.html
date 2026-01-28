@@ -1,261 +1,382 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>아이콘 팩토리 - 두께 편집기</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
-            --primary: #2563eb;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
-            --border: #e2e8f0;
+            --primary: #111111;
+            --accent: #3b82f6;
+            --bg: #F4F4F5;
+            /* Warm/Cool Gray Light */
+            --card-bg: #FFFFFF;
+            --text-main: #18181b;
+            --text-sub: #71717a;
+            --border: #e4e4e7;
+
+            --font-main: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Pretendard', -apple-system, sans-serif;
+            font-family: var(--font-main);
             margin: 0;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--text-main);
             display: flex;
             flex-direction: column;
             height: 100vh;
-            touch-action: manipulation;
-        }
-
-        :focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-        }
-
-        header {
-            padding: 16px 32px;
-            background: var(--card);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 20;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .preview-toolbar {
-            padding: 12px 32px;
-            background: #f1f5f9;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .toolbar-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            margin-right: 8px;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-        }
-
-        .input-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            font-size: 14px;
-            min-width: 280px;
-        }
-
-        select {
-            padding: 6px 10px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
-            font-size: 14px;
-            background-color: white;
-            cursor: pointer;
-        }
-
-        select:hover {
-            border-color: #94a3b8;
-        }
-
-        .main-container {
-            display: flex;
-            flex: 1;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Header & Toolbar --- */
+        .app-header {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 999px;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            letter-spacing: 0.05em;
+        }
+
+        /* Custom Range Slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 120px;
+            height: 4px;
+            background: #e4e4e7;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--text-main);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Custom Select */
+        .select-wrapper {
             position: relative;
         }
 
-        #icon-grid {
+        select {
+            appearance: none;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 32px 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        select:hover {
+            border-color: var(--text-sub);
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            width: 8px;
+            height: 8px;
+            border-right: 1.5px solid var(--text-main);
+            border-bottom: 1.5px solid var(--text-main);
+            transform: translateY(-70%) rotate(45deg);
+        }
+
+        /* Value Badge */
+        .value-badge {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            background: var(--text-main);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            min-width: 60px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Action Button */
+        .btn-primary {
+            background: var(--text-main);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 99px;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #27272a;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* --- Main Grid --- */
+        .main-content {
             flex: 1;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 20px;
-            padding: 32px;
             overflow-y: auto;
+            padding: 120px 20px 60px;
+            /* Top padding clears fixed header */
+            display: flex;
+            justify-content: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+            width: 100%;
+            max-width: 1400px;
         }
 
         .icon-card {
-            background: var(--card);
-            padding: 24px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            background: var(--card-bg);
+            aspect-ratio: 1 / 1;
+            /* Make it square! */
+            border-radius: 16px;
+            /* Smooth corners */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            content-visibility: auto;
-            contain-intrinsic-size: 150px;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid transparent;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            cursor: pointer;
         }
 
         .icon-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            border-color: #cbd5e1;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.05);
+            z-index: 10;
         }
 
-        .icon-card svg {
-            color: #000;
-            shape-rendering: geometricPrecision;
-            overflow: visible;
-            transition: width 0.2s, height 0.2s;
-        }
-
-        .icon-name {
-            margin-top: 16px;
-            font-size: 12px;
-            color: #64748b;
-            word-break: break-all;
-        }
-
-        button#buildBtn {
-            padding: 10px 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
-        }
-
-        button#buildBtn:hover {
-            background-color: #1d4ed8;
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            background-color: #94a3b8 !important;
-        }
-
-        input[type="range"] {
-            width: 140px;
-            cursor: pointer;
-        }
-
-        .status-badge {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            padding: 16px 24px;
-            border-radius: 12px;
-            color: white;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            font-weight: 500;
-            z-index: 100;
-            animation: slideUp 0.3s ease-out;
-            max-width: 400px;
-            line-height: 1.5;
-            /* Flexbox로 변경하여 닫기 버튼 배치 */
-            display: none;
-            /* JS로 flex로 변경됨 */
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .close-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            cursor: pointer;
+        .icon-wrapper {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            line-height: 1;
-            flex-shrink: 0;
+            width: 100%;
         }
 
-        .close-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
+        .icon-card svg {
+            transition: all 0.3s ease;
+            color: var(--text-main);
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
+        .icon-meta {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
 
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .icon-name {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-sub);
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            text-align: center;
+            padding: 0 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .icon-card:hover .icon-name {
+            opacity: 1;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* --- Status Toast --- */
+        .status-toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--text-main);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 200;
+            max-width: 90%;
+        }
+
+        .status-toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .status-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d8;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1aa;
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>아이콘 팩토리</h1>
-        <button id="buildBtn">웹폰트 생성</button>
+    <!-- Floating Header -->
+    <header class="app-header">
+        <div class="brand">
+            <span class="brand-logo">IconFactory</span>
+        </div>
+
+        <div class="controls">
+            <!-- Stroke Control -->
+            <div class="control-item">
+                <span class="label">Weight</span>
+                <input type="range" id="widthSlider" min="1.0" max="2.0" step="0.25" value="1.25">
+                <div id="val" class="value-badge">Regular</div>
+            </div>
+
+            <!-- Size Control -->
+            <div class="control-item">
+                <span class="label">Size</span>
+                <div class="select-wrapper">
+                    <select id="sizeSelect"></select>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+
+            <!-- Action -->
+            <button id="buildBtn" class="btn-primary">
+                <span>Build Fonts</span>
+            </button>
+        </div>
     </header>
 
-    <div class="preview-toolbar">
-        <div class="control-group">
-            <label class="toolbar-label" for="widthSlider">선 두께 미리보기</label>
-            <div class="input-row">
-                <input type="range" id="widthSlider" min="1.0" max="2.0" step="0.25" value="1.25">
-                <span id="val" style="font-weight:normal; margin-left:8px; width:120px; display:inline-block;">1.25px -
-                    Regular</span>
-            </div>
+    <!-- Main Grid -->
+    <main class="main-content">
+        <div id="icon-grid" class="grid-container">
+            <!-- Icons injected here -->
         </div>
-        <div class="control-group">
-            <label class="toolbar-label" for="sizeSelect">크기</label>
-            <select id="sizeSelect">
-                <!-- JS로 옵션 채움 -->
-            </select>
-        </div>
-    </div>
+    </main>
 
-    <div class="main-container">
-        <div id="icon-grid">
-            <!-- 아이콘들이 여기에 렌더링됩니다 -->
-        </div>
+    <!-- Toast Notification -->
+    <div id="status" class="status-toast">
+        <div id="status-msg" class="status-text">Ready</div>
     </div>
-
-    <div id="status" class="status-badge" style="display: none;"></div>
 
     <script>
         const grid = document.getElementById('icon-grid');
@@ -264,56 +385,61 @@
         const sizeSelect = document.getElementById('sizeSelect');
         const buildBtn = document.getElementById('buildBtn');
         const status = document.getElementById('status');
+        const statusMsg = document.getElementById('status-msg');
 
         const sizes = [16, 20, 24, 32, 36, 40, 48, 64, 96, 128];
-
-        // 웨이트 이름 매핑
-        const WEIGHT_NAMES = {
-            '1.00': 'Light (300)',
-            '1.25': 'Regular (400)',
-            '1.50': 'Medium (500)',
-            '1.75': 'SemiBold (600)',
-            '2.00': 'Bold (700)'
+        const WEIGHT_NAMES_SHORT = {
+            '1.00': 'Light',
+            '1.25': 'Regular',
+            '1.50': 'Medium',
+            '1.75': 'SemiBold',
+            '2.00': 'Bold'
         };
 
-        // 사이즈 옵션 초기화
+        // Init UI
         sizes.forEach(size => {
             const option = document.createElement('option');
             option.value = size;
-            option.text = `${size}`;
-            if (size === 24) option.selected = true; // 기본값 24px
+            option.text = `${size}px`;
+            if (size === 24) option.selected = true;
             sizeSelect.appendChild(option);
         });
 
         async function loadIcons() {
-            const res = await fetch('/api/icons');
-            const icons = await res.json();
+            try {
+                const res = await fetch('/api/icons');
+                const icons = await res.json();
 
-            for (const icon of icons) {
-                const card = document.createElement('div');
-                card.className = 'icon-card';
+                for (const icon of icons) {
+                    const card = document.createElement('div');
+                    card.className = 'icon-card';
 
-                // SVG를 fetch로 가져와서 동적으로 stroke-width 수정 가능하게 처리
-                const svgRes = await fetch(`/line-icons/${encodeURIComponent(icon)}`);
-                let svgText = await svgRes.text();
+                    const svgRes = await fetch(`/line-icons/${encodeURIComponent(icon)}`);
+                    let svgText = await svgRes.text();
 
-                card.innerHTML = `
-                    <div class="svg-container">${svgText}</div>
-                    <div class="icon-name">${icon.replace('.svg', '')}</div>
-                `;
-                grid.appendChild(card);
+                    card.innerHTML = `
+                        <div class="icon-wrapper">${svgText}</div>
+                        <div class="icon-meta">
+                            <span class="icon-name">${icon.replace('.svg', '').replace(/[-_]/g, ' ')}</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+
+                // Init Params
+                const params = new URLSearchParams(window.location.search);
+                const initialWidth = params.get('width') || slider.value;
+                const initialSize = params.get('size') || sizeSelect.value;
+
+                slider.value = initialWidth;
+                sizeSelect.value = initialSize;
+
+                updateStroke(initialWidth);
+                updateSize(initialSize);
+
+            } catch (err) {
+                console.error("Failed to load icons", err);
             }
-            // URL 파라미터에서 초기값 읽기
-            const params = new URLSearchParams(window.location.search);
-            const initialWidth = params.get('width') || slider.value;
-            const initialSize = params.get('size') || sizeSelect.value;
-
-            // UI 컨트롤 업데이트
-            slider.value = initialWidth;
-            sizeSelect.value = initialSize;
-
-            updateStroke(initialWidth);
-            updateSize(initialSize);
         }
 
         function updateURL(key, value) {
@@ -325,21 +451,23 @@
         function updateStroke(width) {
             updateURL('width', width);
             const w = parseFloat(width).toFixed(2);
-            valText.innerText = `${w}px - ${WEIGHT_NAMES[w] || ''}`;
+            valText.innerText = WEIGHT_NAMES_SHORT[w] || `${w}px`;
 
             const svgs = document.querySelectorAll('svg');
             svgs.forEach(svg => {
-                const paths = svg.querySelectorAll('path, rect, circle, line');
+                const paths = svg.querySelectorAll('path, rect, circle, line, polyline, polygon');
                 paths.forEach(p => {
-                    // 기존 속성들을 제거하여 초기화(리셋) 처리합니다.
                     p.removeAttribute('stroke-width');
                     p.removeAttribute('stroke');
 
-                    // 선택한 두께를 일괄 적용합니다.
                     p.setAttribute('stroke', 'currentColor');
                     p.setAttribute('stroke-width', width);
                     p.setAttribute('stroke-linejoin', 'round');
                     p.setAttribute('stroke-linecap', 'round');
+                    // Ensure fill is none for line icons
+                    if (!p.getAttribute('fill') || p.getAttribute('fill') === 'none') {
+                        p.setAttribute('fill', 'none');
+                    }
                 });
             });
         }
@@ -356,14 +484,27 @@
         slider.addEventListener('input', (e) => updateStroke(e.target.value));
         sizeSelect.addEventListener('change', (e) => updateSize(e.target.value));
 
+        // Toast Helper
+        let toastTimeout;
+        function showToast(msg, isError = false) {
+            statusMsg.innerHTML = msg;
+            status.style.background = isError ? '#ef4444' : '#18181b';
+            status.classList.add('visible');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                status.classList.remove('visible');
+            }, 3000);
+        }
+
         buildBtn.addEventListener('click', async () => {
-            if (!confirm(`Light(1.0px)부터 Bold(2.0px)까지 5종(300~700)의 웹폰트를 일괄 빌드하시겠습니까?`)) return;
+            if (!confirm(`전체 5종 웨이트(Light ~ Bold)를 빌드하시겠습니까?`)) return;
 
             buildBtn.disabled = true;
-            showStatus('🚀 5종 슬림 웨이트 빌드 시작 중…<br>잠시만 기다려주세요.', '#3b82f6');
+            buildBtn.innerHTML = `<span>Building...</span>`;
+            showToast('🚀 빌드를 시작했습니다...');
 
             try {
-                // strokeWidth를 보내지 않고 전체 빌드를 요청합니다.
                 const res = await fetch('/api/build', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -372,26 +513,17 @@
                 const result = await res.json();
 
                 if (result.success) {
-                    showStatus('✅ <b>빌드 완료!</b><br>dist_font_custom 폴더에 웹폰트가 생성되었습니다.', '#10b981');
+                    showToast('✅ 빌드가 성공적으로 완료되었습니다!');
                 } else {
                     throw new Error(result.error);
                 }
             } catch (err) {
-                showStatus('❌ <b>오류 발생</b><br>' + err.message, '#ef4444');
+                showToast('❌ ' + err.message, true);
             } finally {
                 buildBtn.disabled = false;
+                buildBtn.innerHTML = `<span>Build Fonts</span>`;
             }
         });
-
-        function showStatus(htmlContent, color) {
-            status.innerHTML = `
-                <div style="flex:1">${htmlContent}</div>
-                <button class="close-btn" aria-label="알림 닫기" onclick="document.getElementById('status').style.display='none'">×</button>
-            `;
-            status.style.backgroundColor = color;
-            status.style.display = 'flex';
-            // setTimeout 제거: 사용자가 직접 닫을 때까지 유지
-        }
 
         loadIcons();
     </script>
