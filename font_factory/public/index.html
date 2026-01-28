@@ -159,17 +159,23 @@
         /* Value Badge */
         .value-badge {
             font-family: var(--font-mono);
-            font-size: 12px;
-            background: var(--text-main);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
+            font-size: 13px;
+            /* Slightly larger */
+            background: transparent;
+            /* No background */
+            color: var(--text-main);
+            /* Dark text */
+            padding: 4px 0;
+            /* Remove horizontal padding */
             width: 80px;
-            /* Fixed width to prevent wobble */
             display: flex;
             justify-content: center;
-            /* Center text */
-            font-weight: 500;
+            font-weight: 600;
+            /* Bolder text */
+            border-left: 1px solid var(--border);
+            /* Subtle divider */
+            margin-left: 8px;
+            /* Space from slider */
         }
 
         /* Action Button */
