@@ -510,11 +510,18 @@
         }
 
         buildBtn.addEventListener('click', async () => {
-            if (!confirm(`전체 5종 웨이트(Light ~ Bold)를 빌드하시겠습니까?`)) return;
+            // Remove native confirm to prevent blocking UI flakiness
+            // Instead, we just start the build with a toast notification
+
+            if (buildBtn.disabled) return;
 
             buildBtn.disabled = true;
             buildBtn.innerHTML = `<span>Building...</span>`;
-            showToast('🚀 빌드를 시작했습니다...');
+
+            // Show persistent toast start message
+            statusMsg.innerHTML = '🚀 5종 웹폰트 빌드를 시작합니다...';
+            status.style.background = '#3b82f6';
+            status.classList.add('visible');
 
             try {
                 const res = await fetch('/api/build', {
@@ -525,7 +532,7 @@
                 const result = await res.json();
 
                 if (result.success) {
-                    showToast('✅ 빌드가 성공적으로 완료되었습니다!');
+                    showToast('✅ 빌드 완료! dist_font_custom 폴더를 확인하세요.', false);
                 } else {
                     throw new Error(result.error);
                 }
