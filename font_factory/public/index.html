@@ -519,7 +519,7 @@
             buildBtn.innerHTML = `<span>Building...</span>`;
 
             // Show persistent toast start message
-            statusMsg.innerHTML = 'Starting multi-weight build...';
+            statusMsg.innerHTML = '5종 웹폰트 빌드를 시작합니다...';
             status.style.background = '#3b82f6';
             status.classList.add('visible');
 
@@ -532,12 +532,12 @@
                 const result = await res.json();
 
                 if (result.success) {
-                    showToast('Build complete. Check dist_font_custom folder.', false);
+                    showToast('빌드 완료! dist_font_custom 폴더를 확인하세요.', false);
                 } else {
                     throw new Error(result.error);
                 }
             } catch (err) {
-                showToast('Error: ' + err.message, true);
+                showToast('오류 발생: ' + err.message, true);
             } finally {
                 buildBtn.disabled = false;
                 buildBtn.innerHTML = `<span>Build Fonts</span>`;
