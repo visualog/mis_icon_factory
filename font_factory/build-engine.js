@@ -12,8 +12,8 @@ const WEIGHT_MAP = {
     700: { name: 'Bold', width: 2.0 }
 };
 
-const rootDir = path.join(__dirname, '..');
-const buildDir = path.join(__dirname, 'build_temp');
+const rootDir = process.cwd();
+const buildDir = path.join(rootDir, 'font_factory/build_temp'); // font_factory 내부에 생성
 const lineSrcDir = path.join(rootDir, 'line');
 const fillSrcDir = path.join(rootDir, 'fill');
 const outputDir = path.join(rootDir, 'dist_font_custom');

@@ -7,14 +7,14 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(process.cwd(), 'font_factory/public')));
 // 원본 아이콘 서빙 (미리보기용)
-app.use('/line-icons', express.static(path.join(__dirname, '../line')));
+app.use('/line-icons', express.static(path.join(process.cwd(), 'line')));
 
 // 아이콘 목록 가져오기 API
 app.get('/api/icons', async (req, res) => {
     try {
-        const lineDir = path.join(__dirname, '../line');
+        const lineDir = path.join(process.cwd(), 'line');
         const files = await fs.readdir(lineDir);
         const icons = files.filter(f => f.endsWith('.svg'));
         res.json(icons);
