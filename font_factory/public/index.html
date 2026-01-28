@@ -448,26 +448,31 @@
             window.history.replaceState({}, '', url);
         }
 
+        let rafId = null;
+
         function updateStroke(width) {
-            updateURL('width', width);
-            const w = parseFloat(width).toFixed(2);
-            valText.innerText = WEIGHT_NAMES_SHORT[w] || `${w}px`;
+            if (rafId) cancelAnimationFrame(rafId);
 
-            const svgs = document.querySelectorAll('svg');
-            svgs.forEach(svg => {
-                const paths = svg.querySelectorAll('path, rect, circle, line, polyline, polygon');
-                paths.forEach(p => {
-                    p.removeAttribute('stroke-width');
-                    p.removeAttribute('stroke');
+            rafId = requestAnimationFrame(() => {
+                updateURL('width', width);
+                const w = parseFloat(width).toFixed(2);
+                valText.innerText = WEIGHT_NAMES_SHORT[w] || `${w}px`;
 
-                    p.setAttribute('stroke', 'currentColor');
-                    p.setAttribute('stroke-width', width);
-                    p.setAttribute('stroke-linejoin', 'round');
-                    p.setAttribute('stroke-linecap', 'round');
-                    // Ensure fill is none for line icons
-                    if (!p.getAttribute('fill') || p.getAttribute('fill') === 'none') {
-                        p.setAttribute('fill', 'none');
-                    }
+                const svgs = document.querySelectorAll('svg');
+                svgs.forEach(svg => {
+                    const paths = svg.querySelectorAll('path, rect, circle, line, polyline, polygon');
+                    paths.forEach(p => {
+                        // Use style instead of attributes for better performance during animation
+                        p.style.stroke = 'currentColor';
+                        p.style.strokeWidth = `${width}px`;
+                        p.style.strokeLinecap = 'round';
+                        p.style.strokeLinejoin = 'round';
+                        p.style.fill = 'none';
+
+                        // Remove attributes that might conflict with styles
+                        p.removeAttribute('stroke');
+                        p.removeAttribute('stroke-width');
+                    });
                 });
             });
         }
