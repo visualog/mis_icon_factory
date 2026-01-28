@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs-extra');
-const { buildFont } = require('./build-engine');
+const { buildAllWeights } = require('./build-engine');
 
 const app = express();
 const PORT = 3000;
@@ -25,21 +25,26 @@ app.get('/api/icons', async (req, res) => {
 
 // 빌드 실행 API
 app.post('/api/build', async (req, res) => {
-    const { strokeWidth } = req.body;
-    if (!strokeWidth) return res.status(400).json({ error: 'Stroke width is required' });
+    // 이제 strokeWidth 파라미터는 사용하지 않습니다.
+    console.log("Requesting multi-weight build...");
 
     try {
-        await buildFont(strokeWidth);
-        res.json({ success: true, message: '웹폰트 빌드가 성공적으로 완료되었습니다!' });
+        await buildAllWeights(); // 인자 없이 호출
+        res.json({ success: true, message: '멀티 웨이트 웹폰트 빌드가 성공적으로 완료되었습니다!' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: '빌드 중 오류가 발생했습니다: ' + err.message });
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`================================================`);
-    console.log(`🚀 아이콘 팩토리 서버가 시작되었습니다!`);
-    console.log(`🔗 접속 주소: http://localhost:${PORT}`);
-    console.log(`================================================`);
-});
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`================================================`);
+        console.log(`🚀 아이콘 팩토리 서버가 시작되었습니다!`);
+        console.log(`🔗 접속 주소: http://localhost:${PORT}`);
+        console.log(`================================================`);
+    });
+}
+
+module.exports = app;

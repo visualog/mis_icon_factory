@@ -1,0 +1,22 @@
+{
+    "version": 2,
+    "name": "iconfont-factory",
+    "builds": [
+        {
+            "src": "font_factory/server.js",
+            "use": "@vercel/node",
+            "config": {
+                "includeFiles": [
+                    "line/**",
+                    "font_factory/public/**"
+                ]
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/font_factory/server.js"
+        }
+    ]
+}

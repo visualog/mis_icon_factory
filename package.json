@@ -4,9 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node font_factory/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "fantasticon": "^4.1.0",
+    "fs-extra": "^11.3.3",
+    "oslllo-svg-fixer": "^6.0.1"
+  }
 }

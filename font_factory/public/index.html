@@ -11,37 +11,93 @@
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
+            --border: #e2e8f0;
         }
 
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
             margin: 0;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             background-color: var(--bg);
             color: var(--text);
             display: flex;
             flex-direction: column;
             height: 100vh;
+            touch-action: manipulation;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
         }
 
         header {
-            padding: 20px 40px;
+            padding: 16px 32px;
             background: var(--card);
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 20;
         }
 
-        .controls {
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .preview-toolbar {
+            padding: 12px 32px;
+            background: #f1f5f9;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 32px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .toolbar-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            margin-right: 8px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 280px;
+        }
+
+        select {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        select:hover {
+            border-color: #94a3b8;
         }
 
         .main-container {
             display: flex;
             flex: 1;
             overflow: hidden;
+            position: relative;
         }
 
         #icon-grid {
@@ -49,78 +105,149 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 20px;
-            padding: 40px;
+            padding: 32px;
             overflow-y: auto;
         }
 
         .icon-card {
             background: var(--card);
-            padding: 20px;
+            padding: 24px;
             border-radius: 12px;
             text-align: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            content-visibility: auto;
+            contain-intrinsic-size: 150px;
         }
 
         .icon-card:hover {
-            border-color: var(--primary);
             transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
         }
 
         .icon-card svg {
-            width: 48px;
-            height: 48px;
+            color: #000;
+            shape-rendering: geometricPrecision;
+            overflow: visible;
+            transition: width 0.2s, height 0.2s;
         }
 
         .icon-name {
-            margin-top: 10px;
+            margin-top: 16px;
             font-size: 12px;
             color: #64748b;
             word-break: break-all;
         }
 
-        button {
-            padding: 10px 24px;
+        button#buildBtn {
+            padding: 10px 20px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        button#buildBtn:hover {
+            background-color: #1d4ed8;
         }
 
         button:disabled {
-            opacity: 0.5;
+            opacity: 0.6;
             cursor: not-allowed;
+            background-color: #94a3b8 !important;
         }
 
         input[type="range"] {
-            width: 200px;
+            width: 140px;
+            cursor: pointer;
         }
 
         .status-badge {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 12px 24px;
-            border-radius: 8px;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
             color: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            z-index: 100;
+            animation: slideUp 0.3s ease-out;
+            max-width: 400px;
+            line-height: 1.5;
+            /* Flexbox로 변경하여 닫기 버튼 배치 */
             display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            /* JS로 flex로 변경됨 */
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>💎 아이콘 팩토리</h1>
-        <div class="controls">
-            <label>선 두께 (Stroke Width): <strong id="val">1.6</strong>px</label>
-            <input type="range" id="widthSlider" min="0.5" max="3" step="0.1" value="1.6">
-            <button id="buildBtn">나만의 웹폰트 빌드하기</button>
-        </div>
+        <h1>아이콘 팩토리</h1>
+        <button id="buildBtn">웹폰트 생성</button>
     </header>
+
+    <div class="preview-toolbar">
+        <div class="control-group">
+            <label class="toolbar-label" for="widthSlider">선 두께 미리보기</label>
+            <div class="input-row">
+                <input type="range" id="widthSlider" min="1.0" max="2.0" step="0.25" value="1.25">
+                <span id="val" style="font-weight:normal; margin-left:8px; width:120px; display:inline-block;">1.25px -
+                    Regular</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="toolbar-label" for="sizeSelect">크기</label>
+            <select id="sizeSelect">
+                <!-- JS로 옵션 채움 -->
+            </select>
+        </div>
+    </div>
 
     <div class="main-container">
         <div id="icon-grid">
@@ -128,14 +255,35 @@
         </div>
     </div>
 
-    <div id="status" class="status-badge"></div>
+    <div id="status" class="status-badge" style="display: none;"></div>
 
     <script>
         const grid = document.getElementById('icon-grid');
         const slider = document.getElementById('widthSlider');
         const valText = document.getElementById('val');
+        const sizeSelect = document.getElementById('sizeSelect');
         const buildBtn = document.getElementById('buildBtn');
         const status = document.getElementById('status');
+
+        const sizes = [16, 20, 24, 32, 36, 40, 48, 64, 96, 128];
+
+        // 웨이트 이름 매핑
+        const WEIGHT_NAMES = {
+            '1.00': 'Light (300)',
+            '1.25': 'Regular (400)',
+            '1.50': 'Medium (500)',
+            '1.75': 'SemiBold (600)',
+            '2.00': 'Bold (700)'
+        };
+
+        // 사이즈 옵션 초기화
+        sizes.forEach(size => {
+            const option = document.createElement('option');
+            option.value = size;
+            option.text = `${size}`;
+            if (size === 24) option.selected = true; // 기본값 24px
+            sizeSelect.appendChild(option);
+        });
 
         async function loadIcons() {
             const res = await fetch('/api/icons');
@@ -151,15 +299,34 @@
 
                 card.innerHTML = `
                     <div class="svg-container">${svgText}</div>
-                    <div class="icon-name">${icon}</div>
+                    <div class="icon-name">${icon.replace('.svg', '')}</div>
                 `;
                 grid.appendChild(card);
             }
-            updateStroke(slider.value);
+            // URL 파라미터에서 초기값 읽기
+            const params = new URLSearchParams(window.location.search);
+            const initialWidth = params.get('width') || slider.value;
+            const initialSize = params.get('size') || sizeSelect.value;
+
+            // UI 컨트롤 업데이트
+            slider.value = initialWidth;
+            sizeSelect.value = initialSize;
+
+            updateStroke(initialWidth);
+            updateSize(initialSize);
+        }
+
+        function updateURL(key, value) {
+            const url = new URL(window.location);
+            url.searchParams.set(key, value);
+            window.history.replaceState({}, '', url);
         }
 
         function updateStroke(width) {
-            valText.innerText = width;
+            updateURL('width', width);
+            const w = parseFloat(width).toFixed(2);
+            valText.innerText = `${w}px - ${WEIGHT_NAMES[w] || ''}`;
+
             const svgs = document.querySelectorAll('svg');
             svgs.forEach(svg => {
                 const paths = svg.querySelectorAll('path, rect, circle, line');
@@ -177,41 +344,53 @@
             });
         }
 
+        function updateSize(size) {
+            updateURL('size', size);
+            const svgs = document.querySelectorAll('.icon-card svg');
+            svgs.forEach(svg => {
+                svg.style.width = `${size}px`;
+                svg.style.height = `${size}px`;
+            });
+        }
+
         slider.addEventListener('input', (e) => updateStroke(e.target.value));
+        sizeSelect.addEventListener('change', (e) => updateSize(e.target.value));
 
         buildBtn.addEventListener('click', async () => {
-            if (!confirm(`현재 두께(${slider.value}px)로 웹폰트를 다시 빌드하시겠습니까?`)) return;
+            if (!confirm(`Light(1.0px)부터 Bold(2.0px)까지 5종(300~700)의 웹폰트를 일괄 빌드하시겠습니까?`)) return;
 
             buildBtn.disabled = true;
-            showStatus('🚀 빌드 시작 중...', '#3b82f6');
+            showStatus('🚀 5종 슬림 웨이트 빌드 시작 중…<br>잠시만 기다려주세요.', '#3b82f6');
 
             try {
+                // strokeWidth를 보내지 않고 전체 빌드를 요청합니다.
                 const res = await fetch('/api/build', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ strokeWidth: slider.value })
+                    body: JSON.stringify({})
                 });
                 const result = await res.json();
 
                 if (result.success) {
-                    showStatus('✅ 빌드 완료! dist_font_custom 폴더를 확인하세요.', '#10b981');
+                    showStatus('✅ <b>빌드 완료!</b><br>dist_font_custom 폴더에 웹폰트가 생성되었습니다.', '#10b981');
                 } else {
                     throw new Error(result.error);
                 }
             } catch (err) {
-                showStatus('❌ 오류: ' + err.message, '#ef4444');
+                showStatus('❌ <b>오류 발생</b><br>' + err.message, '#ef4444');
             } finally {
                 buildBtn.disabled = false;
             }
         });
 
-        function showStatus(text, color) {
-            status.innerText = text;
+        function showStatus(htmlContent, color) {
+            status.innerHTML = `
+                <div style="flex:1">${htmlContent}</div>
+                <button class="close-btn" aria-label="알림 닫기" onclick="document.getElementById('status').style.display='none'">×</button>
+            `;
             status.style.backgroundColor = color;
-            status.style.display = 'block';
-            if (color !== '#3b82f6') { // 로딩 중이 아닐 때만 5초 후 사라짐
-                setTimeout(() => status.style.display = 'none', 5000);
-            }
+            status.style.display = 'flex';
+            // setTimeout 제거: 사용자가 직접 닫을 때까지 유지
         }
 
         loadIcons();
