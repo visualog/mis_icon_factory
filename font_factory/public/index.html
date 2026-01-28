@@ -164,8 +164,11 @@
             color: white;
             padding: 4px 8px;
             border-radius: 4px;
-            min-width: 60px;
-            text-align: center;
+            width: 80px;
+            /* Fixed width to prevent wobble */
+            display: flex;
+            justify-content: center;
+            /* Center text */
             font-weight: 500;
         }
 
@@ -208,6 +211,8 @@
             /* Top padding clears fixed header */
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            /* Ensure grid starts at top */
         }
 
         .grid-container {
@@ -216,6 +221,8 @@
             gap: 16px;
             width: 100%;
             max-width: 1400px;
+            align-content: start;
+            /* Fixes rows spreading vertically */
         }
 
         .icon-card {
