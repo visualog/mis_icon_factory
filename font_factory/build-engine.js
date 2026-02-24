@@ -28,6 +28,17 @@ const lineSrcDir = path.join(rootDir, 'line');
 const fillSrcDir = path.join(rootDir, 'fill');
 const outputDir = path.join(rootDir, 'dist_font_custom');
 
+function sanitizeIconId(fileName) {
+    const base = fileName.replace(/\.svg$/i, '').toLowerCase().trim();
+    const normalized = base
+        .replace(/[\s-]+/g, '_')
+        .replace(/[^a-z0-9_]/g, '_')
+        .replace(/_+/g, '_')
+        .replace(/^_+|_+$/g, '');
+
+    return normalized || 'icon';
+}
+
 async function buildAllWeights(selectedIcons = []) {
     console.log("🚀 Starting Multi-Weight Font Build...");
     if (selectedIcons.length > 0) {
@@ -43,6 +54,7 @@ async function buildAllWeights(selectedIcons = []) {
     await fs.ensureDir(outputDir);
 
     const generatedFonts = [];
+    let fixedCodepoints = null;
 
     // 2. 웨이트별 반복 빌드
     for (const [weight, config] of Object.entries(WEIGHT_MAP)) {
@@ -91,7 +103,7 @@ async function buildAllWeights(selectedIcons = []) {
         const fixedFiles = await fs.readdir(fixedLineDir);
         for (const file of fixedFiles) {
             if (file.endsWith('.svg')) {
-                const cleanName = file.replace('.svg', '').toLowerCase(); // temp prefix는 oslllo가 안붙임, 파일명 그대로 옴
+                const cleanName = sanitizeIconId(file);
                 await fs.copy(path.join(fixedLineDir, file), path.join(tempIconsDir, `${cleanName}_line.svg`));
             }
         }
@@ -100,7 +112,7 @@ async function buildAllWeights(selectedIcons = []) {
         const fillFiles = await fs.readdir(fillSrcDir);
         for (const file of fillFiles) {
             if (file.endsWith('.svg')) {
-                const cleanName = file.replace('.svg', '').toLowerCase();
+                const cleanName = sanitizeIconId(file);
                 await fs.copy(path.join(fillSrcDir, file), path.join(tempIconsDir, `${cleanName}_fill.svg`));
             }
         }
@@ -108,7 +120,7 @@ async function buildAllWeights(selectedIcons = []) {
         // 2-5. Fantasticon 실행 (개별 웨이트용)
         // 주의: WOFF2 만 생성하여 용량 절약 (필요시 추가)
         const generateFonts = await getGenerateFonts();
-        await generateFonts({
+        const generationOptions = {
             inputDir: tempIconsDir,
             outputDir: outputDir,
             name: `MyIconFont-${config.name}`,
@@ -117,9 +129,17 @@ async function buildAllWeights(selectedIcons = []) {
             prefix: 'icon--',
             formatOptions: { json: { indent: 2 } },
             normalize: true
-        });
+        };
+        if (fixedCodepoints) {
+            generationOptions.codepoints = fixedCodepoints;
+        }
 
-        generatedFonts.push({ weight, name: config.name });
+        const result = await generateFonts(generationOptions);
+        if (!fixedCodepoints) {
+            fixedCodepoints = result.codepoints;
+        }
+
+        generatedFonts.push({ weight, name: config.name, codepoints: result.codepoints });
     }
 
     // 3. 통합 CSS 및 HTML 생성
@@ -162,37 +182,22 @@ async function generateCombinedAssets(fonts) {
 `);
     });
 
-    // 2. 클래스 매핑 (아이콘 코드는 변하지 않음. 마지막 빌드된 맵 사용)
-    // 폰트 매핑용 JSON 하나를 읽어서 사용 (모든 웨이트가 동일한 아이콘셋을 가지므로)
-    // Fantasticon은 JSON 출력을 껐으므로, 직접 glyph map을 읽거나 하나를 임시로 켰어야 함.
-    // 여기서는 가장 마지막 tempIconsDir를 읽어서 매핑을 생성합니다.
-
-    const lastWeight = fonts[fonts.length - 1]; // 900 Black
-    const mapDir = path.join(buildDir, `w_${lastWeight.weight}`, 'icons_all');
-    const icons = (await fs.readdir(mapDir)).filter(f => f.endsWith('.svg'));
-
-    // 유니코드 매핑 생성 (단순 순차 할당 또는 해시)
-    // Fantasticon 기본 동작과 맞추기 위해, 여기서는 단순하게 알파벳 순으로 정렬 후 PUA 영역 할당
-    // *주의*: 실제 운영 환경에서는 코드포인트 고정이 필요하나, 현재는 로컬 빌드용이므로 매번 새로 생성
-
-    let codepoint = 0xe000;
-    const glyphs = {};
+    // 2. Fantasticon이 실제 생성한 코드포인트를 사용하여 클래스 매핑 생성
+    const lastWeight = fonts[fonts.length - 1];
+    const codepoints = lastWeight.codepoints || {};
+    const iconEntries = Object.entries(codepoints).sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
 
     cssContent.push(`/* Icon Classes */`);
 
-    icons.sort().forEach(iconFile => {
-        const name = iconFile.replace('.svg', '');
+    iconEntries.forEach(([name, codepoint]) => {
         const currentHex = codepoint.toString(16);
-        glyphs[name] = currentHex;
 
-        cssContent.push(`.icon--${name}:before { content: "\\${currentHex}"; }`);
+        cssContent.push(`.icon--${name}::before { content: "\\${currentHex}"; }`);
         htmlDemoContent.push(`
         <div class="icon-item">
             <i class="icon icon--${name}" title="${name}" aria-label="${name}"></i>
             <span>${name}</span>
         </div>`);
-
-        codepoint++;
     });
 
     // CSS 파일 쓰기
