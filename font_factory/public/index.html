@@ -139,6 +139,10 @@
             transition: all 0.2s;
         }
 
+        .select-wide {
+            min-width: 170px;
+        }
+
         select:hover {
             border-color: var(--text-sub);
         }
@@ -221,12 +225,55 @@
             /* Ensure grid starts at top */
         }
 
+        .content-shell {
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 14px;
+        }
+
+        .filter-title {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-main);
+        }
+
+        .filter-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .master-select {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-sub);
+            user-select: none;
+        }
+
+        .master-select input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            accent-color: #18181b;
+            cursor: pointer;
+        }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 16px;
             width: 100%;
-            max-width: 1400px;
             align-content: start;
             /* Fixes rows spreading vertically */
         }
@@ -253,6 +300,91 @@
             box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
             border-color: rgba(0, 0, 0, 0.05);
             z-index: 10;
+        }
+
+        .card-checkbox {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            accent-color: #18181b;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .build-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 3px 7px;
+            border-radius: 999px;
+            background: #0f766e;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            line-height: 1;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            z-index: 2;
+        }
+
+        .build-badge[data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 8px);
+            transform: translateX(calc(-50% + var(--tooltip-shift-x, 0px))) translateY(-2px);
+            background: #111;
+            color: #fff;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            line-height: 1.2;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.15s ease, transform 0.15s ease;
+            z-index: 30;
+        }
+
+        .build-badge[data-tooltip]::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 2px);
+            transform: translateX(calc(-50% + var(--tooltip-shift-x, 0px))) translateY(-2px);
+            border: 5px solid transparent;
+            border-bottom-color: #111;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.15s ease, transform 0.15s ease;
+            z-index: 29;
+        }
+
+        .build-badge[data-tooltip]:hover::after,
+        .build-badge[data-tooltip]:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(calc(-50% + var(--tooltip-shift-x, 0px))) translateY(0);
+        }
+
+        .build-tooltip-measure {
+            position: fixed;
+            left: -9999px;
+            top: -9999px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            line-height: 1.2;
+            white-space: nowrap;
+            visibility: hidden;
+            pointer-events: none;
         }
 
         .icon-wrapper {
@@ -328,6 +460,15 @@
             font-weight: 500;
         }
 
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-sub);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 32px 0;
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -372,10 +513,6 @@
                 </div>
             </div>
 
-            <!-- Action -->
-            <button id="buildBtn" class="btn-primary">
-                <span>Build Fonts</span>
-            </button>
         </div>
     </header>
 
@@ -400,29 +537,32 @@
             background: #fff;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        .icon-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--text-main);
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
     </style>
 
     <!-- Main Grid -->
     <main class="main-content">
-        <div id="icon-grid" class="grid-container">
-            <!-- Icons injected here -->
+        <div class="content-shell">
+            <div class="filter-row">
+                <div id="categoryTitle" class="filter-title">All(전체)</div>
+                <div class="filter-controls">
+                    <label class="master-select" for="selectAllCheckbox">
+                        <input id="selectAllCheckbox" type="checkbox">
+                        <span>Select All</span>
+                    </label>
+                    <span class="label">Category</span>
+                    <div class="select-wrapper">
+                        <select id="categorySelect" class="select-wide"></select>
+                        <div class="select-arrow"></div>
+                    </div>
+                    <button id="buildBtn" class="btn-primary">
+                        <span>Build Fonts</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="icon-grid" class="grid-container">
+                <!-- Icons injected here -->
+            </div>
         </div>
     </main>
 
@@ -436,6 +576,9 @@
         const slider = document.getElementById('widthSlider');
         const valText = document.getElementById('val');
         const sizeSelect = document.getElementById('sizeSelect');
+        const categorySelect = document.getElementById('categorySelect');
+        const categoryTitle = document.getElementById('categoryTitle');
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
         const buildBtn = document.getElementById('buildBtn');
         const status = document.getElementById('status');
         const statusMsg = document.getElementById('status-msg');
@@ -449,8 +592,94 @@
             '2.00': 'Bold'
         };
 
-        let allIcons = []; // Store icon data
+        const CATEGORY_CONFIG = [
+            { key: 'actions', label: 'Actions(작업)', keywords: ['add', 'remove', 'delete', 'copy', 'edit', 'replace', 'refresh', 'recover', 'restore', 'resend', 'reset', 'merge', 'approve', 'cancel', 'initialize', 'import', 'export', 'print', 'share', 'download', 'upload'] },
+            { key: 'navigation', label: 'Navigation(탐색)', keywords: ['arrow', 'chevron', 'forward', 'back', 'exit', 'fullscreen', 'maximize', 'minimize', 'go_to', 'move_top', 'move_bottom'] },
+            { key: 'communication', label: 'Communication(커뮤니케이션)', keywords: ['message', 'comment', 'email', 'reply', 'mention', 'chat', 'notification', 'phone', 'megaphone'] },
+            { key: 'files_folders', label: 'Files/Folders(파일/폴더)', keywords: ['file', 'folder', 'document', 'drive', 'attachment', 'path', 'preview', 'no_image', 'image'] },
+            { key: 'user_org', label: 'User/Org(사용자/조직)', keywords: ['user', 'manager', 'organization', 'group'] },
+            { key: 'security', label: 'Security(보안)', keywords: ['lock', 'unlock', 'permission', 'security', 'key', 'forbidden'] },
+            { key: 'status_feedback', label: 'Status/Feedback(상태/피드백)', keywords: ['info', 'error', 'question', 'favorite', 'thumbs', 'sparkle', 'do_not_disturb'] },
+            { key: 'media', label: 'Media(미디어)', keywords: ['play', 'pause', 'stop', 'camera', 'emoji'] },
+            { key: 'layout_format', label: 'Layout/Format(레이아웃/정렬)', keywords: ['align', 'bullet_list', 'grid', 'table', 'sort', 'filter', 'card_list_view', 'flowchart'] },
+            { key: 'system_device', label: 'System/Device(시스템/디바이스)', keywords: ['device', 'cpu', 'smartphone', 'storage', 'globe', 'ip', 'settings', 'bot', 'application', 'mouse', 'location'] },
+            { key: 'time_schedule', label: 'Time/Schedule(시간/일정)', keywords: ['time', 'date', 'datetime', 'schedule', 'timer'] }
+        ];
+
+        let allIcons = []; // Store icon file names
+        let iconCatalog = []; // [{ name, built, lastBuiltAt, category }]
         let selectedIcons = new Set(); // Store selected icon filenames
+        let activeCategory = 'all';
+
+        function classifyIcon(iconName) {
+            const baseName = iconName.replace('.svg', '').toLowerCase();
+
+            for (const category of CATEGORY_CONFIG) {
+                const matched = category.keywords.some((keyword) => baseName.includes(keyword));
+                if (matched) return category.key;
+            }
+
+            return 'misc';
+        }
+
+        function getCategoryLabel(categoryKey) {
+            if (categoryKey === 'all') return 'All(전체)';
+            if (categoryKey === 'misc') return 'Misc(기타)';
+            const category = CATEGORY_CONFIG.find((c) => c.key === categoryKey);
+            return category ? category.label : categoryKey;
+        }
+
+        function getCategoryTitle(categoryKey) {
+            const label = getCategoryLabel(categoryKey);
+            return label.replace(/\(.*\)$/, '').trim();
+        }
+
+        function populateCategoryOptions() {
+            const counts = iconCatalog.reduce((acc, icon) => {
+                acc[icon.category] = (acc[icon.category] || 0) + 1;
+                return acc;
+            }, {});
+
+            const options = [{ key: 'all', count: iconCatalog.length }];
+
+            CATEGORY_CONFIG.forEach((category) => {
+                if (counts[category.key]) {
+                    options.push({ key: category.key, count: counts[category.key] });
+                }
+            });
+
+            if (counts.misc) {
+                options.push({ key: 'misc', count: counts.misc });
+            }
+
+            categorySelect.innerHTML = '';
+            options.forEach((optionData) => {
+                const option = document.createElement('option');
+                option.value = optionData.key;
+                option.text = `${getCategoryLabel(optionData.key)} (${optionData.count})`;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        function applyCategoryFilter() {
+            activeCategory = categorySelect.value || 'all';
+            categoryTitle.textContent = getCategoryTitle(activeCategory);
+            updateURL('category', activeCategory);
+
+            const visibleIcons = activeCategory === 'all'
+                ? iconCatalog
+                : iconCatalog.filter((icon) => icon.category === activeCategory);
+
+            renderIcons(visibleIcons);
+            updateSelectAllCheckbox();
+        }
+
+        function updateSelectAllCheckbox() {
+            const total = iconCatalog.length;
+            const selected = selectedIcons.size;
+            selectAllCheckbox.indeterminate = selected > 0 && selected < total;
+            selectAllCheckbox.checked = total > 0 && selected === total;
+        }
 
         // Init UI
         sizes.forEach(size => {
@@ -463,15 +692,32 @@
 
         async function loadIcons() {
             try {
-                const res = await fetch('/api/icons');
-                allIcons = await res.json(); // Store for filtering
+                const res = await fetch('/api/icons?sort=recent');
+                const iconRows = await res.json();
+                const normalizedRows = iconRows.map((item) => (typeof item === 'string'
+                    ? { name: item, built: false, lastBuiltAt: null }
+                    : item));
 
-                renderIcons(allIcons);
+                allIcons = normalizedRows.map((item) => item.name);
+                iconCatalog = normalizedRows.map((item) => ({
+                    name: item.name,
+                    built: !!item.built,
+                    lastBuiltAt: item.lastBuiltAt || null,
+                    category: classifyIcon(item.name)
+                }));
+                const validIconSet = new Set(allIcons);
+                selectedIcons = new Set([...selectedIcons].filter((name) => validIconSet.has(name)));
 
-                // Init Params
+                populateCategoryOptions();
+
                 const params = new URLSearchParams(window.location.search);
                 const initialWidth = params.get('width') || slider.value;
                 const initialSize = params.get('size') || sizeSelect.value;
+                const initialCategory = params.get('category') || 'all';
+
+                const categoryExists = Array.from(categorySelect.options).some((option) => option.value === initialCategory);
+                categorySelect.value = categoryExists ? initialCategory : 'all';
+                applyCategoryFilter();
 
                 slider.value = initialWidth;
                 sizeSelect.value = initialSize;
@@ -487,10 +733,17 @@
         function renderIcons(icons) {
             grid.innerHTML = ''; // Clear current grid
 
-            icons.forEach(icon => {
+            if (icons.length === 0) {
+                grid.innerHTML = '<div class="empty-state">해당 카테고리에 표시할 아이콘이 없습니다.</div>';
+                return;
+            }
+
+            icons.forEach((iconData) => {
+                const icon = iconData.name;
                 const card = document.createElement('div');
                 card.className = 'icon-card';
                 card.dataset.name = icon.toLowerCase();
+                if (selectedIcons.has(icon)) card.classList.add('selected');
 
                 // Helper to toggle selection
                 card.onclick = () => toggleSelection(card, icon);
@@ -498,12 +751,27 @@
                 fetch(`/line-icons/${encodeURIComponent(icon)}`)
                     .then(r => r.text())
                     .then(svgText => {
+                        const builtTooltip = iconData.lastBuiltAt
+                            ? `Last built: ${new Date(iconData.lastBuiltAt).toLocaleString()}`
+                            : 'Built';
+                        const builtBadge = iconData.built
+                            ? `<span class="build-badge" data-tooltip="${builtTooltip}" aria-label="${builtTooltip}">Built</span>`
+                            : '';
                         card.innerHTML = `
+                            <input class="card-checkbox" type="checkbox" ${selectedIcons.has(icon) ? 'checked' : ''} aria-label="${icon} 선택">
+                            ${builtBadge}
                             <div class="icon-wrapper">${svgText}</div>
                             <div class="icon-meta">
                                 <span class="icon-name">${icon.replace('.svg', '').replace(/[-_]/g, ' ')}</span>
                             </div>
                         `;
+                        const checkbox = card.querySelector('.card-checkbox');
+                        checkbox.addEventListener('click', (event) => event.stopPropagation());
+                        checkbox.addEventListener('change', (event) => {
+                            toggleSelection(card, icon, event.target.checked);
+                        });
+                        const badge = card.querySelector('.build-badge[data-tooltip]');
+                        if (badge) bindBuiltBadgeTooltip(badge);
                         // Re-apply current styles
                         updateStroke(slider.value);
                         updateSize(sizeSelect.value);
@@ -513,15 +781,21 @@
             });
         }
 
-        function toggleSelection(card, iconName) {
-            if (selectedIcons.has(iconName)) {
-                selectedIcons.delete(iconName);
-                card.classList.remove('selected');
-            } else {
+        function toggleSelection(card, iconName, forcedChecked = null) {
+            const shouldSelect = forcedChecked === null ? !selectedIcons.has(iconName) : forcedChecked;
+
+            if (shouldSelect) {
                 selectedIcons.add(iconName);
                 card.classList.add('selected');
+            } else {
+                selectedIcons.delete(iconName);
+                card.classList.remove('selected');
             }
+
+            const checkbox = card.querySelector('.card-checkbox');
+            if (checkbox) checkbox.checked = shouldSelect;
             updateBuildButton();
+            updateSelectAllCheckbox();
         }
 
         function updateBuildButton() {
@@ -530,6 +804,46 @@
             } else {
                 buildBtn.querySelector('span').innerText = `Build Fonts`;
             }
+        }
+
+        function computeBuiltBadgeTooltipShift(badge) {
+            const tooltipText = badge.dataset.tooltip;
+            if (!tooltipText) return;
+
+            const probe = document.createElement('span');
+            probe.className = 'build-tooltip-measure';
+            probe.textContent = tooltipText;
+            document.body.appendChild(probe);
+
+            const tooltipWidth = probe.getBoundingClientRect().width;
+            probe.remove();
+
+            const rect = badge.getBoundingClientRect();
+            const viewportPadding = 8;
+            const centeredLeft = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+            const centeredRight = centeredLeft + tooltipWidth;
+
+            let shiftX = 0;
+            if (centeredLeft < viewportPadding) {
+                shiftX = viewportPadding - centeredLeft;
+            } else if (centeredRight > window.innerWidth - viewportPadding) {
+                shiftX = (window.innerWidth - viewportPadding) - centeredRight;
+            }
+
+            badge.style.setProperty('--tooltip-shift-x', `${shiftX}px`);
+        }
+
+        function bindBuiltBadgeTooltip(badge) {
+            if (badge.dataset.tooltipBound === '1') return;
+            badge.dataset.tooltipBound = '1';
+            badge.addEventListener('mouseenter', () => computeBuiltBadgeTooltipShift(badge));
+            badge.addEventListener('focus', () => computeBuiltBadgeTooltipShift(badge));
+        }
+
+        function refreshBuiltBadgeTooltips() {
+            document.querySelectorAll('.build-badge[data-tooltip]').forEach((badge) => {
+                computeBuiltBadgeTooltipShift(badge);
+            });
         }
 
         function updateURL(key, value) {
@@ -578,6 +892,17 @@
 
         slider.addEventListener('input', (e) => updateStroke(e.target.value));
         sizeSelect.addEventListener('change', (e) => updateSize(e.target.value));
+        categorySelect.addEventListener('change', applyCategoryFilter);
+        window.addEventListener('resize', refreshBuiltBadgeTooltips);
+        selectAllCheckbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                selectedIcons = new Set(iconCatalog.map((icon) => icon.name));
+            } else {
+                selectedIcons.clear();
+            }
+            applyCategoryFilter();
+            updateBuildButton();
+        });
 
         // Toast Helper
         let toastTimeout;
@@ -598,7 +923,7 @@
 
             if (buildBtn.disabled) return;
 
-            const count = selectedIcons.size > 0 ? selectedIcons.size : allIcons.length;
+            const count = selectedIcons.size > 0 ? selectedIcons.size : iconCatalog.length;
             const targetName = selectedIcons.size > 0 ? "선택한 아이콘" : "전체 아이콘";
 
             buildBtn.disabled = true;
@@ -620,6 +945,8 @@
 
                 if (result.success) {
                     showToast('빌드 완료! dist_font_custom 폴더를 확인하세요.', false);
+                    await loadIcons();
+                    updateBuildButton();
                 } else {
                     throw new Error(result.error);
                 }

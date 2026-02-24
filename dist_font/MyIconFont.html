@@ -49,13 +49,14 @@
         }
 
         .preview {
+            position: relative;
             width: 120px;
             display: inline-block;
             margin: 12px;
             background: #fff;
             border: 1px solid #efefef;
             border-radius: 12px;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -64,6 +65,50 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
             border-color: #ddd;
+        }
+
+        .preview::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 8px);
+            transform: translateX(-50%) translateY(4px);
+            background: #111;
+            color: #fff;
+            font-size: 11px;
+            line-height: 1.2;
+            padding: 6px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+            z-index: 20;
+        }
+
+        .preview::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 2px);
+            transform: translateX(-50%) translateY(4px);
+            border: 6px solid transparent;
+            border-top-color: #111;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+            z-index: 19;
+        }
+
+        .preview:hover::after,
+        .preview:hover::before,
+        .preview:focus-within::after,
+        .preview:focus-within::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
 
         .preview .inner {
@@ -243,6 +288,17 @@
 
         // 아이콘 클릭 이벤트 리스너 (이벤트 위임 사용)
         document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.preview').forEach((preview) => {
+                const icon = preview.querySelector('.inner i');
+                const label = preview.querySelector('.label');
+                if (!icon || !label) return;
+
+                const iconName = label.innerText.trim();
+                preview.setAttribute('data-tooltip', iconName);
+                icon.removeAttribute('title');
+                icon.setAttribute('aria-label', iconName);
+            });
+
             document.body.addEventListener('click', (e) => {
                 const preview = e.target.closest('.preview');
                 if (preview) {

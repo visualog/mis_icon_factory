@@ -177,7 +177,7 @@ async function generateCombinedAssets(fonts) {
         cssContent.push(`.icon--${name}:before { content: "\\${currentHex}"; }`);
         htmlDemoContent.push(`
         <div class="icon-item">
-            <i class="icon icon--${name}"></i>
+            <i class="icon icon--${name}" title="${name}" aria-label="${name}"></i>
             <span>${name}</span>
         </div>`);
 
