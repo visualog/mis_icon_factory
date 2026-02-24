@@ -1,12 +1,15 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs-extra');
+const { getOutputDir, getProjectRoot } = require('./runtime-paths');
 // build-engine is lazy loaded in the route handler
 
 const app = express();
 const PORT = 3000;
-const HISTORY_FILE = path.join(process.cwd(), 'dist_font_custom', 'build-history.json');
-const OUTPUT_CSS_FILE = path.join(process.cwd(), 'dist_font_custom', 'my-icon-font.css');
+const PROJECT_ROOT = getProjectRoot();
+const OUTPUT_DIR = getOutputDir();
+const HISTORY_FILE = path.join(OUTPUT_DIR, 'build-history.json');
+const OUTPUT_CSS_FILE = path.join(OUTPUT_DIR, 'my-icon-font.css');
 
 async function readBuildHistory() {
     try {
@@ -50,7 +53,7 @@ async function inferBuiltIconsFromCss() {
         const inferredAt = stat.mtime.toISOString();
         const iconMap = {};
 
-        const lineMatches = css.matchAll(/\.icon-([a-z0-9_-]+)_line:before/g);
+        const lineMatches = css.matchAll(/\.icon--([a-z0-9_-]+)_line::?before/g);
         for (const match of lineMatches) {
             const iconName = `${match[1]}.svg`;
             iconMap[iconName] = {
@@ -67,7 +70,7 @@ async function inferBuiltIconsFromCss() {
 
 async function getBuildArtifactMeta() {
     try {
-        const distDir = path.join(process.cwd(), 'dist_font_custom');
+        const distDir = OUTPUT_DIR;
         const exists = await fs.pathExists(distDir);
         if (!exists) return null;
 
@@ -89,14 +92,16 @@ async function getBuildArtifactMeta() {
 }
 
 app.use(express.json());
-app.use(express.static(path.join(process.cwd(), 'font_factory/public')));
+app.use(express.static(path.join(PROJECT_ROOT, 'font_factory/public')));
 // 원본 아이콘 서빙 (미리보기용)
-app.use('/line-icons', express.static(path.join(process.cwd(), 'line')));
+app.use('/line-icons', express.static(path.join(PROJECT_ROOT, 'line')));
+// 빌드된 폰트/스타일 서빙 (Vercel에서는 /tmp를 사용)
+app.use('/generated-fonts', express.static(OUTPUT_DIR));
 
 // 아이콘 목록 가져오기 API
 app.get('/api/icons', async (req, res) => {
     try {
-        const lineDir = path.join(process.cwd(), 'line');
+        const lineDir = path.join(PROJECT_ROOT, 'line');
         const files = await fs.readdir(lineDir);
         const sort = req.query.sort || 'name';
         const history = await readBuildHistory();
@@ -143,7 +148,7 @@ app.post('/api/build', async (req, res) => {
         await buildAllWeights(selectedIcons);
         let builtIcons = Array.isArray(selectedIcons) ? selectedIcons : [];
         if (builtIcons.length === 0) {
-            const lineDir = path.join(process.cwd(), 'line');
+            const lineDir = path.join(PROJECT_ROOT, 'line');
             const files = await fs.readdir(lineDir);
             builtIcons = files.filter((f) => f.endsWith('.svg'));
         }

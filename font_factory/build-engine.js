@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const SVGFixer = require('oslllo-svg-fixer');
+const { getBuildTempDir, getOutputDir, getProjectRoot } = require('./runtime-paths');
 
 let cachedGenerateFonts = null;
 
@@ -22,11 +23,11 @@ const WEIGHT_MAP = {
     700: { name: 'Bold', width: 2.0 }
 };
 
-const rootDir = process.cwd();
-const buildDir = path.join(rootDir, 'font_factory/build_temp'); // font_factory 내부에 생성
+const rootDir = getProjectRoot();
+const buildDir = getBuildTempDir();
 const lineSrcDir = path.join(rootDir, 'line');
 const fillSrcDir = path.join(rootDir, 'fill');
-const outputDir = path.join(rootDir, 'dist_font_custom');
+const outputDir = getOutputDir();
 
 function sanitizeIconId(fileName) {
     const base = fileName.replace(/\.svg$/i, '').toLowerCase().trim();
