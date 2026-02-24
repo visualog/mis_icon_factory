@@ -1,7 +1,17 @@
 const fs = require('fs-extra');
 const path = require('path');
 const SVGFixer = require('oslllo-svg-fixer');
-const { generateFonts } = require('fantasticon');
+
+let cachedGenerateFonts = null;
+
+async function getGenerateFonts() {
+    if (!cachedGenerateFonts) {
+        // `fantasticon`의 CJS 엔트리는 Node 22에서 ESM 의존성과 충돌할 수 있으므로 dynamic import 사용
+        const fantasticon = await import('fantasticon');
+        cachedGenerateFonts = fantasticon.generateFonts;
+    }
+    return cachedGenerateFonts;
+}
 
 // 사용자 지정 웨이트 매핑 (뭉개짐 방지를 위해 최대 2.0px로 제한)
 const WEIGHT_MAP = {
@@ -97,6 +107,7 @@ async function buildAllWeights(selectedIcons = []) {
 
         // 2-5. Fantasticon 실행 (개별 웨이트용)
         // 주의: WOFF2 만 생성하여 용량 절약 (필요시 추가)
+        const generateFonts = await getGenerateFonts();
         await generateFonts({
             inputDir: tempIconsDir,
             outputDir: outputDir,
