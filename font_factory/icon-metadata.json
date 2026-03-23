@@ -1,0 +1,4920 @@
+{
+  "$schema": "./icon-metadata.schema.json",
+  "version": 1,
+  "icons": {
+    "a_apple_line": {
+      "displayName": "A Apple Line",
+      "category": "misc",
+      "keywords": [
+        "a",
+        "apple",
+        "fruit",
+        "a apple line"
+      ],
+      "synonyms": [
+        "a apple line",
+        "a apple",
+        "a_apple",
+        "a",
+        "사과",
+        "apple"
+      ]
+    },
+    "a_banana_line": {
+      "displayName": "A Banana Line",
+      "category": "misc",
+      "keywords": [
+        "a",
+        "banana",
+        "fruit",
+        "a banana line"
+      ],
+      "synonyms": [
+        "a banana line",
+        "a banana",
+        "a_banana",
+        "a",
+        "바나나",
+        "banana"
+      ]
+    },
+    "a_bird_line": {
+      "displayName": "A Bird Line",
+      "category": "misc",
+      "keywords": [
+        "a",
+        "bird",
+        "animal",
+        "a bird line"
+      ],
+      "synonyms": [
+        "a bird line",
+        "a bird",
+        "a_bird",
+        "a",
+        "새",
+        "bird"
+      ]
+    },
+    "accessibility_line": {
+      "displayName": "Accessibility Line",
+      "category": "misc",
+      "keywords": [
+        "accessibility",
+        "accessibility line"
+      ],
+      "synonyms": [
+        "accessibility line",
+        "accessibility"
+      ]
+    },
+    "add_circle_line": {
+      "displayName": "Add Circle Line",
+      "category": "actions",
+      "keywords": [
+        "add",
+        "create",
+        "plus",
+        "circle",
+        "round",
+        "add circle line"
+      ],
+      "synonyms": [
+        "add circle line",
+        "add circle",
+        "add_circle",
+        "추가",
+        "생성",
+        "plus",
+        "원형",
+        "circle"
+      ]
+    },
+    "add_file_line": {
+      "displayName": "Add File Line",
+      "category": "actions",
+      "keywords": [
+        "add",
+        "create",
+        "plus",
+        "file",
+        "document",
+        "add file line"
+      ],
+      "synonyms": [
+        "add file line",
+        "add file",
+        "add_file",
+        "추가",
+        "생성",
+        "plus",
+        "파일",
+        "문서",
+        "file"
+      ]
+    },
+    "add_line": {
+      "displayName": "Add Line",
+      "category": "actions",
+      "keywords": [
+        "add",
+        "create",
+        "plus",
+        "add line"
+      ],
+      "synonyms": [
+        "add line",
+        "add",
+        "추가",
+        "생성",
+        "plus"
+      ]
+    },
+    "add_policy_line": {
+      "displayName": "Add Policy Line",
+      "category": "actions",
+      "keywords": [
+        "add",
+        "create",
+        "plus",
+        "policy",
+        "rule",
+        "add policy line"
+      ],
+      "synonyms": [
+        "add policy line",
+        "add policy",
+        "add_policy",
+        "추가",
+        "생성",
+        "plus",
+        "정책",
+        "규칙",
+        "policy"
+      ]
+    },
+    "add_user_line": {
+      "displayName": "Add User Line",
+      "category": "actions",
+      "keywords": [
+        "add",
+        "create",
+        "plus",
+        "user",
+        "account",
+        "person",
+        "add user line"
+      ],
+      "synonyms": [
+        "add user line",
+        "add user",
+        "add_user",
+        "추가",
+        "생성",
+        "plus",
+        "사용자",
+        "유저",
+        "계정",
+        "user"
+      ]
+    },
+    "ai_fill": {
+      "displayName": "Ai Fill",
+      "category": "misc",
+      "keywords": [
+        "ai",
+        "ai fill"
+      ],
+      "synonyms": [
+        "ai fill",
+        "ai"
+      ]
+    },
+    "alert_fill": {
+      "displayName": "Alert Fill",
+      "category": "status",
+      "keywords": [
+        "alert",
+        "warning",
+        "notice",
+        "alert fill"
+      ],
+      "synonyms": [
+        "alert fill",
+        "alert",
+        "경고",
+        "알림",
+        "주의"
+      ]
+    },
+    "alert_octagon_fill": {
+      "displayName": "Alert Octagon Fill",
+      "category": "status",
+      "keywords": [
+        "alert",
+        "warning",
+        "notice",
+        "octagon",
+        "alert octagon fill"
+      ],
+      "synonyms": [
+        "alert octagon fill",
+        "alert octagon",
+        "alert_octagon",
+        "경고",
+        "알림",
+        "주의",
+        "alert",
+        "octagon"
+      ]
+    },
+    "align_center_line": {
+      "displayName": "Align Center Line",
+      "category": "layout",
+      "keywords": [
+        "align",
+        "layout",
+        "center",
+        "align center line"
+      ],
+      "synonyms": [
+        "align center line",
+        "align center",
+        "align_center",
+        "정렬",
+        "align",
+        "layout",
+        "center"
+      ]
+    },
+    "align_justify_line": {
+      "displayName": "Align Justify Line",
+      "category": "layout",
+      "keywords": [
+        "align",
+        "layout",
+        "justify",
+        "align justify line"
+      ],
+      "synonyms": [
+        "align justify line",
+        "align justify",
+        "align_justify",
+        "정렬",
+        "align",
+        "layout",
+        "양쪽 정렬",
+        "justify"
+      ]
+    },
+    "align_left_line": {
+      "displayName": "Align Left Line",
+      "category": "layout",
+      "keywords": [
+        "align",
+        "layout",
+        "left",
+        "previous",
+        "align left line"
+      ],
+      "synonyms": [
+        "align left line",
+        "align left",
+        "align_left",
+        "정렬",
+        "align",
+        "layout",
+        "왼쪽",
+        "left"
+      ]
+    },
+    "align_right_line": {
+      "displayName": "Align Right Line",
+      "category": "layout",
+      "keywords": [
+        "align",
+        "layout",
+        "right",
+        "next",
+        "align right line"
+      ],
+      "synonyms": [
+        "align right line",
+        "align right",
+        "align_right",
+        "정렬",
+        "align",
+        "layout",
+        "오른쪽",
+        "right"
+      ]
+    },
+    "application_line": {
+      "displayName": "Application Line",
+      "category": "device",
+      "keywords": [
+        "application",
+        "application line"
+      ],
+      "synonyms": [
+        "application line",
+        "application"
+      ]
+    },
+    "approval_cancel_fill": {
+      "displayName": "Approval Cancel Fill",
+      "category": "actions",
+      "keywords": [
+        "approval",
+        "approve",
+        "confirm",
+        "cancel",
+        "close",
+        "remove",
+        "approval cancel fill"
+      ],
+      "synonyms": [
+        "approval cancel fill",
+        "approval cancel",
+        "approval_cancel",
+        "승인",
+        "결재",
+        "approval",
+        "취소",
+        "닫기",
+        "cancel"
+      ]
+    },
+    "approval_fill": {
+      "displayName": "Approval Fill",
+      "category": "misc",
+      "keywords": [
+        "approval",
+        "approve",
+        "confirm",
+        "approval fill"
+      ],
+      "synonyms": [
+        "approval fill",
+        "approval",
+        "승인",
+        "결재"
+      ]
+    },
+    "approve_circle_line": {
+      "displayName": "Approve Circle Line",
+      "category": "actions",
+      "keywords": [
+        "approve",
+        "confirm",
+        "accept",
+        "circle",
+        "round",
+        "approve circle line"
+      ],
+      "synonyms": [
+        "approve circle line",
+        "approve circle",
+        "approve_circle",
+        "승인",
+        "확인",
+        "accept",
+        "원형",
+        "circle"
+      ]
+    },
+    "approve_line": {
+      "displayName": "Approve Line",
+      "category": "actions",
+      "keywords": [
+        "approve",
+        "confirm",
+        "accept",
+        "approve line"
+      ],
+      "synonyms": [
+        "approve line",
+        "approve",
+        "승인",
+        "확인",
+        "accept"
+      ]
+    },
+    "archive_line": {
+      "displayName": "Archive Line",
+      "category": "files",
+      "keywords": [
+        "archive",
+        "store",
+        "archive line"
+      ],
+      "synonyms": [
+        "archive line",
+        "archive",
+        "보관",
+        "아카이브"
+      ]
+    },
+    "arrow_down_line": {
+      "displayName": "Arrow Down Line",
+      "category": "navigation",
+      "keywords": [
+        "arrow",
+        "direction",
+        "down",
+        "lower",
+        "arrow down line"
+      ],
+      "synonyms": [
+        "arrow down line",
+        "arrow down",
+        "arrow_down",
+        "화살표",
+        "방향",
+        "arrow",
+        "아래",
+        "down"
+      ]
+    },
+    "arrow_left_line": {
+      "displayName": "Arrow Left Line",
+      "category": "navigation",
+      "keywords": [
+        "arrow",
+        "direction",
+        "left",
+        "previous",
+        "arrow left line"
+      ],
+      "synonyms": [
+        "arrow left line",
+        "arrow left",
+        "arrow_left",
+        "화살표",
+        "방향",
+        "arrow",
+        "왼쪽",
+        "left"
+      ]
+    },
+    "arrow_right_line": {
+      "displayName": "Arrow Right Line",
+      "category": "navigation",
+      "keywords": [
+        "arrow",
+        "direction",
+        "right",
+        "next",
+        "arrow right line"
+      ],
+      "synonyms": [
+        "arrow right line",
+        "arrow right",
+        "arrow_right",
+        "화살표",
+        "방향",
+        "arrow",
+        "오른쪽",
+        "right"
+      ]
+    },
+    "arrow_up_line": {
+      "displayName": "Arrow Up Line",
+      "category": "navigation",
+      "keywords": [
+        "arrow",
+        "direction",
+        "up",
+        "upper",
+        "arrow up line"
+      ],
+      "synonyms": [
+        "arrow up line",
+        "arrow up",
+        "arrow_up",
+        "화살표",
+        "방향",
+        "arrow",
+        "위",
+        "up"
+      ]
+    },
+    "arrow_up_right_fill": {
+      "displayName": "Arrow Up Right Fill",
+      "category": "navigation",
+      "keywords": [
+        "arrow",
+        "direction",
+        "up",
+        "upper",
+        "right",
+        "next",
+        "arrow up right fill"
+      ],
+      "synonyms": [
+        "arrow up right fill",
+        "arrow up right",
+        "arrow_up_right",
+        "화살표",
+        "방향",
+        "arrow",
+        "위",
+        "up",
+        "오른쪽",
+        "right"
+      ]
+    },
+    "attachment_line": {
+      "displayName": "Attachment Line",
+      "category": "files",
+      "keywords": [
+        "attachment",
+        "file",
+        "attachment line"
+      ],
+      "synonyms": [
+        "attachment line",
+        "attachment",
+        "첨부",
+        "첨부파일"
+      ]
+    },
+    "auto_delete_timer_line": {
+      "displayName": "Auto Delete Timer Line",
+      "category": "actions",
+      "keywords": [
+        "auto",
+        "automatic",
+        "delete",
+        "remove",
+        "trash",
+        "timer",
+        "countdown",
+        "auto delete timer line"
+      ],
+      "synonyms": [
+        "auto delete timer line",
+        "auto delete timer",
+        "auto_delete_timer",
+        "자동",
+        "auto",
+        "삭제",
+        "지우기",
+        "delete",
+        "타이머",
+        "timer"
+      ]
+    },
+    "backup_fill": {
+      "displayName": "Backup Fill",
+      "category": "misc",
+      "keywords": [
+        "backup",
+        "restore",
+        "safety",
+        "backup fill"
+      ],
+      "synonyms": [
+        "backup fill",
+        "backup",
+        "백업",
+        "복구"
+      ]
+    },
+    "backup_line": {
+      "displayName": "Backup Line",
+      "category": "misc",
+      "keywords": [
+        "backup",
+        "restore",
+        "safety",
+        "backup line"
+      ],
+      "synonyms": [
+        "backup line",
+        "backup",
+        "백업",
+        "복구"
+      ]
+    },
+    "book_fill": {
+      "displayName": "Book Fill",
+      "category": "files",
+      "keywords": [
+        "book",
+        "manual",
+        "guide",
+        "book fill"
+      ],
+      "synonyms": [
+        "book fill",
+        "book",
+        "책",
+        "매뉴얼"
+      ]
+    },
+    "bot_fill": {
+      "displayName": "Bot Fill",
+      "category": "device",
+      "keywords": [
+        "bot",
+        "automation",
+        "robot",
+        "bot fill"
+      ],
+      "synonyms": [
+        "bot fill",
+        "bot",
+        "봇",
+        "로봇"
+      ]
+    },
+    "bot_line": {
+      "displayName": "Bot Line",
+      "category": "device",
+      "keywords": [
+        "bot",
+        "automation",
+        "robot",
+        "bot line"
+      ],
+      "synonyms": [
+        "bot line",
+        "bot",
+        "봇",
+        "로봇"
+      ]
+    },
+    "briefcase_fill": {
+      "displayName": "Briefcase Fill",
+      "category": "misc",
+      "keywords": [
+        "briefcase",
+        "business",
+        "work",
+        "briefcase fill"
+      ],
+      "synonyms": [
+        "briefcase fill",
+        "briefcase",
+        "서류가방",
+        "업무"
+      ]
+    },
+    "bug_line": {
+      "displayName": "Bug Line",
+      "category": "status",
+      "keywords": [
+        "bug",
+        "issue",
+        "error",
+        "bug line"
+      ],
+      "synonyms": [
+        "bug line",
+        "bug",
+        "버그",
+        "문제"
+      ]
+    },
+    "bullet_list_line": {
+      "displayName": "Bullet List Line",
+      "category": "layout",
+      "keywords": [
+        "bullet",
+        "list",
+        "items",
+        "bullet list line"
+      ],
+      "synonyms": [
+        "bullet list line",
+        "bullet list",
+        "bullet_list",
+        "불릿",
+        "목록",
+        "list",
+        "리스트"
+      ]
+    },
+    "calculator_line": {
+      "displayName": "Calculator Line",
+      "category": "misc",
+      "keywords": [
+        "calculator",
+        "calculator line"
+      ],
+      "synonyms": [
+        "calculator line",
+        "calculator"
+      ]
+    },
+    "calendar_fill": {
+      "displayName": "Calendar Fill",
+      "category": "misc",
+      "keywords": [
+        "calendar",
+        "date",
+        "schedule",
+        "calendar fill"
+      ],
+      "synonyms": [
+        "calendar fill",
+        "calendar",
+        "캘린더",
+        "일정"
+      ]
+    },
+    "camera_fill": {
+      "displayName": "Camera Fill",
+      "category": "misc",
+      "keywords": [
+        "camera",
+        "photo",
+        "camera fill"
+      ],
+      "synonyms": [
+        "camera fill",
+        "camera",
+        "카메라",
+        "사진"
+      ]
+    },
+    "camera_line": {
+      "displayName": "Camera Line",
+      "category": "misc",
+      "keywords": [
+        "camera",
+        "photo",
+        "camera line"
+      ],
+      "synonyms": [
+        "camera line",
+        "camera",
+        "카메라",
+        "사진"
+      ]
+    },
+    "camera_off_line": {
+      "displayName": "Camera Off Line",
+      "category": "misc",
+      "keywords": [
+        "camera",
+        "photo",
+        "off",
+        "disabled",
+        "camera off line"
+      ],
+      "synonyms": [
+        "camera off line",
+        "camera off",
+        "camera_off",
+        "카메라",
+        "사진",
+        "camera",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "cancel_circle_line": {
+      "displayName": "Cancel Circle Line",
+      "category": "actions",
+      "keywords": [
+        "cancel",
+        "close",
+        "remove",
+        "circle",
+        "round",
+        "cancel circle line"
+      ],
+      "synonyms": [
+        "cancel circle line",
+        "cancel circle",
+        "cancel_circle",
+        "취소",
+        "닫기",
+        "cancel",
+        "원형",
+        "circle"
+      ]
+    },
+    "card_list_view_line": {
+      "displayName": "Card List View Line",
+      "category": "layout",
+      "keywords": [
+        "card",
+        "panel",
+        "list",
+        "items",
+        "view",
+        "layout",
+        "display",
+        "card list view line"
+      ],
+      "synonyms": [
+        "card list view line",
+        "card list view",
+        "card_list_view",
+        "카드",
+        "card",
+        "목록",
+        "리스트",
+        "list",
+        "보기",
+        "뷰",
+        "view"
+      ]
+    },
+    "change_order_line": {
+      "displayName": "Change Order Line",
+      "category": "misc",
+      "keywords": [
+        "change",
+        "order",
+        "sort",
+        "change order line"
+      ],
+      "synonyms": [
+        "change order line",
+        "change order",
+        "change_order",
+        "change",
+        "순서",
+        "정렬",
+        "order"
+      ]
+    },
+    "change_tone_line": {
+      "displayName": "Change Tone Line",
+      "category": "misc",
+      "keywords": [
+        "change",
+        "tone",
+        "style",
+        "change tone line"
+      ],
+      "synonyms": [
+        "change tone line",
+        "change tone",
+        "change_tone",
+        "change",
+        "톤",
+        "분위기",
+        "tone"
+      ]
+    },
+    "chat_alert_fill": {
+      "displayName": "Chat Alert Fill",
+      "category": "communication",
+      "keywords": [
+        "chat",
+        "conversation",
+        "message",
+        "alert",
+        "warning",
+        "notice",
+        "chat alert fill"
+      ],
+      "synonyms": [
+        "chat alert fill",
+        "chat alert",
+        "chat_alert",
+        "채팅",
+        "대화",
+        "chat",
+        "경고",
+        "알림",
+        "주의",
+        "alert"
+      ]
+    },
+    "chat_fill": {
+      "displayName": "Chat Fill",
+      "category": "communication",
+      "keywords": [
+        "chat",
+        "conversation",
+        "message",
+        "chat fill"
+      ],
+      "synonyms": [
+        "chat fill",
+        "chat",
+        "채팅",
+        "대화"
+      ]
+    },
+    "check_circle_fill": {
+      "displayName": "Check Circle Fill",
+      "category": "misc",
+      "keywords": [
+        "check",
+        "complete",
+        "verify",
+        "circle",
+        "round",
+        "check circle fill"
+      ],
+      "synonyms": [
+        "check circle fill",
+        "check circle",
+        "check_circle",
+        "체크",
+        "확인",
+        "완료",
+        "check",
+        "원형",
+        "circle"
+      ]
+    },
+    "chevron_down_fill": {
+      "displayName": "Chevron Down Fill",
+      "category": "navigation",
+      "keywords": [
+        "chevron",
+        "direction",
+        "down",
+        "lower",
+        "chevron down fill"
+      ],
+      "synonyms": [
+        "chevron down fill",
+        "chevron down",
+        "chevron_down",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "아래",
+        "down"
+      ]
+    },
+    "chevron_down_line": {
+      "displayName": "Chevron Down Line",
+      "category": "navigation",
+      "keywords": [
+        "chevron",
+        "direction",
+        "down",
+        "lower",
+        "chevron down line"
+      ],
+      "synonyms": [
+        "chevron down line",
+        "chevron down",
+        "chevron_down",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "아래",
+        "down"
+      ]
+    },
+    "chevron_left_line": {
+      "displayName": "Chevron Left Line",
+      "category": "navigation",
+      "keywords": [
+        "chevron",
+        "direction",
+        "left",
+        "previous",
+        "chevron left line"
+      ],
+      "synonyms": [
+        "chevron left line",
+        "chevron left",
+        "chevron_left",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "왼쪽",
+        "left"
+      ]
+    },
+    "chevron_right_line": {
+      "displayName": "Chevron Right Line",
+      "category": "navigation",
+      "keywords": [
+        "chevron",
+        "direction",
+        "right",
+        "next",
+        "chevron right line"
+      ],
+      "synonyms": [
+        "chevron right line",
+        "chevron right",
+        "chevron_right",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "오른쪽",
+        "right"
+      ]
+    },
+    "chevron_up_fill": {
+      "displayName": "Chevron Up Fill",
+      "category": "navigation",
+      "keywords": [
+        "chevron",
+        "direction",
+        "up",
+        "upper",
+        "chevron up fill"
+      ],
+      "synonyms": [
+        "chevron up fill",
+        "chevron up",
+        "chevron_up",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "위",
+        "up"
+      ]
+    },
+    "chevron_up_line": {
+      "displayName": "Chevron Up Line",
+      "category": "navigation",
+      "keywords": [
+        "chevron",
+        "direction",
+        "up",
+        "upper",
+        "chevron up line"
+      ],
+      "synonyms": [
+        "chevron up line",
+        "chevron up",
+        "chevron_up",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "위",
+        "up"
+      ]
+    },
+    "circle_lock_line": {
+      "displayName": "Circle Lock Line",
+      "category": "security",
+      "keywords": [
+        "circle",
+        "round",
+        "lock",
+        "security",
+        "private",
+        "circle lock line"
+      ],
+      "synonyms": [
+        "circle lock line",
+        "circle lock",
+        "circle_lock",
+        "원형",
+        "circle",
+        "잠금",
+        "보안",
+        "lock"
+      ]
+    },
+    "clipboard_blank_fill": {
+      "displayName": "Clipboard Blank Fill",
+      "category": "files",
+      "keywords": [
+        "clipboard",
+        "paste",
+        "copy",
+        "blank",
+        "clipboard blank fill"
+      ],
+      "synonyms": [
+        "clipboard blank fill",
+        "clipboard blank",
+        "clipboard_blank",
+        "클립보드",
+        "붙여넣기",
+        "clipboard",
+        "blank"
+      ]
+    },
+    "clipboard_check_fill": {
+      "displayName": "Clipboard Check Fill",
+      "category": "files",
+      "keywords": [
+        "clipboard",
+        "paste",
+        "copy",
+        "check",
+        "complete",
+        "verify",
+        "clipboard check fill"
+      ],
+      "synonyms": [
+        "clipboard check fill",
+        "clipboard check",
+        "clipboard_check",
+        "클립보드",
+        "붙여넣기",
+        "clipboard",
+        "체크",
+        "확인",
+        "완료",
+        "check"
+      ]
+    },
+    "clipboard_play_fill": {
+      "displayName": "Clipboard Play Fill",
+      "category": "files",
+      "keywords": [
+        "clipboard",
+        "paste",
+        "copy",
+        "play",
+        "start",
+        "clipboard play fill"
+      ],
+      "synonyms": [
+        "clipboard play fill",
+        "clipboard play",
+        "clipboard_play",
+        "클립보드",
+        "붙여넣기",
+        "clipboard",
+        "재생",
+        "시작",
+        "play"
+      ]
+    },
+    "clipboard_plus_fill": {
+      "displayName": "Clipboard Plus Fill",
+      "category": "files",
+      "keywords": [
+        "clipboard",
+        "paste",
+        "copy",
+        "plus",
+        "add",
+        "clipboard plus fill"
+      ],
+      "synonyms": [
+        "clipboard plus fill",
+        "clipboard plus",
+        "clipboard_plus",
+        "클립보드",
+        "붙여넣기",
+        "clipboard",
+        "플러스",
+        "추가",
+        "plus"
+      ]
+    },
+    "close_fill": {
+      "displayName": "Close Fill",
+      "category": "misc",
+      "keywords": [
+        "close",
+        "dismiss",
+        "close fill"
+      ],
+      "synonyms": [
+        "close fill",
+        "close",
+        "닫기",
+        "종료"
+      ]
+    },
+    "close_line": {
+      "displayName": "Close Line",
+      "category": "misc",
+      "keywords": [
+        "close",
+        "dismiss",
+        "close line"
+      ],
+      "synonyms": [
+        "close line",
+        "close",
+        "닫기",
+        "종료"
+      ]
+    },
+    "close_sm_line": {
+      "displayName": "Close SM Line",
+      "category": "misc",
+      "keywords": [
+        "close",
+        "dismiss",
+        "small",
+        "sm",
+        "close sm line"
+      ],
+      "synonyms": [
+        "close sm line",
+        "close sm",
+        "close_sm",
+        "닫기",
+        "종료",
+        "close",
+        "작은",
+        "small",
+        "sm"
+      ]
+    },
+    "collapse_spacing_line": {
+      "displayName": "Collapse Spacing Line",
+      "category": "navigation",
+      "keywords": [
+        "collapse",
+        "compress",
+        "spacing",
+        "gap",
+        "layout",
+        "collapse spacing line"
+      ],
+      "synonyms": [
+        "collapse spacing line",
+        "collapse spacing",
+        "collapse_spacing",
+        "접기",
+        "축소",
+        "collapse",
+        "간격",
+        "spacing"
+      ]
+    },
+    "comment_line": {
+      "displayName": "Comment Line",
+      "category": "communication",
+      "keywords": [
+        "comment",
+        "feedback",
+        "comment line"
+      ],
+      "synonyms": [
+        "comment line",
+        "comment",
+        "댓글",
+        "코멘트"
+      ]
+    },
+    "company_fill": {
+      "displayName": "Company Fill",
+      "category": "misc",
+      "keywords": [
+        "company",
+        "business",
+        "company fill"
+      ],
+      "synonyms": [
+        "company fill",
+        "company",
+        "회사",
+        "기업"
+      ]
+    },
+    "copy_line": {
+      "displayName": "Copy Line",
+      "category": "actions",
+      "keywords": [
+        "copy",
+        "duplicate",
+        "copy line"
+      ],
+      "synonyms": [
+        "copy line",
+        "copy",
+        "복사",
+        "duplicate"
+      ]
+    },
+    "cpu_line": {
+      "displayName": "CPU Line",
+      "category": "device",
+      "keywords": [
+        "cpu",
+        "processor",
+        "system",
+        "cpu line"
+      ],
+      "synonyms": [
+        "cpu line",
+        "cpu",
+        "CPU",
+        "프로세서",
+        "processor"
+      ]
+    },
+    "create_approval_fill": {
+      "displayName": "Create Approval Fill",
+      "category": "actions",
+      "keywords": [
+        "create",
+        "new",
+        "make",
+        "approval",
+        "approve",
+        "confirm",
+        "create approval fill"
+      ],
+      "synonyms": [
+        "create approval fill",
+        "create approval",
+        "create_approval",
+        "생성",
+        "새로 만들기",
+        "create",
+        "승인",
+        "결재",
+        "approval"
+      ]
+    },
+    "create_chat_room_line": {
+      "displayName": "Create Chat Room Line",
+      "category": "actions",
+      "keywords": [
+        "create",
+        "new",
+        "make",
+        "chat",
+        "conversation",
+        "message",
+        "room",
+        "create chat room line"
+      ],
+      "synonyms": [
+        "create chat room line",
+        "create chat room",
+        "create_chat_room",
+        "생성",
+        "새로 만들기",
+        "create",
+        "채팅",
+        "대화",
+        "chat",
+        "room"
+      ]
+    },
+    "crown_fill": {
+      "displayName": "Crown Fill",
+      "category": "misc",
+      "keywords": [
+        "crown",
+        "premium",
+        "crown fill"
+      ],
+      "synonyms": [
+        "crown fill",
+        "crown",
+        "왕관",
+        "프리미엄"
+      ]
+    },
+    "dash_2_line": {
+      "displayName": "Dash 2 Line",
+      "category": "misc",
+      "keywords": [
+        "dash",
+        "2",
+        "dash 2 line"
+      ],
+      "synonyms": [
+        "dash 2 line",
+        "dash 2",
+        "dash_2",
+        "dash",
+        "2"
+      ]
+    },
+    "dash_line": {
+      "displayName": "Dash Line",
+      "category": "misc",
+      "keywords": [
+        "dash",
+        "dash line"
+      ],
+      "synonyms": [
+        "dash line",
+        "dash"
+      ]
+    },
+    "date_completed_line": {
+      "displayName": "Date Completed Line",
+      "category": "time",
+      "keywords": [
+        "date",
+        "calendar",
+        "completed",
+        "date completed line"
+      ],
+      "synonyms": [
+        "date completed line",
+        "date completed",
+        "date_completed",
+        "날짜",
+        "date",
+        "completed"
+      ]
+    },
+    "date_line": {
+      "displayName": "Date Line",
+      "category": "time",
+      "keywords": [
+        "date",
+        "calendar",
+        "date line"
+      ],
+      "synonyms": [
+        "date line",
+        "date",
+        "날짜"
+      ]
+    },
+    "datetime_line": {
+      "displayName": "Datetime Line",
+      "category": "time",
+      "keywords": [
+        "datetime",
+        "schedule",
+        "timestamp",
+        "datetime line"
+      ],
+      "synonyms": [
+        "datetime line",
+        "datetime",
+        "일시",
+        "날짜 시간"
+      ]
+    },
+    "delete_fill": {
+      "displayName": "Delete Fill",
+      "category": "actions",
+      "keywords": [
+        "delete",
+        "remove",
+        "trash",
+        "delete fill"
+      ],
+      "synonyms": [
+        "delete fill",
+        "delete",
+        "삭제",
+        "지우기"
+      ]
+    },
+    "delete_line": {
+      "displayName": "Delete Line",
+      "category": "actions",
+      "keywords": [
+        "delete",
+        "remove",
+        "trash",
+        "delete line"
+      ],
+      "synonyms": [
+        "delete line",
+        "delete",
+        "삭제",
+        "지우기"
+      ]
+    },
+    "detail_info_line": {
+      "displayName": "Detail Info Line",
+      "category": "status",
+      "keywords": [
+        "detail",
+        "info",
+        "information",
+        "detail info line"
+      ],
+      "synonyms": [
+        "detail info line",
+        "detail info",
+        "detail_info",
+        "상세",
+        "세부정보",
+        "detail",
+        "정보",
+        "안내",
+        "info"
+      ]
+    },
+    "detect_fill": {
+      "displayName": "Detect Fill",
+      "category": "misc",
+      "keywords": [
+        "detect",
+        "detect fill"
+      ],
+      "synonyms": [
+        "detect fill",
+        "detect"
+      ]
+    },
+    "device_line": {
+      "displayName": "Device Line",
+      "category": "device",
+      "keywords": [
+        "device",
+        "hardware",
+        "device line"
+      ],
+      "synonyms": [
+        "device line",
+        "device",
+        "디바이스",
+        "기기"
+      ]
+    },
+    "do_not_disturb_line": {
+      "displayName": "Do Not Disturb Line",
+      "category": "misc",
+      "keywords": [
+        "focus",
+        "mute",
+        "silence",
+        "do",
+        "not",
+        "disturb",
+        "interrupt",
+        "do not disturb line"
+      ],
+      "synonyms": [
+        "do not disturb line",
+        "do not disturb",
+        "do_not_disturb",
+        "방해 금지",
+        "집중 모드",
+        "dnd",
+        "mute",
+        "do",
+        "not",
+        "방해",
+        "interrupt"
+      ]
+    },
+    "document_approval_line": {
+      "displayName": "Document Approval Line",
+      "category": "files",
+      "keywords": [
+        "document",
+        "doc",
+        "file",
+        "approval",
+        "approve",
+        "confirm",
+        "document approval line"
+      ],
+      "synonyms": [
+        "document approval line",
+        "document approval",
+        "document_approval",
+        "문서",
+        "document",
+        "doc",
+        "승인",
+        "결재",
+        "approval"
+      ]
+    },
+    "document_fill": {
+      "displayName": "Document Fill",
+      "category": "files",
+      "keywords": [
+        "document",
+        "doc",
+        "file",
+        "document fill"
+      ],
+      "synonyms": [
+        "document fill",
+        "document",
+        "문서",
+        "doc"
+      ]
+    },
+    "dot_fill": {
+      "displayName": "Dot Fill",
+      "category": "misc",
+      "keywords": [
+        "dot",
+        "point",
+        "dot fill"
+      ],
+      "synonyms": [
+        "dot fill",
+        "dot",
+        "점",
+        "point"
+      ]
+    },
+    "double_chevron_down_line": {
+      "displayName": "Double Chevron Down Line",
+      "category": "navigation",
+      "keywords": [
+        "double",
+        "pair",
+        "chevron",
+        "direction",
+        "down",
+        "lower",
+        "double chevron down line"
+      ],
+      "synonyms": [
+        "double chevron down line",
+        "double chevron down",
+        "double_chevron_down",
+        "이중",
+        "double",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "아래",
+        "down"
+      ]
+    },
+    "double_chevron_left_line": {
+      "displayName": "Double Chevron Left Line",
+      "category": "navigation",
+      "keywords": [
+        "double",
+        "pair",
+        "chevron",
+        "direction",
+        "left",
+        "previous",
+        "double chevron left line"
+      ],
+      "synonyms": [
+        "double chevron left line",
+        "double chevron left",
+        "double_chevron_left",
+        "이중",
+        "double",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "왼쪽",
+        "left"
+      ]
+    },
+    "double_chevron_right_line": {
+      "displayName": "Double Chevron Right Line",
+      "category": "navigation",
+      "keywords": [
+        "double",
+        "pair",
+        "chevron",
+        "direction",
+        "right",
+        "next",
+        "double chevron right line"
+      ],
+      "synonyms": [
+        "double chevron right line",
+        "double chevron right",
+        "double_chevron_right",
+        "이중",
+        "double",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "오른쪽",
+        "right"
+      ]
+    },
+    "double_chevron_up_line": {
+      "displayName": "Double Chevron Up Line",
+      "category": "navigation",
+      "keywords": [
+        "double",
+        "pair",
+        "chevron",
+        "direction",
+        "up",
+        "upper",
+        "double chevron up line"
+      ],
+      "synonyms": [
+        "double chevron up line",
+        "double chevron up",
+        "double_chevron_up",
+        "이중",
+        "double",
+        "꺾쇠",
+        "방향",
+        "chevron",
+        "위",
+        "up"
+      ]
+    },
+    "download_line": {
+      "displayName": "Download Line",
+      "category": "actions",
+      "keywords": [
+        "download",
+        "save",
+        "download line"
+      ],
+      "synonyms": [
+        "download line",
+        "download",
+        "다운로드",
+        "받기"
+      ]
+    },
+    "drive_line": {
+      "displayName": "Drive Line",
+      "category": "files",
+      "keywords": [
+        "drive",
+        "storage",
+        "drive line"
+      ],
+      "synonyms": [
+        "drive line",
+        "drive",
+        "드라이브",
+        "저장소"
+      ]
+    },
+    "drive_share_fill": {
+      "displayName": "Drive Share Fill",
+      "category": "files",
+      "keywords": [
+        "drive",
+        "storage",
+        "share",
+        "send",
+        "drive share fill"
+      ],
+      "synonyms": [
+        "drive share fill",
+        "drive share",
+        "drive_share",
+        "드라이브",
+        "저장소",
+        "drive",
+        "공유",
+        "share"
+      ]
+    },
+    "edit_button_line": {
+      "displayName": "Edit Button Line",
+      "category": "actions",
+      "keywords": [
+        "edit",
+        "modify",
+        "write",
+        "button",
+        "edit button line"
+      ],
+      "synonyms": [
+        "edit button line",
+        "edit button",
+        "edit_button",
+        "편집",
+        "수정",
+        "edit",
+        "button"
+      ]
+    },
+    "edit_dropdown_line": {
+      "displayName": "Edit Dropdown Line",
+      "category": "actions",
+      "keywords": [
+        "edit",
+        "modify",
+        "write",
+        "dropdown",
+        "menu",
+        "edit dropdown line"
+      ],
+      "synonyms": [
+        "edit dropdown line",
+        "edit dropdown",
+        "edit_dropdown",
+        "편집",
+        "수정",
+        "edit",
+        "드롭다운",
+        "메뉴",
+        "dropdown"
+      ]
+    },
+    "education_fill": {
+      "displayName": "Education Fill",
+      "category": "misc",
+      "keywords": [
+        "education",
+        "learning",
+        "education fill"
+      ],
+      "synonyms": [
+        "education fill",
+        "education",
+        "교육",
+        "학습"
+      ]
+    },
+    "email_line": {
+      "displayName": "Email Line",
+      "category": "communication",
+      "keywords": [
+        "email",
+        "mail",
+        "message",
+        "email line"
+      ],
+      "synonyms": [
+        "email line",
+        "email",
+        "이메일",
+        "메일",
+        "mail"
+      ]
+    },
+    "email_read_line": {
+      "displayName": "Email Read Line",
+      "category": "communication",
+      "keywords": [
+        "email",
+        "mail",
+        "message",
+        "read",
+        "opened",
+        "email read line"
+      ],
+      "synonyms": [
+        "email read line",
+        "email read",
+        "email_read",
+        "이메일",
+        "메일",
+        "email",
+        "mail",
+        "읽음",
+        "확인",
+        "read"
+      ]
+    },
+    "emoji_line": {
+      "displayName": "Emoji Line",
+      "category": "misc",
+      "keywords": [
+        "emoji",
+        "reaction",
+        "emoji line"
+      ],
+      "synonyms": [
+        "emoji line",
+        "emoji",
+        "이모지",
+        "이모티콘"
+      ]
+    },
+    "error_line": {
+      "displayName": "Error Line",
+      "category": "status",
+      "keywords": [
+        "error",
+        "warning",
+        "issue",
+        "error line"
+      ],
+      "synonyms": [
+        "error line",
+        "error",
+        "오류",
+        "에러",
+        "문제"
+      ]
+    },
+    "error_message_line": {
+      "displayName": "Error Message Line",
+      "category": "communication",
+      "keywords": [
+        "error",
+        "warning",
+        "issue",
+        "message",
+        "chat",
+        "comment",
+        "error message line"
+      ],
+      "synonyms": [
+        "error message line",
+        "error message",
+        "error_message",
+        "오류",
+        "에러",
+        "문제",
+        "error",
+        "메시지",
+        "메세지",
+        "message"
+      ]
+    },
+    "etc_fill": {
+      "displayName": "Etc Fill",
+      "category": "misc",
+      "keywords": [
+        "etc",
+        "etc fill"
+      ],
+      "synonyms": [
+        "etc fill",
+        "etc"
+      ]
+    },
+    "exit_fullscreen_line": {
+      "displayName": "Exit Fullscreen Line",
+      "category": "navigation",
+      "keywords": [
+        "exit",
+        "leave",
+        "fullscreen",
+        "expand",
+        "exit fullscreen line"
+      ],
+      "synonyms": [
+        "exit fullscreen line",
+        "exit fullscreen",
+        "exit_fullscreen",
+        "나가기",
+        "종료",
+        "exit",
+        "전체 화면",
+        "fullscreen"
+      ]
+    },
+    "exit_line": {
+      "displayName": "Exit Line",
+      "category": "misc",
+      "keywords": [
+        "exit",
+        "leave",
+        "exit line"
+      ],
+      "synonyms": [
+        "exit line",
+        "exit",
+        "나가기",
+        "종료"
+      ]
+    },
+    "expand_spacing_line": {
+      "displayName": "Expand Spacing Line",
+      "category": "navigation",
+      "keywords": [
+        "expand",
+        "stretch",
+        "spacing",
+        "gap",
+        "layout",
+        "expand spacing line"
+      ],
+      "synonyms": [
+        "expand spacing line",
+        "expand spacing",
+        "expand_spacing",
+        "펼치기",
+        "확장",
+        "expand",
+        "간격",
+        "spacing"
+      ]
+    },
+    "export_2_line": {
+      "displayName": "Export 2 Line",
+      "category": "actions",
+      "keywords": [
+        "export",
+        "outbound",
+        "share",
+        "2",
+        "export 2 line"
+      ],
+      "synonyms": [
+        "export 2 line",
+        "export 2",
+        "export_2",
+        "내보내기",
+        "export",
+        "2"
+      ]
+    },
+    "export_line": {
+      "displayName": "Export Line",
+      "category": "actions",
+      "keywords": [
+        "export",
+        "outbound",
+        "share",
+        "export line"
+      ],
+      "synonyms": [
+        "export line",
+        "export",
+        "내보내기"
+      ]
+    },
+    "fasoo_rule_fill": {
+      "displayName": "Fasoo Rule Fill",
+      "category": "misc",
+      "keywords": [
+        "fasoo",
+        "rule",
+        "policy",
+        "fasoo rule fill"
+      ],
+      "synonyms": [
+        "fasoo rule fill",
+        "fasoo rule",
+        "fasoo_rule",
+        "fasoo",
+        "규칙",
+        "정책",
+        "rule"
+      ]
+    },
+    "favorite_line": {
+      "displayName": "Favorite Line",
+      "category": "status",
+      "keywords": [
+        "favorite",
+        "star",
+        "bookmark",
+        "favorite line"
+      ],
+      "synonyms": [
+        "favorite line",
+        "favorite",
+        "즐겨찾기",
+        "bookmark"
+      ]
+    },
+    "favorite_off_line": {
+      "displayName": "Favorite Off Line",
+      "category": "status",
+      "keywords": [
+        "favorite",
+        "star",
+        "bookmark",
+        "off",
+        "disabled",
+        "favorite off line"
+      ],
+      "synonyms": [
+        "favorite off line",
+        "favorite off",
+        "favorite_off",
+        "즐겨찾기",
+        "favorite",
+        "bookmark",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "file_fill": {
+      "displayName": "File Fill",
+      "category": "files",
+      "keywords": [
+        "file",
+        "document",
+        "file fill"
+      ],
+      "synonyms": [
+        "file fill",
+        "file",
+        "파일",
+        "문서"
+      ]
+    },
+    "file_info_line": {
+      "displayName": "File Info Line",
+      "category": "files",
+      "keywords": [
+        "file",
+        "document",
+        "info",
+        "information",
+        "detail",
+        "file info line"
+      ],
+      "synonyms": [
+        "file info line",
+        "file info",
+        "file_info",
+        "파일",
+        "문서",
+        "file",
+        "정보",
+        "안내",
+        "info"
+      ]
+    },
+    "file_line": {
+      "displayName": "File Line",
+      "category": "files",
+      "keywords": [
+        "file",
+        "document",
+        "file line"
+      ],
+      "synonyms": [
+        "file line",
+        "file",
+        "파일",
+        "문서"
+      ]
+    },
+    "file_off_line": {
+      "displayName": "File Off Line",
+      "category": "files",
+      "keywords": [
+        "file",
+        "document",
+        "off",
+        "disabled",
+        "file off line"
+      ],
+      "synonyms": [
+        "file off line",
+        "file off",
+        "file_off",
+        "파일",
+        "문서",
+        "file",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "filter_line": {
+      "displayName": "Filter Line",
+      "category": "layout",
+      "keywords": [
+        "filter",
+        "refine",
+        "filter line"
+      ],
+      "synonyms": [
+        "filter line",
+        "filter",
+        "필터",
+        "정렬"
+      ]
+    },
+    "flowchart_line": {
+      "displayName": "Flowchart Line",
+      "category": "layout",
+      "keywords": [
+        "flowchart",
+        "process",
+        "diagram",
+        "flowchart line"
+      ],
+      "synonyms": [
+        "flowchart line",
+        "flowchart",
+        "플로우차트",
+        "순서도"
+      ]
+    },
+    "folder_fill": {
+      "displayName": "Folder Fill",
+      "category": "files",
+      "keywords": [
+        "folder",
+        "directory",
+        "storage",
+        "folder fill"
+      ],
+      "synonyms": [
+        "folder fill",
+        "folder",
+        "폴더",
+        "디렉터리",
+        "directory"
+      ]
+    },
+    "folder_line": {
+      "displayName": "Folder Line",
+      "category": "files",
+      "keywords": [
+        "folder",
+        "directory",
+        "storage",
+        "folder line"
+      ],
+      "synonyms": [
+        "folder line",
+        "folder",
+        "폴더",
+        "디렉터리",
+        "directory"
+      ]
+    },
+    "folder_off_line": {
+      "displayName": "Folder Off Line",
+      "category": "files",
+      "keywords": [
+        "folder",
+        "directory",
+        "storage",
+        "off",
+        "disabled",
+        "folder off line"
+      ],
+      "synonyms": [
+        "folder off line",
+        "folder off",
+        "folder_off",
+        "폴더",
+        "디렉터리",
+        "folder",
+        "directory",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "foot_step_fill": {
+      "displayName": "Foot Step Fill",
+      "category": "misc",
+      "keywords": [
+        "foot",
+        "step",
+        "footprint",
+        "foot step fill"
+      ],
+      "synonyms": [
+        "foot step fill",
+        "foot step",
+        "foot_step",
+        "foot",
+        "단계",
+        "발자국",
+        "step"
+      ]
+    },
+    "forbidden_line": {
+      "displayName": "Forbidden Line",
+      "category": "security",
+      "keywords": [
+        "forbidden",
+        "blocked",
+        "forbidden line"
+      ],
+      "synonyms": [
+        "forbidden line",
+        "forbidden",
+        "금지",
+        "차단"
+      ]
+    },
+    "forward_line": {
+      "displayName": "Forward Line",
+      "category": "navigation",
+      "keywords": [
+        "forward",
+        "next",
+        "forward line"
+      ],
+      "synonyms": [
+        "forward line",
+        "forward",
+        "앞으로",
+        "다음"
+      ]
+    },
+    "fullscreen_line": {
+      "displayName": "Fullscreen Line",
+      "category": "navigation",
+      "keywords": [
+        "fullscreen",
+        "expand",
+        "fullscreen line"
+      ],
+      "synonyms": [
+        "fullscreen line",
+        "fullscreen",
+        "전체 화면"
+      ]
+    },
+    "globe_fill": {
+      "displayName": "Globe Fill",
+      "category": "device",
+      "keywords": [
+        "globe",
+        "world",
+        "internet",
+        "globe fill"
+      ],
+      "synonyms": [
+        "globe fill",
+        "globe",
+        "지구본",
+        "세계"
+      ]
+    },
+    "globe_line": {
+      "displayName": "Globe Line",
+      "category": "device",
+      "keywords": [
+        "globe",
+        "world",
+        "internet",
+        "globe line"
+      ],
+      "synonyms": [
+        "globe line",
+        "globe",
+        "지구본",
+        "세계"
+      ]
+    },
+    "go_to_original_message_line": {
+      "displayName": "Go To Original Message Line",
+      "category": "communication",
+      "keywords": [
+        "go",
+        "to",
+        "original",
+        "source",
+        "message",
+        "chat",
+        "comment",
+        "go to original message line"
+      ],
+      "synonyms": [
+        "go to original message line",
+        "go to original message",
+        "go_to_original_message",
+        "go",
+        "to",
+        "원본",
+        "기본",
+        "original",
+        "메시지",
+        "메세지",
+        "message"
+      ]
+    },
+    "graph_fill": {
+      "displayName": "Graph Fill",
+      "category": "misc",
+      "keywords": [
+        "graph",
+        "chart",
+        "graph fill"
+      ],
+      "synonyms": [
+        "graph fill",
+        "graph",
+        "그래프",
+        "차트"
+      ]
+    },
+    "grid_view_md_line": {
+      "displayName": "Grid View MD Line",
+      "category": "layout",
+      "keywords": [
+        "grid",
+        "layout",
+        "view",
+        "display",
+        "medium",
+        "md",
+        "grid view md line"
+      ],
+      "synonyms": [
+        "grid view md line",
+        "grid view md",
+        "grid_view_md",
+        "그리드",
+        "격자",
+        "grid",
+        "layout",
+        "보기",
+        "뷰",
+        "view",
+        "중간",
+        "medium"
+      ]
+    },
+    "grid_view_sm_line": {
+      "displayName": "Grid View SM Line",
+      "category": "layout",
+      "keywords": [
+        "grid",
+        "layout",
+        "view",
+        "display",
+        "small",
+        "sm",
+        "grid view sm line"
+      ],
+      "synonyms": [
+        "grid view sm line",
+        "grid view sm",
+        "grid_view_sm",
+        "그리드",
+        "격자",
+        "grid",
+        "보기",
+        "뷰",
+        "view",
+        "작은",
+        "small",
+        "sm"
+      ]
+    },
+    "hamburger_menu_line": {
+      "displayName": "Hamburger Menu Line",
+      "category": "layout",
+      "keywords": [
+        "menu",
+        "hamburger",
+        "navigation",
+        "hamburger menu line"
+      ],
+      "synonyms": [
+        "hamburger menu line",
+        "hamburger menu",
+        "hamburger_menu",
+        "햄버거 메뉴",
+        "메뉴",
+        "navigation",
+        "menu"
+      ]
+    },
+    "heart_line": {
+      "displayName": "Heart Line",
+      "category": "misc",
+      "keywords": [
+        "heart",
+        "favorite",
+        "heart line"
+      ],
+      "synonyms": [
+        "heart line",
+        "heart",
+        "하트",
+        "좋아요"
+      ]
+    },
+    "hide_chat_room_line": {
+      "displayName": "Hide Chat Room Line",
+      "category": "communication",
+      "keywords": [
+        "hide",
+        "conceal",
+        "chat",
+        "conversation",
+        "message",
+        "room",
+        "hide chat room line"
+      ],
+      "synonyms": [
+        "hide chat room line",
+        "hide chat room",
+        "hide_chat_room",
+        "숨기기",
+        "hide",
+        "채팅",
+        "대화",
+        "chat",
+        "room"
+      ]
+    },
+    "home_fill": {
+      "displayName": "Home Fill",
+      "category": "misc",
+      "keywords": [
+        "home",
+        "main",
+        "home fill"
+      ],
+      "synonyms": [
+        "home fill",
+        "home",
+        "홈",
+        "메인"
+      ]
+    },
+    "image_line": {
+      "displayName": "Image Line",
+      "category": "files",
+      "keywords": [
+        "image",
+        "picture",
+        "photo",
+        "image line"
+      ],
+      "synonyms": [
+        "image line",
+        "image",
+        "이미지",
+        "사진"
+      ]
+    },
+    "import_line": {
+      "displayName": "Import Line",
+      "category": "actions",
+      "keywords": [
+        "import",
+        "inbound",
+        "import line"
+      ],
+      "synonyms": [
+        "import line",
+        "import",
+        "가져오기"
+      ]
+    },
+    "info_fill": {
+      "displayName": "Info Fill",
+      "category": "status",
+      "keywords": [
+        "info",
+        "information",
+        "detail",
+        "info fill"
+      ],
+      "synonyms": [
+        "info fill",
+        "info",
+        "정보",
+        "안내"
+      ]
+    },
+    "info_line": {
+      "displayName": "Info Line",
+      "category": "status",
+      "keywords": [
+        "info",
+        "information",
+        "detail",
+        "info line"
+      ],
+      "synonyms": [
+        "info line",
+        "info",
+        "정보",
+        "안내"
+      ]
+    },
+    "initialize_line": {
+      "displayName": "Initialize Line",
+      "category": "misc",
+      "keywords": [
+        "initialize",
+        "setup",
+        "reset",
+        "initialize line"
+      ],
+      "synonyms": [
+        "initialize line",
+        "initialize",
+        "초기화",
+        "setup"
+      ]
+    },
+    "ip_address_line": {
+      "displayName": "IP Address Line",
+      "category": "device",
+      "keywords": [
+        "network",
+        "address",
+        "ip",
+        "ip address line"
+      ],
+      "synonyms": [
+        "ip address line",
+        "ip address",
+        "ip_address",
+        "IP 주소",
+        "아이피",
+        "address",
+        "network",
+        "IP",
+        "ip"
+      ]
+    },
+    "key_line": {
+      "displayName": "Key Line",
+      "category": "security",
+      "keywords": [
+        "key",
+        "security",
+        "access",
+        "key line"
+      ],
+      "synonyms": [
+        "key line",
+        "key",
+        "키",
+        "열쇠"
+      ]
+    },
+    "laptop_globe_fill": {
+      "displayName": "Laptop Globe Fill",
+      "category": "device",
+      "keywords": [
+        "laptop",
+        "computer",
+        "globe",
+        "world",
+        "internet",
+        "laptop globe fill"
+      ],
+      "synonyms": [
+        "laptop globe fill",
+        "laptop globe",
+        "laptop_globe",
+        "노트북",
+        "laptop",
+        "지구본",
+        "세계",
+        "globe"
+      ]
+    },
+    "laptop_ip_fill": {
+      "displayName": "Laptop IP Fill",
+      "category": "device",
+      "keywords": [
+        "laptop",
+        "computer",
+        "ip",
+        "address",
+        "network",
+        "laptop ip fill"
+      ],
+      "synonyms": [
+        "laptop ip fill",
+        "laptop ip",
+        "laptop_ip",
+        "노트북",
+        "laptop",
+        "IP",
+        "아이피",
+        "ip"
+      ]
+    },
+    "layers_fill": {
+      "displayName": "Layers Fill",
+      "category": "layout",
+      "keywords": [
+        "layers",
+        "stack",
+        "layers fill"
+      ],
+      "synonyms": [
+        "layers fill",
+        "layers",
+        "레이어"
+      ]
+    },
+    "leave_opinion_line": {
+      "displayName": "Leave Opinion Line",
+      "category": "misc",
+      "keywords": [
+        "leave",
+        "opinion",
+        "feedback",
+        "comment",
+        "leave opinion line"
+      ],
+      "synonyms": [
+        "leave opinion line",
+        "leave opinion",
+        "leave_opinion",
+        "leave",
+        "의견",
+        "피드백",
+        "opinion"
+      ]
+    },
+    "link_line": {
+      "displayName": "Link Line",
+      "category": "misc",
+      "keywords": [
+        "link",
+        "url",
+        "connect",
+        "link line"
+      ],
+      "synonyms": [
+        "link line",
+        "link",
+        "링크",
+        "연결"
+      ]
+    },
+    "location_line": {
+      "displayName": "Location Line",
+      "category": "misc",
+      "keywords": [
+        "location",
+        "place",
+        "map",
+        "location line"
+      ],
+      "synonyms": [
+        "location line",
+        "location",
+        "위치",
+        "장소"
+      ]
+    },
+    "location_off_line": {
+      "displayName": "Location Off Line",
+      "category": "misc",
+      "keywords": [
+        "location",
+        "place",
+        "map",
+        "off",
+        "disabled",
+        "location off line"
+      ],
+      "synonyms": [
+        "location off line",
+        "location off",
+        "location_off",
+        "위치",
+        "장소",
+        "location",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "lock_line": {
+      "displayName": "Lock Line",
+      "category": "security",
+      "keywords": [
+        "lock",
+        "security",
+        "private",
+        "lock line"
+      ],
+      "synonyms": [
+        "lock line",
+        "lock",
+        "잠금",
+        "보안"
+      ]
+    },
+    "lock_message_line": {
+      "displayName": "Lock Message Line",
+      "category": "communication",
+      "keywords": [
+        "lock",
+        "security",
+        "private",
+        "message",
+        "chat",
+        "comment",
+        "lock message line"
+      ],
+      "synonyms": [
+        "lock message line",
+        "lock message",
+        "lock_message",
+        "잠금",
+        "보안",
+        "lock",
+        "메시지",
+        "메세지",
+        "message"
+      ]
+    },
+    "log_fill": {
+      "displayName": "Log Fill",
+      "category": "misc",
+      "keywords": [
+        "log",
+        "record",
+        "history",
+        "log fill"
+      ],
+      "synonyms": [
+        "log fill",
+        "log",
+        "로그",
+        "기록"
+      ]
+    },
+    "mail_fill": {
+      "displayName": "Mail Fill",
+      "category": "communication",
+      "keywords": [
+        "mail",
+        "email",
+        "message",
+        "mail fill"
+      ],
+      "synonyms": [
+        "mail fill",
+        "mail",
+        "메일",
+        "이메일"
+      ]
+    },
+    "manager_line": {
+      "displayName": "Manager Line",
+      "category": "user",
+      "keywords": [
+        "manager",
+        "admin",
+        "manager line"
+      ],
+      "synonyms": [
+        "manager line",
+        "manager",
+        "관리자",
+        "매니저"
+      ]
+    },
+    "manual_book_fill": {
+      "displayName": "Manual Book Fill",
+      "category": "files",
+      "keywords": [
+        "manual",
+        "guide",
+        "book",
+        "manual book fill"
+      ],
+      "synonyms": [
+        "manual book fill",
+        "manual book",
+        "manual_book",
+        "매뉴얼",
+        "가이드",
+        "manual",
+        "책",
+        "book"
+      ]
+    },
+    "maximize_line": {
+      "displayName": "Maximize Line",
+      "category": "navigation",
+      "keywords": [
+        "maximize",
+        "expand",
+        "maximize line"
+      ],
+      "synonyms": [
+        "maximize line",
+        "maximize",
+        "최대화"
+      ]
+    },
+    "megaphone_fill": {
+      "displayName": "Megaphone Fill",
+      "category": "communication",
+      "keywords": [
+        "announcement",
+        "broadcast",
+        "notification",
+        "megaphone",
+        "megaphone fill"
+      ],
+      "synonyms": [
+        "megaphone fill",
+        "megaphone",
+        "공지",
+        "알림",
+        "안내",
+        "방송",
+        "notice",
+        "alert",
+        "메가폰"
+      ]
+    },
+    "megaphone_line": {
+      "displayName": "Megaphone",
+      "category": "communication",
+      "keywords": [
+        "announcement",
+        "broadcast",
+        "notification"
+      ],
+      "synonyms": [
+        "공지",
+        "알림",
+        "안내",
+        "방송",
+        "notice",
+        "alert"
+      ]
+    },
+    "mention_line": {
+      "displayName": "Mention Line",
+      "category": "communication",
+      "keywords": [
+        "mention",
+        "tag",
+        "mention line"
+      ],
+      "synonyms": [
+        "mention line",
+        "mention",
+        "멘션",
+        "언급"
+      ]
+    },
+    "merge_line": {
+      "displayName": "Merge Line",
+      "category": "actions",
+      "keywords": [
+        "merge",
+        "combine",
+        "merge line"
+      ],
+      "synonyms": [
+        "merge line",
+        "merge",
+        "병합",
+        "합치기"
+      ]
+    },
+    "message_line": {
+      "displayName": "Message Line",
+      "category": "communication",
+      "keywords": [
+        "message",
+        "chat",
+        "comment",
+        "message line"
+      ],
+      "synonyms": [
+        "message line",
+        "message",
+        "메시지",
+        "메세지"
+      ]
+    },
+    "minimize_line": {
+      "displayName": "Minimize Line",
+      "category": "navigation",
+      "keywords": [
+        "minimize",
+        "collapse",
+        "minimize line"
+      ],
+      "synonyms": [
+        "minimize line",
+        "minimize",
+        "최소화"
+      ]
+    },
+    "monitor_1_fill": {
+      "displayName": "Monitor 1 Fill",
+      "category": "device",
+      "keywords": [
+        "monitor",
+        "screen",
+        "display",
+        "1",
+        "monitor 1 fill"
+      ],
+      "synonyms": [
+        "monitor 1 fill",
+        "monitor 1",
+        "monitor_1",
+        "모니터",
+        "화면",
+        "monitor",
+        "1"
+      ]
+    },
+    "monitor_2_fill": {
+      "displayName": "Monitor 2 Fill",
+      "category": "device",
+      "keywords": [
+        "monitor",
+        "screen",
+        "display",
+        "2",
+        "monitor 2 fill"
+      ],
+      "synonyms": [
+        "monitor 2 fill",
+        "monitor 2",
+        "monitor_2",
+        "모니터",
+        "화면",
+        "monitor",
+        "2"
+      ]
+    },
+    "more_horizontal_line": {
+      "displayName": "More Horizontal Line",
+      "category": "misc",
+      "keywords": [
+        "more",
+        "overflow",
+        "menu",
+        "horizontal",
+        "more horizontal line"
+      ],
+      "synonyms": [
+        "more horizontal line",
+        "more horizontal",
+        "more_horizontal",
+        "더보기",
+        "추가 메뉴",
+        "more",
+        "horizontal"
+      ]
+    },
+    "more_vertical_line": {
+      "displayName": "More Vertical Line",
+      "category": "misc",
+      "keywords": [
+        "more",
+        "overflow",
+        "menu",
+        "vertical",
+        "column",
+        "more vertical line"
+      ],
+      "synonyms": [
+        "more vertical line",
+        "more vertical",
+        "more_vertical",
+        "더보기",
+        "추가 메뉴",
+        "more",
+        "세로",
+        "vertical"
+      ]
+    },
+    "mouse_line": {
+      "displayName": "Mouse Line",
+      "category": "device",
+      "keywords": [
+        "mouse",
+        "pointer",
+        "mouse line"
+      ],
+      "synonyms": [
+        "mouse line",
+        "mouse",
+        "마우스",
+        "pointer"
+      ]
+    },
+    "move_bottom_line": {
+      "displayName": "Move Bottom Line",
+      "category": "navigation",
+      "keywords": [
+        "move",
+        "reposition",
+        "bottom",
+        "move bottom line"
+      ],
+      "synonyms": [
+        "move bottom line",
+        "move bottom",
+        "move_bottom",
+        "이동",
+        "move",
+        "bottom"
+      ]
+    },
+    "move_top_line": {
+      "displayName": "Move Top Line",
+      "category": "navigation",
+      "keywords": [
+        "move",
+        "reposition",
+        "top",
+        "upper",
+        "move top line"
+      ],
+      "synonyms": [
+        "move top line",
+        "move top",
+        "move_top",
+        "이동",
+        "move",
+        "위",
+        "top"
+      ]
+    },
+    "movedocument_fill": {
+      "displayName": "Movedocument Fill",
+      "category": "misc",
+      "keywords": [
+        "movedocument",
+        "movedocument fill"
+      ],
+      "synonyms": [
+        "movedocument fill",
+        "movedocument"
+      ]
+    },
+    "no_image_line": {
+      "displayName": "No Image Line",
+      "category": "files",
+      "keywords": [
+        "image",
+        "placeholder",
+        "missing",
+        "none",
+        "no",
+        "picture",
+        "photo",
+        "no image line"
+      ],
+      "synonyms": [
+        "no image line",
+        "no image",
+        "no_image",
+        "이미지 없음",
+        "사진 없음",
+        "placeholder",
+        "없음",
+        "not",
+        "no",
+        "이미지",
+        "사진",
+        "image"
+      ]
+    },
+    "notification_alert_fill": {
+      "displayName": "Notification Alert Fill",
+      "category": "communication",
+      "keywords": [
+        "notification",
+        "notice",
+        "alert",
+        "warning",
+        "notification alert fill"
+      ],
+      "synonyms": [
+        "notification alert fill",
+        "notification alert",
+        "notification_alert",
+        "알림",
+        "공지",
+        "notification",
+        "notice",
+        "경고",
+        "주의",
+        "alert"
+      ]
+    },
+    "notification_fill": {
+      "displayName": "Notification Fill",
+      "category": "communication",
+      "keywords": [
+        "notification",
+        "notice",
+        "alert",
+        "notification fill"
+      ],
+      "synonyms": [
+        "notification fill",
+        "notification",
+        "알림",
+        "공지",
+        "notice"
+      ]
+    },
+    "notification_off_line": {
+      "displayName": "Notification Off Line",
+      "category": "communication",
+      "keywords": [
+        "notification",
+        "notice",
+        "alert",
+        "off",
+        "disabled",
+        "notification off line"
+      ],
+      "synonyms": [
+        "notification off line",
+        "notification off",
+        "notification_off",
+        "알림",
+        "공지",
+        "notification",
+        "notice",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "notification_on_line": {
+      "displayName": "Notification On Line",
+      "category": "communication",
+      "keywords": [
+        "notification",
+        "notice",
+        "alert",
+        "on",
+        "enabled",
+        "notification on line"
+      ],
+      "synonyms": [
+        "notification on line",
+        "notification on",
+        "notification_on",
+        "알림",
+        "공지",
+        "notification",
+        "notice",
+        "켜짐",
+        "활성",
+        "on"
+      ]
+    },
+    "notification_settings_line": {
+      "displayName": "Notification Settings Line",
+      "category": "communication",
+      "keywords": [
+        "notification",
+        "notice",
+        "alert",
+        "settings",
+        "config",
+        "setup",
+        "notification settings line"
+      ],
+      "synonyms": [
+        "notification settings line",
+        "notification settings",
+        "notification_settings",
+        "알림",
+        "공지",
+        "notification",
+        "notice",
+        "설정",
+        "settings"
+      ]
+    },
+    "organization_chart_line": {
+      "displayName": "Organization Chart Line",
+      "category": "user",
+      "keywords": [
+        "organization",
+        "org",
+        "company",
+        "chart",
+        "organization chart line"
+      ],
+      "synonyms": [
+        "organization chart line",
+        "organization chart",
+        "organization_chart",
+        "조직",
+        "organization",
+        "org",
+        "chart"
+      ]
+    },
+    "original_location_line": {
+      "displayName": "Original Location Line",
+      "category": "misc",
+      "keywords": [
+        "original",
+        "source",
+        "location",
+        "place",
+        "map",
+        "original location line"
+      ],
+      "synonyms": [
+        "original location line",
+        "original location",
+        "original_location",
+        "원본",
+        "기본",
+        "original",
+        "위치",
+        "장소",
+        "location"
+      ]
+    },
+    "path_line": {
+      "displayName": "Path Line",
+      "category": "navigation",
+      "keywords": [
+        "path",
+        "route",
+        "path line"
+      ],
+      "synonyms": [
+        "path line",
+        "path",
+        "경로"
+      ]
+    },
+    "pause_circle_line": {
+      "displayName": "Pause Circle Line",
+      "category": "time",
+      "keywords": [
+        "pause",
+        "stop",
+        "hold",
+        "circle",
+        "round",
+        "pause circle line"
+      ],
+      "synonyms": [
+        "pause circle line",
+        "pause circle",
+        "pause_circle",
+        "일시정지",
+        "pause",
+        "원형",
+        "circle"
+      ]
+    },
+    "permission_line": {
+      "displayName": "Permission Line",
+      "category": "security",
+      "keywords": [
+        "permission",
+        "access",
+        "authorization",
+        "permission line"
+      ],
+      "synonyms": [
+        "permission line",
+        "permission",
+        "권한",
+        "허용"
+      ]
+    },
+    "permission_request_line": {
+      "displayName": "Permission Request Line",
+      "category": "security",
+      "keywords": [
+        "permission",
+        "access",
+        "authorization",
+        "request",
+        "permission request line"
+      ],
+      "synonyms": [
+        "permission request line",
+        "permission request",
+        "permission_request",
+        "권한",
+        "허용",
+        "permission",
+        "request"
+      ]
+    },
+    "phone_line": {
+      "displayName": "Phone Line",
+      "category": "communication",
+      "keywords": [
+        "phone",
+        "call",
+        "contact",
+        "phone line"
+      ],
+      "synonyms": [
+        "phone line",
+        "phone",
+        "전화",
+        "통화"
+      ]
+    },
+    "phone_off_line": {
+      "displayName": "Phone Off Line",
+      "category": "communication",
+      "keywords": [
+        "phone",
+        "call",
+        "contact",
+        "off",
+        "disabled",
+        "phone off line"
+      ],
+      "synonyms": [
+        "phone off line",
+        "phone off",
+        "phone_off",
+        "전화",
+        "통화",
+        "phone",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "pin_line": {
+      "displayName": "Pin Line",
+      "category": "misc",
+      "keywords": [
+        "pin",
+        "fixed",
+        "pin line"
+      ],
+      "synonyms": [
+        "pin line",
+        "pin",
+        "고정",
+        "핀"
+      ]
+    },
+    "play_circle_line": {
+      "displayName": "Play Circle Line",
+      "category": "misc",
+      "keywords": [
+        "play",
+        "start",
+        "circle",
+        "round",
+        "play circle line"
+      ],
+      "synonyms": [
+        "play circle line",
+        "play circle",
+        "play_circle",
+        "재생",
+        "시작",
+        "play",
+        "원형",
+        "circle"
+      ]
+    },
+    "plus_circle_fill": {
+      "displayName": "Plus Circle Fill",
+      "category": "misc",
+      "keywords": [
+        "plus",
+        "add",
+        "circle",
+        "round",
+        "plus circle fill"
+      ],
+      "synonyms": [
+        "plus circle fill",
+        "plus circle",
+        "plus_circle",
+        "플러스",
+        "추가",
+        "plus",
+        "원형",
+        "circle"
+      ]
+    },
+    "point_fill": {
+      "displayName": "Point Fill",
+      "category": "misc",
+      "keywords": [
+        "point",
+        "mark",
+        "point fill"
+      ],
+      "synonyms": [
+        "point fill",
+        "point",
+        "포인트",
+        "점"
+      ]
+    },
+    "preview_fill": {
+      "displayName": "Preview Fill",
+      "category": "misc",
+      "keywords": [
+        "preview",
+        "look",
+        "view",
+        "preview fill"
+      ],
+      "synonyms": [
+        "preview fill",
+        "preview",
+        "미리보기"
+      ]
+    },
+    "preview_line": {
+      "displayName": "Preview Line",
+      "category": "misc",
+      "keywords": [
+        "preview",
+        "look",
+        "view",
+        "preview line"
+      ],
+      "synonyms": [
+        "preview line",
+        "preview",
+        "미리보기"
+      ]
+    },
+    "preview_off_line": {
+      "displayName": "Preview Off Line",
+      "category": "misc",
+      "keywords": [
+        "preview",
+        "look",
+        "view",
+        "off",
+        "disabled",
+        "preview off line"
+      ],
+      "synonyms": [
+        "preview off line",
+        "preview off",
+        "preview_off",
+        "미리보기",
+        "preview",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "print_line": {
+      "displayName": "Print Line",
+      "category": "files",
+      "keywords": [
+        "print",
+        "printer",
+        "print line"
+      ],
+      "synonyms": [
+        "print line",
+        "print",
+        "인쇄",
+        "프린트"
+      ]
+    },
+    "prompt_fill": {
+      "displayName": "Prompt Fill",
+      "category": "misc",
+      "keywords": [
+        "prompt",
+        "ai",
+        "input",
+        "prompt fill"
+      ],
+      "synonyms": [
+        "prompt fill",
+        "prompt",
+        "프롬프트",
+        "입력"
+      ]
+    },
+    "prompt_line": {
+      "displayName": "Prompt Line",
+      "category": "misc",
+      "keywords": [
+        "prompt",
+        "ai",
+        "input",
+        "prompt line"
+      ],
+      "synonyms": [
+        "prompt line",
+        "prompt",
+        "프롬프트",
+        "입력"
+      ]
+    },
+    "question_mark_fill": {
+      "displayName": "Question Mark Fill",
+      "category": "status",
+      "keywords": [
+        "question",
+        "help",
+        "support",
+        "mark",
+        "question mark fill"
+      ],
+      "synonyms": [
+        "question mark fill",
+        "question mark",
+        "question_mark",
+        "질문",
+        "도움말",
+        "문의",
+        "help",
+        "도움",
+        "question",
+        "mark"
+      ]
+    },
+    "question_mark_line": {
+      "displayName": "Question Mark Line",
+      "category": "status",
+      "keywords": [
+        "question",
+        "help",
+        "support",
+        "mark",
+        "question mark line"
+      ],
+      "synonyms": [
+        "question mark line",
+        "question mark",
+        "question_mark",
+        "질문",
+        "도움말",
+        "문의",
+        "help",
+        "도움",
+        "question",
+        "mark"
+      ]
+    },
+    "recover_line": {
+      "displayName": "Recover Line",
+      "category": "actions",
+      "keywords": [
+        "recover",
+        "restore",
+        "recover line"
+      ],
+      "synonyms": [
+        "recover line",
+        "recover",
+        "복구"
+      ]
+    },
+    "recovery_fill": {
+      "displayName": "Recovery Fill",
+      "category": "misc",
+      "keywords": [
+        "recovery",
+        "restore",
+        "recovery fill"
+      ],
+      "synonyms": [
+        "recovery fill",
+        "recovery",
+        "복구"
+      ]
+    },
+    "refresh_line": {
+      "displayName": "Refresh Line",
+      "category": "actions",
+      "keywords": [
+        "refresh",
+        "reload",
+        "sync",
+        "refresh line"
+      ],
+      "synonyms": [
+        "refresh line",
+        "refresh",
+        "새로고침",
+        "갱신"
+      ]
+    },
+    "remove_circle_line": {
+      "displayName": "Remove Circle Line",
+      "category": "actions",
+      "keywords": [
+        "remove",
+        "subtract",
+        "minus",
+        "circle",
+        "round",
+        "remove circle line"
+      ],
+      "synonyms": [
+        "remove circle line",
+        "remove circle",
+        "remove_circle",
+        "제거",
+        "삭제",
+        "remove",
+        "원형",
+        "circle"
+      ]
+    },
+    "replace_line": {
+      "displayName": "Replace Line",
+      "category": "actions",
+      "keywords": [
+        "replace",
+        "swap",
+        "replace line"
+      ],
+      "synonyms": [
+        "replace line",
+        "replace",
+        "교체",
+        "바꾸기"
+      ]
+    },
+    "reply_history_line": {
+      "displayName": "Reply History Line",
+      "category": "communication",
+      "keywords": [
+        "reply",
+        "respond",
+        "history",
+        "record",
+        "log",
+        "reply history line"
+      ],
+      "synonyms": [
+        "reply history line",
+        "reply history",
+        "reply_history",
+        "답장",
+        "응답",
+        "reply",
+        "이력",
+        "기록",
+        "history"
+      ]
+    },
+    "reply_line": {
+      "displayName": "Reply Line",
+      "category": "communication",
+      "keywords": [
+        "reply",
+        "respond",
+        "reply line"
+      ],
+      "synonyms": [
+        "reply line",
+        "reply",
+        "답장",
+        "응답"
+      ]
+    },
+    "resend_line": {
+      "displayName": "Resend Line",
+      "category": "actions",
+      "keywords": [
+        "resend",
+        "send again",
+        "resend line"
+      ],
+      "synonyms": [
+        "resend line",
+        "resend",
+        "재전송",
+        "다시 보내기"
+      ]
+    },
+    "reset_message_line": {
+      "displayName": "Reset Message Line",
+      "category": "actions",
+      "keywords": [
+        "reset",
+        "initialize",
+        "message",
+        "chat",
+        "comment",
+        "reset message line"
+      ],
+      "synonyms": [
+        "reset message line",
+        "reset message",
+        "reset_message",
+        "초기화",
+        "재설정",
+        "reset",
+        "메시지",
+        "메세지",
+        "message"
+      ]
+    },
+    "restore_line": {
+      "displayName": "Restore Line",
+      "category": "actions",
+      "keywords": [
+        "restore",
+        "recover",
+        "restore line"
+      ],
+      "synonyms": [
+        "restore line",
+        "restore",
+        "복원"
+      ]
+    },
+    "resume_circle_line": {
+      "displayName": "Resume Circle Line",
+      "category": "time",
+      "keywords": [
+        "resume",
+        "continue",
+        "circle",
+        "round",
+        "resume circle line"
+      ],
+      "synonyms": [
+        "resume circle line",
+        "resume circle",
+        "resume_circle",
+        "재개",
+        "resume",
+        "원형",
+        "circle"
+      ]
+    },
+    "rotate_clockwise_90_1_line": {
+      "displayName": "Rotate Clockwise 90 1 Line",
+      "category": "misc",
+      "keywords": [
+        "rotate",
+        "turn",
+        "clockwise",
+        "90",
+        "1",
+        "rotate clockwise 90 1 line"
+      ],
+      "synonyms": [
+        "rotate clockwise 90 1 line",
+        "rotate clockwise 90 1",
+        "rotate_clockwise_90_1",
+        "회전",
+        "rotate",
+        "clockwise",
+        "90",
+        "1"
+      ]
+    },
+    "rotate_clockwise_90_line": {
+      "displayName": "Rotate Clockwise 90 Line",
+      "category": "misc",
+      "keywords": [
+        "rotate",
+        "turn",
+        "clockwise",
+        "90",
+        "rotate clockwise 90 line"
+      ],
+      "synonyms": [
+        "rotate clockwise 90 line",
+        "rotate clockwise 90",
+        "rotate_clockwise_90",
+        "회전",
+        "rotate",
+        "clockwise",
+        "90"
+      ]
+    },
+    "rotate_clockwise_line": {
+      "displayName": "Rotate Clockwise Line",
+      "category": "misc",
+      "keywords": [
+        "rotate",
+        "turn",
+        "clockwise",
+        "rotate clockwise line"
+      ],
+      "synonyms": [
+        "rotate clockwise line",
+        "rotate clockwise",
+        "rotate_clockwise",
+        "회전",
+        "rotate",
+        "clockwise"
+      ]
+    },
+    "rotate_counter_clockwise_line": {
+      "displayName": "Rotate Counter Clockwise Line",
+      "category": "misc",
+      "keywords": [
+        "rotate",
+        "turn",
+        "counter",
+        "clockwise",
+        "rotate counter clockwise line"
+      ],
+      "synonyms": [
+        "rotate counter clockwise line",
+        "rotate counter clockwise",
+        "rotate_counter_clockwise",
+        "회전",
+        "rotate",
+        "counter",
+        "clockwise"
+      ]
+    },
+    "schedule_fill": {
+      "displayName": "Schedule Fill",
+      "category": "time",
+      "keywords": [
+        "schedule",
+        "plan",
+        "calendar",
+        "schedule fill"
+      ],
+      "synonyms": [
+        "schedule fill",
+        "schedule",
+        "일정",
+        "예약"
+      ]
+    },
+    "schedule_message_line": {
+      "displayName": "Schedule Message Line",
+      "category": "communication",
+      "keywords": [
+        "schedule",
+        "plan",
+        "calendar",
+        "message",
+        "chat",
+        "comment",
+        "schedule message line"
+      ],
+      "synonyms": [
+        "schedule message line",
+        "schedule message",
+        "schedule_message",
+        "일정",
+        "예약",
+        "schedule",
+        "메시지",
+        "메세지",
+        "message"
+      ]
+    },
+    "search_detail_line": {
+      "displayName": "Search Detail Line",
+      "category": "misc",
+      "keywords": [
+        "search",
+        "find",
+        "lookup",
+        "detail",
+        "info",
+        "search detail line"
+      ],
+      "synonyms": [
+        "search detail line",
+        "search detail",
+        "search_detail",
+        "검색",
+        "찾기",
+        "search",
+        "상세",
+        "세부정보",
+        "detail"
+      ]
+    },
+    "search_line": {
+      "displayName": "Search Line",
+      "category": "misc",
+      "keywords": [
+        "search",
+        "find",
+        "lookup",
+        "search line"
+      ],
+      "synonyms": [
+        "search line",
+        "search",
+        "검색",
+        "찾기"
+      ]
+    },
+    "security_line": {
+      "displayName": "Security Line",
+      "category": "security",
+      "keywords": [
+        "security",
+        "protection",
+        "security line"
+      ],
+      "synonyms": [
+        "security line",
+        "security",
+        "보안"
+      ]
+    },
+    "security_message_line": {
+      "displayName": "Security Message Line",
+      "category": "communication",
+      "keywords": [
+        "security",
+        "protection",
+        "message",
+        "chat",
+        "comment",
+        "security message line"
+      ],
+      "synonyms": [
+        "security message line",
+        "security message",
+        "security_message",
+        "보안",
+        "security",
+        "메시지",
+        "메세지",
+        "message"
+      ]
+    },
+    "security_off_line": {
+      "displayName": "Security Off Line",
+      "category": "security",
+      "keywords": [
+        "security",
+        "protection",
+        "off",
+        "disabled",
+        "security off line"
+      ],
+      "synonyms": [
+        "security off line",
+        "security off",
+        "security_off",
+        "보안",
+        "security",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "semantic_search_fill": {
+      "displayName": "Semantic Search Fill",
+      "category": "misc",
+      "keywords": [
+        "semantic",
+        "meaning",
+        "smart",
+        "search",
+        "find",
+        "lookup",
+        "semantic search fill"
+      ],
+      "synonyms": [
+        "semantic search fill",
+        "semantic search",
+        "semantic_search",
+        "의미 기반",
+        "semantic",
+        "검색",
+        "찾기",
+        "search"
+      ]
+    },
+    "send_fill": {
+      "displayName": "Send Fill",
+      "category": "actions",
+      "keywords": [
+        "send",
+        "submit",
+        "send fill"
+      ],
+      "synonyms": [
+        "send fill",
+        "send",
+        "보내기",
+        "전송"
+      ]
+    },
+    "send_message_line": {
+      "displayName": "Send Message Line",
+      "category": "actions",
+      "keywords": [
+        "send",
+        "submit",
+        "message",
+        "chat",
+        "comment",
+        "send message line"
+      ],
+      "synonyms": [
+        "send message line",
+        "send message",
+        "send_message",
+        "보내기",
+        "전송",
+        "send",
+        "메시지",
+        "메세지",
+        "message"
+      ]
+    },
+    "server_1_fill": {
+      "displayName": "Server 1 Fill",
+      "category": "device",
+      "keywords": [
+        "server",
+        "backend",
+        "system",
+        "1",
+        "server 1 fill"
+      ],
+      "synonyms": [
+        "server 1 fill",
+        "server 1",
+        "server_1",
+        "서버",
+        "시스템",
+        "server",
+        "1"
+      ]
+    },
+    "server_2_fill": {
+      "displayName": "Server 2 Fill",
+      "category": "device",
+      "keywords": [
+        "server",
+        "backend",
+        "system",
+        "2",
+        "server 2 fill"
+      ],
+      "synonyms": [
+        "server 2 fill",
+        "server 2",
+        "server_2",
+        "서버",
+        "시스템",
+        "server",
+        "2"
+      ]
+    },
+    "setting_fill": {
+      "displayName": "Setting Fill",
+      "category": "misc",
+      "keywords": [
+        "settings",
+        "config",
+        "setup",
+        "setting fill"
+      ],
+      "synonyms": [
+        "setting fill",
+        "setting",
+        "설정",
+        "settings"
+      ]
+    },
+    "settings_line": {
+      "displayName": "Settings Line",
+      "category": "misc",
+      "keywords": [
+        "settings",
+        "config",
+        "setup",
+        "settings line"
+      ],
+      "synonyms": [
+        "settings line",
+        "settings",
+        "설정"
+      ]
+    },
+    "share_fill": {
+      "displayName": "Share Fill",
+      "category": "misc",
+      "keywords": [
+        "share",
+        "send",
+        "share fill"
+      ],
+      "synonyms": [
+        "share fill",
+        "share",
+        "공유"
+      ]
+    },
+    "share_line": {
+      "displayName": "Share Line",
+      "category": "misc",
+      "keywords": [
+        "share",
+        "send",
+        "share line"
+      ],
+      "synonyms": [
+        "share line",
+        "share",
+        "공유"
+      ]
+    },
+    "shared_drive_line": {
+      "displayName": "Shared Drive Line",
+      "category": "files",
+      "keywords": [
+        "shared",
+        "drive",
+        "storage",
+        "shared drive line"
+      ],
+      "synonyms": [
+        "shared drive line",
+        "shared drive",
+        "shared_drive",
+        "shared",
+        "드라이브",
+        "저장소",
+        "drive"
+      ]
+    },
+    "shared_folder_line": {
+      "displayName": "Shared Folder Line",
+      "category": "files",
+      "keywords": [
+        "shared",
+        "folder",
+        "directory",
+        "storage",
+        "shared folder line"
+      ],
+      "synonyms": [
+        "shared folder line",
+        "shared folder",
+        "shared_folder",
+        "shared",
+        "폴더",
+        "디렉터리",
+        "folder",
+        "directory"
+      ]
+    },
+    "shield_fill": {
+      "displayName": "Shield Fill",
+      "category": "security",
+      "keywords": [
+        "shield",
+        "protect",
+        "security",
+        "shield fill"
+      ],
+      "synonyms": [
+        "shield fill",
+        "shield",
+        "보호",
+        "쉴드"
+      ]
+    },
+    "slash_line": {
+      "displayName": "Slash Line",
+      "category": "misc",
+      "keywords": [
+        "slash",
+        "slash line"
+      ],
+      "synonyms": [
+        "slash line",
+        "slash"
+      ]
+    },
+    "smartphone_line": {
+      "displayName": "Smartphone Line",
+      "category": "device",
+      "keywords": [
+        "smartphone",
+        "mobile",
+        "smartphone line"
+      ],
+      "synonyms": [
+        "smartphone line",
+        "smartphone",
+        "스마트폰",
+        "모바일"
+      ]
+    },
+    "sort_line": {
+      "displayName": "Sort Line",
+      "category": "layout",
+      "keywords": [
+        "sort",
+        "order",
+        "sort line"
+      ],
+      "synonyms": [
+        "sort line",
+        "sort",
+        "정렬"
+      ]
+    },
+    "sparkle_line": {
+      "displayName": "Sparkle Line",
+      "category": "status",
+      "keywords": [
+        "sparkle",
+        "sparkle line"
+      ],
+      "synonyms": [
+        "sparkle line",
+        "sparkle"
+      ]
+    },
+    "spell_check_line": {
+      "displayName": "Spell Check Line",
+      "category": "misc",
+      "keywords": [
+        "spell",
+        "check",
+        "complete",
+        "verify",
+        "spell check line"
+      ],
+      "synonyms": [
+        "spell check line",
+        "spell check",
+        "spell_check",
+        "spell",
+        "체크",
+        "확인",
+        "완료",
+        "check"
+      ]
+    },
+    "square_lock_line": {
+      "displayName": "Square Lock Line",
+      "category": "security",
+      "keywords": [
+        "square",
+        "lock",
+        "security",
+        "private",
+        "square lock line"
+      ],
+      "synonyms": [
+        "square lock line",
+        "square lock",
+        "square_lock",
+        "square",
+        "잠금",
+        "보안",
+        "lock"
+      ]
+    },
+    "square_lock_off_line": {
+      "displayName": "Square Lock Off Line",
+      "category": "security",
+      "keywords": [
+        "square",
+        "lock",
+        "security",
+        "private",
+        "off",
+        "disabled",
+        "square lock off line"
+      ],
+      "synonyms": [
+        "square lock off line",
+        "square lock off",
+        "square_lock_off",
+        "square",
+        "잠금",
+        "보안",
+        "lock",
+        "꺼짐",
+        "비활성",
+        "off"
+      ]
+    },
+    "star_fill": {
+      "displayName": "Star Fill",
+      "category": "misc",
+      "keywords": [
+        "star",
+        "favorite",
+        "star fill"
+      ],
+      "synonyms": [
+        "star fill",
+        "star",
+        "별",
+        "즐겨찾기"
+      ]
+    },
+    "step_fill": {
+      "displayName": "Step Fill",
+      "category": "misc",
+      "keywords": [
+        "step",
+        "footprint",
+        "step fill"
+      ],
+      "synonyms": [
+        "step fill",
+        "step",
+        "단계",
+        "발자국"
+      ]
+    },
+    "stop_circle_line": {
+      "displayName": "Stop Circle Line",
+      "category": "misc",
+      "keywords": [
+        "stop",
+        "circle",
+        "round",
+        "stop circle line"
+      ],
+      "synonyms": [
+        "stop circle line",
+        "stop circle",
+        "stop_circle",
+        "stop",
+        "원형",
+        "circle"
+      ]
+    },
+    "storage_fill": {
+      "displayName": "Storage Fill",
+      "category": "device",
+      "keywords": [
+        "storage",
+        "drive",
+        "disk",
+        "storage fill"
+      ],
+      "synonyms": [
+        "storage fill",
+        "storage",
+        "저장소",
+        "스토리지"
+      ]
+    },
+    "storage_line": {
+      "displayName": "Storage Line",
+      "category": "device",
+      "keywords": [
+        "storage",
+        "drive",
+        "disk",
+        "storage line"
+      ],
+      "synonyms": [
+        "storage line",
+        "storage",
+        "저장소",
+        "스토리지"
+      ]
+    },
+    "table_line": {
+      "displayName": "Table Line",
+      "category": "layout",
+      "keywords": [
+        "table",
+        "grid",
+        "table line"
+      ],
+      "synonyms": [
+        "table line",
+        "table",
+        "테이블",
+        "표"
+      ]
+    },
+    "tag_fill": {
+      "displayName": "Tag Fill",
+      "category": "misc",
+      "keywords": [
+        "tag",
+        "label",
+        "tag fill"
+      ],
+      "synonyms": [
+        "tag fill",
+        "tag",
+        "태그",
+        "라벨"
+      ]
+    },
+    "tag_line": {
+      "displayName": "Tag Line",
+      "category": "misc",
+      "keywords": [
+        "tag",
+        "label",
+        "tag line"
+      ],
+      "synonyms": [
+        "tag line",
+        "tag",
+        "태그",
+        "라벨"
+      ]
+    },
+    "thumbs_down_fill": {
+      "displayName": "Thumbs Down Fill",
+      "category": "status",
+      "keywords": [
+        "thumbs",
+        "reaction",
+        "down",
+        "lower",
+        "thumbs down fill"
+      ],
+      "synonyms": [
+        "thumbs down fill",
+        "thumbs down",
+        "thumbs_down",
+        "좋아요",
+        "싫어요",
+        "thumbs",
+        "아래",
+        "down"
+      ]
+    },
+    "thumbs_down_line": {
+      "displayName": "Thumbs Down Line",
+      "category": "status",
+      "keywords": [
+        "thumbs",
+        "reaction",
+        "down",
+        "lower",
+        "thumbs down line"
+      ],
+      "synonyms": [
+        "thumbs down line",
+        "thumbs down",
+        "thumbs_down",
+        "좋아요",
+        "싫어요",
+        "thumbs",
+        "아래",
+        "down"
+      ]
+    },
+    "thumbs_up_fill": {
+      "displayName": "Thumbs Up Fill",
+      "category": "status",
+      "keywords": [
+        "thumbs",
+        "reaction",
+        "up",
+        "upper",
+        "thumbs up fill"
+      ],
+      "synonyms": [
+        "thumbs up fill",
+        "thumbs up",
+        "thumbs_up",
+        "좋아요",
+        "싫어요",
+        "thumbs",
+        "위",
+        "up"
+      ]
+    },
+    "thumbs_up_line": {
+      "displayName": "Thumbs Up Line",
+      "category": "status",
+      "keywords": [
+        "thumbs",
+        "reaction",
+        "up",
+        "upper",
+        "thumbs up line"
+      ],
+      "synonyms": [
+        "thumbs up line",
+        "thumbs up",
+        "thumbs_up",
+        "좋아요",
+        "싫어요",
+        "thumbs",
+        "위",
+        "up"
+      ]
+    },
+    "time_fill": {
+      "displayName": "Time Fill",
+      "category": "time",
+      "keywords": [
+        "time",
+        "clock",
+        "schedule",
+        "time fill"
+      ],
+      "synonyms": [
+        "time fill",
+        "time",
+        "시간",
+        "시계"
+      ]
+    },
+    "time_line": {
+      "displayName": "Time Line",
+      "category": "time",
+      "keywords": [
+        "time",
+        "clock",
+        "schedule",
+        "time line"
+      ],
+      "synonyms": [
+        "time line",
+        "time",
+        "시간",
+        "시계"
+      ]
+    },
+    "translate_line": {
+      "displayName": "Translate Line",
+      "category": "misc",
+      "keywords": [
+        "translate",
+        "translate line"
+      ],
+      "synonyms": [
+        "translate line",
+        "translate"
+      ]
+    },
+    "unlock_line": {
+      "displayName": "Unlock Line",
+      "category": "security",
+      "keywords": [
+        "unlock",
+        "open",
+        "unlock line"
+      ],
+      "synonyms": [
+        "unlock line",
+        "unlock",
+        "잠금 해제"
+      ]
+    },
+    "unpin_line": {
+      "displayName": "Unpin Line",
+      "category": "misc",
+      "keywords": [
+        "unpin",
+        "unpin line"
+      ],
+      "synonyms": [
+        "unpin line",
+        "unpin"
+      ]
+    },
+    "upload_line": {
+      "displayName": "Upload Line",
+      "category": "actions",
+      "keywords": [
+        "upload",
+        "send",
+        "upload line"
+      ],
+      "synonyms": [
+        "upload line",
+        "upload",
+        "업로드",
+        "올리기"
+      ]
+    },
+    "user_check_fill": {
+      "displayName": "User Check Fill",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "check",
+        "complete",
+        "verify",
+        "user check fill"
+      ],
+      "synonyms": [
+        "user check fill",
+        "user check",
+        "user_check",
+        "사용자",
+        "유저",
+        "계정",
+        "user",
+        "체크",
+        "확인",
+        "완료",
+        "check"
+      ]
+    },
+    "user_fill": {
+      "displayName": "User Fill",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "user fill"
+      ],
+      "synonyms": [
+        "user fill",
+        "user",
+        "사용자",
+        "유저",
+        "계정"
+      ]
+    },
+    "user_group_line": {
+      "displayName": "User Group Line",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "group",
+        "team",
+        "user group line"
+      ],
+      "synonyms": [
+        "user group line",
+        "user group",
+        "user_group",
+        "사용자",
+        "유저",
+        "계정",
+        "user",
+        "그룹",
+        "팀",
+        "group"
+      ]
+    },
+    "user_line": {
+      "displayName": "User Line",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "user line"
+      ],
+      "synonyms": [
+        "user line",
+        "user",
+        "사용자",
+        "유저",
+        "계정"
+      ]
+    },
+    "user_setting_fill": {
+      "displayName": "User Setting Fill",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "settings",
+        "config",
+        "setup",
+        "user setting fill"
+      ],
+      "synonyms": [
+        "user setting fill",
+        "user setting",
+        "user_setting",
+        "사용자",
+        "유저",
+        "계정",
+        "user",
+        "설정",
+        "settings"
+      ]
+    },
+    "user_shield_fill": {
+      "displayName": "User Shield Fill",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "shield",
+        "protect",
+        "security",
+        "user shield fill"
+      ],
+      "synonyms": [
+        "user shield fill",
+        "user shield",
+        "user_shield",
+        "사용자",
+        "유저",
+        "계정",
+        "user",
+        "보호",
+        "쉴드",
+        "shield"
+      ]
+    },
+    "user_track_fill": {
+      "displayName": "User Track Fill",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "track",
+        "monitor",
+        "user track fill"
+      ],
+      "synonyms": [
+        "user track fill",
+        "user track",
+        "user_track",
+        "사용자",
+        "유저",
+        "계정",
+        "user",
+        "추적",
+        "tracking",
+        "track"
+      ]
+    },
+    "user2_fill": {
+      "displayName": "User2 Fill",
+      "category": "user",
+      "keywords": [
+        "user",
+        "account",
+        "person",
+        "2",
+        "user2 fill"
+      ],
+      "synonyms": [
+        "user2 fill",
+        "user2",
+        "사용자",
+        "유저",
+        "계정",
+        "user",
+        "2"
+      ]
+    },
+    "users_1_fill": {
+      "displayName": "Users 1 Fill",
+      "category": "user",
+      "keywords": [
+        "users",
+        "group",
+        "team",
+        "1",
+        "users 1 fill"
+      ],
+      "synonyms": [
+        "users 1 fill",
+        "users 1",
+        "users_1",
+        "사용자들",
+        "팀",
+        "그룹",
+        "users",
+        "1"
+      ]
+    },
+    "users_fill": {
+      "displayName": "Users Fill",
+      "category": "user",
+      "keywords": [
+        "users",
+        "group",
+        "team",
+        "users fill"
+      ],
+      "synonyms": [
+        "users fill",
+        "users",
+        "사용자들",
+        "팀",
+        "그룹"
+      ]
+    },
+    "users_position_fill": {
+      "displayName": "Users Position Fill",
+      "category": "user",
+      "keywords": [
+        "users",
+        "group",
+        "team",
+        "position",
+        "location",
+        "users position fill"
+      ],
+      "synonyms": [
+        "users position fill",
+        "users position",
+        "users_position",
+        "사용자들",
+        "팀",
+        "그룹",
+        "users",
+        "위치",
+        "포지션",
+        "position"
+      ]
+    },
+    "window_fill": {
+      "displayName": "Window Fill",
+      "category": "device",
+      "keywords": [
+        "window",
+        "screen",
+        "window fill"
+      ],
+      "synonyms": [
+        "window fill",
+        "window",
+        "창"
+      ]
+    }
+  }
+}

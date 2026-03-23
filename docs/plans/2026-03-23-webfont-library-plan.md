@@ -68,7 +68,7 @@ Expected: direct SVG fetch is still present and generated font CSS is not the pr
 - load `/generated-fonts/my-icon-font.css`
 - generate class names that match built glyph names
 - render icon cards using the built webfont classes
-- keep selection and metadata behavior intact
+- remove dependence on card selection state and treat the built library grid itself as the source of truth
 
 **Step 4: Run test to verify it passes**
 
@@ -206,7 +206,7 @@ Track required behaviors:
 - drag-and-drop with clear state feedback
 - `aria-live` status updates
 - touch-safe bottom controller controls
-- card selection and built metadata remain accessible
+- built-library loading, upload busy state, and failure feedback remain accessible
 
 **Step 2: Run test to verify it fails**
 
