@@ -55,3 +55,10 @@ test('palette also uses the shared dropdown component instead of button swatches
     assert.doesNotMatch(indexHtml, /class="palette-button/);
     assert.match(indexHtml, /const paletteDropdownComponent = createDropdownComponent\(\s*\{/);
 });
+
+test('upload button is placed after the palette dropdown inside the bottom controller', () => {
+    assert.match(
+        indexHtml,
+        /<aside id="bottomController"[\s\S]*<div class="controller-group">[\s\S]*<div class="palette-dropdown dropdown dropdown--up">[\s\S]*<\/div>[\s\S]*<\/div>[\s\S]*<div class="controller-group controller-upload-group">[\s\S]*<button id="uploadButton" class="upload-button" type="button">SVG 업로드<\/button>[\s\S]*<input id="uploadInput" class="visually-hidden" type="file"/s
+    );
+});

@@ -300,7 +300,7 @@
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
-            justify-content: flex-end;
+            justify-content: flex-start;
         }
 
         .meta-pill {
@@ -893,7 +893,7 @@
             left: 18px;
             right: 18px;
             bottom: 18px;
-            border-radius: 999px;
+            border-radius: 30px;
             border: 1px solid rgba(30, 31, 36, 0.08);
             background: rgba(252, 250, 247, 0.94);
             backdrop-filter: blur(20px);
@@ -901,7 +901,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 18px;
+            gap: 4px;
             padding: 4px;
             z-index: 40;
         }
@@ -916,6 +916,10 @@
         .controller-search-group {
             flex: 1 1 260px;
             min-width: 220px;
+        }
+
+        .controller-upload-group {
+            flex: 0 0 auto;
         }
 
         .controller-search {
@@ -1059,9 +1063,9 @@
             .bottom-controller {
                 flex-wrap: wrap;
                 justify-content: flex-start;
-                border-radius: 32px;
+                border-radius: 30px;
                 padding: 4px;
-                gap: 20px 28px;
+                gap: 4px;
             }
         }
 
@@ -1080,12 +1084,21 @@
                 padding: 8px;
             }
 
+            .bottom-controller {
+                left: 14px;
+                right: 14px;
+                bottom: 14px;
+            }
+
             .topbar-controls,
-            .bottom-controller,
             .search-field,
             .filter-select,
+            .category-dropdown,
+            .controller-search,
             .weight-dropdown,
-            .size-dropdown {
+            .size-dropdown,
+            .palette-dropdown,
+            .upload-button {
                 min-width: 100%;
                 width: 100%;
             }
@@ -1105,8 +1118,6 @@
     <div class="app-shell">
         <header class="topbar">
             <span class="visually-hidden">IconFactory</span>
-            <button id="uploadButton" class="upload-button" type="button">SVG 업로드</button>
-            <input id="uploadInput" class="visually-hidden" type="file" accept=".svg,image/svg+xml" multiple>
         </header>
 
         <main class="content-scroll">
@@ -1184,6 +1195,11 @@
                 </button>
                 <div id="paletteMenu" class="dropdown-menu palette-menu" role="listbox" aria-label="컬러 팔레트 선택"></div>
             </div>
+        </div>
+
+        <div class="controller-group controller-upload-group">
+            <button id="uploadButton" class="upload-button" type="button">SVG 업로드</button>
+            <input id="uploadInput" class="visually-hidden" type="file" accept=".svg,image/svg+xml" multiple>
         </div>
     </aside>
 

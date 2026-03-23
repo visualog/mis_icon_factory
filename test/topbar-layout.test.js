@@ -7,9 +7,9 @@ const indexHtml = fs.readFileSync(
     'utf8'
 );
 
-test('topbar keeps only the upload action and no longer contains search or category controls', () => {
+test('topbar no longer contains upload, search, or category controls', () => {
     const topbarHtml = indexHtml.match(/<header class="topbar">[\s\S]*?<\/header>/)?.[0] || '';
-    assert.match(topbarHtml, /id="uploadButton"/);
+    assert.doesNotMatch(topbarHtml, /id="uploadButton"/);
     assert.doesNotMatch(topbarHtml, /id="searchInput"/);
     assert.doesNotMatch(topbarHtml, /id="categoryTrigger"/);
 });
