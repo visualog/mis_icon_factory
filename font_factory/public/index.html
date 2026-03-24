@@ -44,10 +44,12 @@
         body {
             font-family: var(--font-main);
             color: var(--text);
+            /*
             background:
                 radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0, rgba(255, 255, 255, 0) 32%),
                 radial-gradient(circle at top right, rgba(235, 228, 216, 0.92) 0, rgba(235, 228, 216, 0) 35%),
                 linear-gradient(180deg, #fbfaf8 0%, var(--bg) 50%, #f1eee8 100%);
+            */
             overflow: hidden;
         }
 
@@ -80,12 +82,15 @@
         }
 
         .topbar {
-            flex: 0 0 auto;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 16px;
-            padding: 18px 24px 8px;
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         .topbar-controls {
@@ -111,9 +116,47 @@
             overflow: hidden;
         }
 
+        .search-field::-webkit-search-cancel-button {
+            appearance: none;
+        }
+
+        .search-combo:hover .search-combo-shell,
         .search-combo:focus-within .search-combo-shell {
-            outline: 3px solid rgba(31, 111, 255, 0.35);
-            outline-offset: 3px;
+            border-color: var(--line-strong);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
+        }
+
+        .search-clear-button {
+            width: 40px;
+            height: 40px;
+            margin-right: 4px;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: rgba(30, 31, 36, 0.52);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.16s ease, color 0.16s ease, background-color 0.16s ease;
+        }
+
+        .search-clear-button:hover,
+        .search-clear-button:focus-visible {
+            background: rgba(30, 31, 36, 0.06);
+            color: rgba(30, 31, 36, 0.82);
+            outline: none;
+        }
+
+        .search-clear-button .icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .search-combo.has-value .search-clear-button {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .dropdown {
@@ -122,10 +165,12 @@
 
         .dropdown-trigger {
             min-height: 48px;
-            padding: 0 16px 0 18px;
+            padding: 0 12px;
             border-radius: 999px;
             border: 1px solid var(--line);
-            background: rgba(255, 255, 255, 0.74);
+            background: rgba(255, 255, 255, 0.42);
+            -webkit-backdrop-filter: blur(12px) saturate(135%);
+            backdrop-filter: blur(12px) saturate(135%);
             box-shadow: 0 10px 24px rgba(48, 41, 29, 0.04);
             color: var(--text);
             display: inline-flex;
@@ -133,7 +178,7 @@
             justify-content: space-between;
             gap: 12px;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: -0.02em;
             text-align: left;
         }
@@ -148,22 +193,30 @@
 
         .dropdown.open .dropdown-trigger {
             border-color: var(--line-strong);
-            box-shadow: 0 14px 32px rgba(48, 41, 29, 0.08);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
+        }
+
+        .dropdown-trigger:hover,
+        .dropdown-trigger:focus-visible {
+            border-color: var(--line-strong);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
         }
 
         .dropdown-menu {
             position: absolute;
             min-width: 220px;
             padding: 8px;
+            overflow: hidden;
             border-radius: 20px;
             border: 1px solid rgba(30, 31, 36, 0.08);
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(16px);
-            box-shadow: 0 18px 40px rgba(48, 41, 29, 0.14);
+            background: rgba(255, 255, 255, 0.62);
+            -webkit-backdrop-filter: blur(18px) saturate(145%);
+            backdrop-filter: blur(18px) saturate(145%);
+            box-shadow: 0 10px 24px rgba(48, 41, 29, 0.08);
             display: none;
             flex-direction: column;
             gap: 4px;
-            z-index: 30;
+            z-index: 40;
         }
 
         .dropdown.open .dropdown-menu {
@@ -180,6 +233,7 @@
             bottom: calc(100% + 10px);
             right: 0;
             transform-origin: bottom right;
+            box-shadow: 0 -10px 24px rgba(48, 41, 29, 0.08);
         }
 
         .dropdown-option {
@@ -194,7 +248,7 @@
             justify-content: space-between;
             gap: 12px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             letter-spacing: -0.02em;
             text-align: left;
         }
@@ -208,13 +262,10 @@
             color: var(--accent);
         }
 
-        .dropdown-option.active::after {
-            content: '';
-            width: 6px;
-            height: 10px;
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(45deg);
+        .dropdown-option-check {
+            font-size: 20px;
+            line-height: 1;
+            flex: 0 0 auto;
         }
 
         .category-trigger {
@@ -223,8 +274,21 @@
             padding-right: 14px;
         }
 
+        .kind-trigger {
+            min-width: 96px;
+            flex: 0 0 96px;
+            padding-right: 14px;
+        }
+
         .category-menu {
             min-width: 220px;
+            left: 0;
+            right: auto;
+            transform-origin: bottom left;
+        }
+
+        .kind-menu {
+            min-width: 132px;
             left: 0;
             right: auto;
             transform-origin: bottom left;
@@ -236,23 +300,66 @@
 
         .upload-button {
             min-height: 48px;
-            padding: 0 18px;
+            padding: 0 4px;
             border-radius: 999px;
             border: 1px solid rgba(30, 31, 36, 0.08);
-            background: rgba(255, 255, 255, 0.78);
+            background: rgba(255, 255, 255, 0.4);
+            -webkit-backdrop-filter: blur(12px) saturate(135%);
+            backdrop-filter: blur(12px) saturate(135%);
             box-shadow: 0 8px 24px rgba(48, 41, 29, 0.08);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 0;
             color: var(--text);
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: -0.02em;
+            position: relative;
+            transition: background-color 0.18s ease, border-color 0.18s ease, border-width 0.18s ease, box-shadow 0.18s ease;
         }
 
-        .upload-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 14px 28px rgba(48, 41, 29, 0.12);
+        .upload-button-icon {
+            font-size: 40px;
+            line-height: 1;
+            flex: 0 0 auto;
+            color: var(--success);
+        }
+
+        .upload-button::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 12px);
+            transform: translateX(-50%) translateY(6px);
+            min-height: 32px;
+            padding: 0 12px;
+            border-radius: 999px;
+            background: rgba(30, 31, 36, 0.92);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.16s ease, transform 0.16s ease;
+        }
+
+        .upload-button:hover,
+        .upload-button:focus-visible {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: var(--line-strong);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
+        }
+
+        .upload-button:hover::after,
+        .upload-button:focus-visible::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         .upload-button:disabled {
@@ -262,18 +369,8 @@
             opacity: 0.72;
         }
 
-        .upload-button::before {
-            content: '+';
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--text);
-            color: #fff;
-            font-size: 18px;
-            line-height: 1;
+        .upload-button:disabled::after {
+            display: none;
         }
 
         .content-scroll {
@@ -289,10 +386,38 @@
         }
 
         .library-hero {
-            padding: 4px 0 12px;
+            padding: 10px 0 8px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            isolation: isolate;
+        }
+
+        .library-hero::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 100vw;
+            height: 100%;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg, rgba(249, 246, 239, 0.58), rgba(249, 246, 239, 0.34) 72%, rgba(249, 246, 239, 0));
+            -webkit-backdrop-filter: blur(8px) saturate(120%);
+            backdrop-filter: blur(8px) saturate(120%);
+            box-shadow: inset 0 -1px 0 rgba(30, 31, 36, 0);
+            pointer-events: none;
+            z-index: -1;
+            transition: background 0.22s ease, -webkit-backdrop-filter 0.22s ease, backdrop-filter 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .library-hero.is-scrolled::before {
+            background: linear-gradient(180deg, rgba(249, 246, 239, 0.94), rgba(249, 246, 239, 0.82) 72%, rgba(249, 246, 239, 0));
+            -webkit-backdrop-filter: blur(18px) saturate(145%);
+            backdrop-filter: blur(18px) saturate(145%);
+            box-shadow: inset 0 -1px 0 rgba(30, 31, 36, 0.08);
         }
 
         .hero-meta {
@@ -300,11 +425,107 @@
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
-            justify-content: flex-start;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .hero-meta-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            margin-left: auto;
+            overflow: visible;
+        }
+
+        .hero-view-toggle {
+            min-height: 40px;
+            padding: 0 12px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.42);
+            -webkit-backdrop-filter: blur(12px) saturate(135%);
+            backdrop-filter: blur(12px) saturate(135%);
+            color: var(--text);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            cursor: pointer;
+            appearance: none;
+            box-shadow: 0 8px 24px rgba(48, 41, 29, 0.08);
+            position: relative;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        .hero-view-toggle:hover,
+        .hero-view-toggle:focus-visible {
+            border-color: var(--line-strong);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
+        }
+
+        .hero-view-toggle::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 12px);
+            transform: translateX(-50%) translateY(6px);
+            min-height: 32px;
+            padding: 0 12px;
+            border-radius: 999px;
+            background: rgba(30, 31, 36, 0.92);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 60;
+            transition: opacity 0.16s ease, transform 0.16s ease;
+        }
+
+        .hero-view-toggle:hover::after,
+        .hero-view-toggle:focus-visible::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .hero-view-icon {
+            font-size: 18px;
+            line-height: 1;
+            flex: 0 0 auto;
+        }
+
+        .hero-sort {
+            position: relative;
+        }
+
+        .hero-sort-trigger {
+            min-height: 40px;
+            min-width: 132px;
+            padding: 0 12px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-sort .dropdown-menu {
+            min-width: 148px;
+            right: 0;
+            left: auto;
+            transform-origin: top right;
         }
 
         .meta-pill {
-            min-height: 38px;
+            min-height: 40px;
             padding: 0 14px;
             border-radius: 999px;
             border: 1px solid var(--line);
@@ -645,11 +866,22 @@
             box-shadow: none;
             background: transparent;
             border-radius: 0;
+            font-family: var(--font-main), 'MyIconFont';
+            font-size: 14px;
+            line-height: 1;
         }
 
         .search-combo .search-field {
             min-width: 0;
             flex: 1 1 auto;
+        }
+
+        .search-combo .search-field::placeholder {
+            font-family: var(--font-main);
+            font-size: inherit;
+            font-weight: inherit;
+            letter-spacing: inherit;
+            line-height: 1;
         }
 
         .search-combo .search-field:focus-visible,
@@ -661,16 +893,28 @@
         .library-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 16px;
+            gap: 4px;
+        }
+
+        .library-grid.list-view {
+            grid-template-columns: 1fr;
+            gap: 4px;
         }
 
         .icon-card,
         .empty-card {
             border-radius: 24px;
-            border: 1px solid rgba(30, 31, 36, 0.06);
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.74));
             box-shadow: 0 12px 30px rgba(48, 41, 29, 0.05);
             min-height: 210px;
+        }
+
+        .empty-card {
+            border: 1px solid rgba(30, 31, 36, 0.06);
+        }
+
+        .icon-card {
+            border: 0;
         }
 
         .icon-card {
@@ -687,6 +931,225 @@
             box-shadow: 0 18px 34px rgba(48, 41, 29, 0.1);
         }
 
+        .icon-card.list-card {
+            min-height: 132px;
+            display: grid;
+            grid-template-columns: 96px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 18px;
+        }
+
+        .list-card-preview {
+            width: 96px;
+            height: 96px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 31, 36, 0.04);
+            flex: 0 0 auto;
+        }
+
+        .list-card-main {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .list-card-search-terms {
+            color: var(--text-subtle);
+            font-size: 12px;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .list-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .list-card-meta-chip {
+            min-height: 24px;
+            padding: 0 10px;
+            border-radius: 999px;
+            background: rgba(30, 31, 36, 0.06);
+            color: var(--text-subtle);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            display: inline-flex;
+            align-items: center;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .list-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center;
+            align-content: center;
+            gap: 8px;
+            min-width: 284px;
+        }
+
+        .list-action-group {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .list-copy-button,
+        .list-action-main {
+            min-height: 36px;
+            padding: 0 14px;
+            border: 1px solid rgba(30, 31, 36, 0.08);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.82);
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .list-copy-button {
+            font-weight: 500;
+        }
+
+        .list-action-main {
+            min-width: 112px;
+        }
+
+        .glyph-copy-button {
+            border-color: rgba(31, 111, 255, 0.16);
+            background: rgba(31, 111, 255, 0.1);
+            color: var(--accent);
+        }
+
+        .svg-download-button {
+            background: rgba(30, 31, 36, 0.04);
+        }
+
+        .list-copy-button-icon {
+            font-size: 16px;
+            line-height: 1;
+            flex: 0 0 auto;
+        }
+
+        .list-action-menu-toggle {
+            width: 36px;
+            min-width: 36px;
+            min-height: 36px;
+            padding: 0;
+            border: 1px solid rgba(30, 31, 36, 0.08);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.82);
+            color: var(--text-subtle);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+        }
+
+        .list-action-menu-toggle .icon {
+            font-size: 18px;
+            line-height: 1;
+            transition: transform 160ms ease;
+        }
+
+        .list-action-group.open .list-action-menu-toggle .icon {
+            transform: rotate(180deg);
+        }
+
+        .list-copy-button:hover,
+        .list-action-main:hover {
+            border-color: rgba(30, 31, 36, 0.14);
+            box-shadow: inset 0 0 0 1px rgba(30, 31, 36, 0.14);
+        }
+
+        .list-action-menu-toggle:hover,
+        .list-action-menu-toggle:focus-visible,
+        .list-action-group.open .list-action-menu-toggle,
+        .list-action-group.open .list-action-main,
+        .list-action-main:hover,
+        .list-action-main:focus-visible {
+            border-color: rgba(30, 31, 36, 0.14);
+            box-shadow: inset 0 0 0 1px rgba(30, 31, 36, 0.14);
+        }
+
+        .list-copy-button:disabled,
+        .list-action-main:disabled {
+            cursor: not-allowed;
+            opacity: 0.62;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .list-action-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 172px;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.78);
+            -webkit-backdrop-filter: blur(18px) saturate(145%);
+            backdrop-filter: blur(18px) saturate(145%);
+            box-shadow: 0 12px 28px rgba(48, 41, 29, 0.08);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 12;
+        }
+
+        .list-action-group.open .list-action-menu {
+            display: flex;
+        }
+
+        .list-action-item {
+            min-height: 34px;
+            padding: 0 12px;
+            border: 0;
+            border-radius: 12px;
+            background: transparent;
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .list-action-item:hover,
+        .list-action-item:focus-visible {
+            background: rgba(31, 111, 255, 0.08);
+            color: var(--accent);
+        }
+
+        .list-action-item-icon {
+            font-size: 16px;
+            line-height: 1;
+            flex: 0 0 auto;
+        }
+
         .card-top {
             display: flex;
             justify-content: space-between;
@@ -695,17 +1158,17 @@
         }
 
         .kind-pill {
-            min-height: 28px;
+            min-height: 24px;
             padding: 0 10px;
             border-radius: 999px;
             background: rgba(30, 31, 36, 0.06);
             color: var(--text-subtle);
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 10px;
             display: inline-flex;
             align-items: center;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0;
         }
 
         .kind-pill.fill {
@@ -735,15 +1198,25 @@
         }
 
         .card-title {
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            text-align: center;
+        }
+
+        .list-card .card-title {
+            text-align: left;
+            font-size: 16px;
         }
 
         .card-subtitle {
             font-family: var(--font-mono);
             font-size: 11px;
             color: var(--text-subtle);
+        }
+
+        .list-card .card-subtitle {
+            font-size: 12px;
         }
 
         .card-devtools {
@@ -791,6 +1264,7 @@
             color: #fff;
             font-family: var(--font-mono);
             font-size: 11px;
+            font-weight: 500;
         }
 
         .card-copy-button:hover {
@@ -799,7 +1273,11 @@
 
         .empty-card {
             grid-column: 1 / -1;
-            padding: 40px 24px;
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+            min-height: 320px;
+            padding: 72px 24px 56px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -807,21 +1285,41 @@
         }
 
         .empty-card.error-state {
+            min-height: 210px;
+            padding: 40px 24px;
+            border: 1px solid rgba(230, 76, 60, 0.16);
             border-color: rgba(230, 76, 60, 0.16);
             background: linear-gradient(180deg, rgba(255, 248, 247, 0.98), rgba(255, 244, 242, 0.84));
+            box-shadow: 0 12px 30px rgba(48, 41, 29, 0.05);
+        }
+
+        .empty-card-content {
+            max-width: 480px;
         }
 
         .empty-card strong {
             display: block;
             margin-bottom: 10px;
-            font-size: 18px;
+            font-size: 22px;
+            font-weight: 600;
             letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
         .empty-card p {
             margin: 0;
             color: var(--text-subtle);
-            line-height: 1.6;
+            font-size: 13px;
+            line-height: 1.55;
+            letter-spacing: -0.01em;
+        }
+
+        .empty-card-filters {
+            margin-top: 14px;
+            color: var(--text-subtle);
+            font-size: 12px;
+            line-height: 1.5;
+            letter-spacing: -0.01em;
         }
 
         .pending-build-card {
@@ -893,17 +1391,51 @@
             left: 18px;
             right: 18px;
             bottom: 18px;
-            border-radius: 30px;
-            border: 1px solid rgba(30, 31, 36, 0.08);
-            background: rgba(252, 250, 247, 0.94);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 24px 48px rgba(48, 41, 29, 0.14);
+            border-radius: 28px;
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 4px;
             padding: 4px;
             z-index: 40;
+            isolation: isolate;
+        }
+
+        .bottom-controller::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            border-radius: inherit;
+            border: 1px solid rgba(255, 255, 255, 0.38);
+            background:
+                radial-gradient(140% 140% at 50% -28%, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.28) 24%, rgba(255, 255, 255, 0) 52%),
+                radial-gradient(120% 120% at 50% 132%, rgba(223, 214, 197, 0.26) 0%, rgba(223, 214, 197, 0) 58%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.58) 42%, rgba(242, 238, 230, 0.72) 100%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            backdrop-filter: blur(28px) saturate(180%);
+            box-shadow:
+                0 14px 32px rgba(48, 41, 29, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.92),
+                inset 0 -1px 0 rgba(122, 114, 98, 0.1),
+                inset 0 12px 24px rgba(255, 255, 255, 0.24);
+        }
+
+        .bottom-controller::after {
+            content: "";
+            position: absolute;
+            left: 28px;
+            right: 28px;
+            bottom: -6px;
+            height: 14px;
+            z-index: -2;
+            pointer-events: none;
+            border-radius: 999px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.14) 46%, rgba(255, 255, 255, 0) 76%);
+            filter: blur(10px);
+            opacity: 0.82;
         }
 
         .controller-group {
@@ -927,7 +1459,7 @@
         }
 
         .weight-dropdown {
-            min-width: 164px;
+            min-width: 128px;
         }
 
         .category-dropdown {
@@ -935,12 +1467,12 @@
         }
 
         .weight-trigger {
-            min-width: 164px;
+            min-width: 128px;
             padding-right: 14px;
         }
 
         .weight-menu {
-            min-width: 180px;
+            min-width: 164px;
         }
 
         .weight-option {
@@ -948,16 +1480,16 @@
         }
 
         .size-dropdown {
-            min-width: 116px;
+            min-width: 96px;
         }
 
         .size-trigger {
-            min-width: 116px;
+            min-width: 96px;
             padding-right: 14px;
         }
 
         .size-menu {
-            min-width: 132px;
+            min-width: 112px;
         }
 
         .size-option {
@@ -1039,8 +1571,8 @@
             background: rgba(230, 76, 60, 0.94);
         }
 
-        button:focus-visible,
-        input:focus-visible,
+        button:focus-visible:not(.dropdown-trigger),
+        input:focus-visible:not(.search-field),
         select:focus-visible {
             outline: 3px solid rgba(31, 111, 255, 0.35);
             outline-offset: 3px;
@@ -1063,7 +1595,7 @@
             .bottom-controller {
                 flex-wrap: wrap;
                 justify-content: flex-start;
-                border-radius: 30px;
+                border-radius: 28px;
                 padding: 4px;
                 gap: 4px;
             }
@@ -1095,6 +1627,7 @@
             .filter-select,
             .category-dropdown,
             .controller-search,
+            .kind-dropdown,
             .weight-dropdown,
             .size-dropdown,
             .palette-dropdown,
@@ -1125,6 +1658,22 @@
                 <section class="library-hero">
                     <div class="hero-meta">
                         <span id="lastBuiltAt" class="meta-pill success">빌드 대기</span>
+                        <div class="hero-meta-actions">
+                            <button id="viewToggleButton" class="hero-view-toggle" type="button" aria-pressed="false" aria-label="카드 표시 형식 전환" data-tooltip="리스트 카드 형식으로 전환">
+                                <i id="viewToggleIcon" class="icon icon--grid_view_sm_line hero-view-icon" aria-hidden="true"></i>
+                                <span id="viewToggleLabel">Grid</span>
+                            </button>
+                            <div class="hero-sort dropdown dropdown--down">
+                                <button id="sortTrigger" class="dropdown-trigger hero-sort-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu">
+                                    <span id="sortTriggerLabel">이름순</span>
+                                    <i id="sortTriggerIcon" class="icon icon--chevron_down_line dropdown-trigger-icon" aria-hidden="true"></i>
+                                </button>
+                                <div id="sortMenu" class="dropdown-menu hero-sort-menu" role="listbox" aria-label="정렬 선택">
+                                    <button type="button" class="dropdown-option hero-sort-option active" data-dropdown-value="name" role="option" aria-selected="true">이름순</button>
+                                    <button type="button" class="dropdown-option hero-sort-option" data-dropdown-value="category" role="option" aria-selected="false">카테고리순</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -1156,10 +1705,23 @@
             </div>
         </div>
 
+        <div class="controller-group">
+            <div class="kind-dropdown dropdown dropdown--up">
+                <button id="kindTrigger" class="dropdown-trigger kind-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="kindMenu">
+                    <span id="kindTriggerLabel">전체</span>
+                    <i id="kindTriggerIcon" class="icon icon--chevron_down_line dropdown-trigger-icon" aria-hidden="true"></i>
+                </button>
+                <div id="kindMenu" class="dropdown-menu kind-menu" role="listbox" aria-label="타입 선택"></div>
+            </div>
+        </div>
+
         <div class="controller-group controller-search-group">
             <div class="search-combo controller-search">
                 <div class="search-combo-shell">
                     <input id="searchInput" class="search-field" type="search" placeholder="아이콘 검색">
+                    <button id="searchClearButton" class="search-clear-button" type="button" aria-label="검색어 지우기">
+                        <i class="icon icon--close_sm_line" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1167,7 +1729,7 @@
         <div class="controller-group">
             <div class="weight-dropdown dropdown dropdown--up">
                 <button id="weightTrigger" class="dropdown-trigger weight-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="weightMenu">
-                    <span id="weightTriggerLabel">Regular 400</span>
+                    <span id="weightTriggerLabel">Regular</span>
                     <i id="weightTriggerIcon" class="icon icon--chevron_down_line dropdown-trigger-icon" aria-hidden="true"></i>
                 </button>
                 <div id="weightMenu" class="dropdown-menu weight-menu" role="listbox" aria-label="아이콘 두께 선택"></div>
@@ -1198,7 +1760,10 @@
         </div>
 
         <div class="controller-group controller-upload-group">
-            <button id="uploadButton" class="upload-button" type="button">SVG 업로드</button>
+            <button id="uploadButton" class="upload-button" type="button" aria-label="SVG 업로드" data-tooltip="SVG 업로드">
+                <i class="icon icon--plus_circle_fill upload-button-icon" aria-hidden="true"></i>
+                <span id="uploadButtonLabel" class="visually-hidden">SVG 업로드</span>
+            </button>
             <input id="uploadInput" class="visually-hidden" type="file" accept=".svg,image/svg+xml" multiple>
         </div>
     </aside>
@@ -1229,6 +1794,10 @@
 
         const previewWeights = [300, 400, 500, 600, 700];
         const previewSizes = [20, 24, 28, 32, 40, 48, 64];
+        const SORT_OPTIONS = [
+            { key: 'name', label: '이름순' },
+            { key: 'category', label: '카테고리순' }
+        ];
         const PALETTE_OPTIONS = [
             { key: 'ink', label: 'Ink', color: '#1e1f24' },
             { key: 'signal-blue', label: 'Signal Blue', color: '#1f6fff' },
@@ -1241,7 +1810,10 @@
             icons: [],
             pendingBuilds: [],
             category: 'all',
+            kind: 'all',
             query: '',
+            viewMode: 'grid',
+            sortMode: 'name',
             previewWeight: 400,
             previewSize: 24,
             previewColor: '#1e1f24',
@@ -1258,12 +1830,30 @@
         const dragOverlayTitle = document.getElementById('dragOverlayTitle');
         const dragOverlayDesc = document.getElementById('dragOverlayDesc');
         const bottomController = document.getElementById('bottomController');
+        const contentScroll = document.querySelector('.content-scroll');
+        const libraryHero = document.querySelector('.library-hero');
+        const searchCombo = document.querySelector('.search-combo');
         const searchInput = document.getElementById('searchInput');
+        const searchClearButton = document.getElementById('searchClearButton');
+        const uploadButtonLabel = document.getElementById('uploadButtonLabel');
+        const viewToggleButton = document.getElementById('viewToggleButton');
+        const viewToggleIcon = document.getElementById('viewToggleIcon');
+        const viewToggleLabel = document.getElementById('viewToggleLabel');
+        const sortDropdown = document.querySelector('.hero-sort');
+        const sortTrigger = document.getElementById('sortTrigger');
+        const sortTriggerLabel = document.getElementById('sortTriggerLabel');
+        const sortTriggerIcon = document.getElementById('sortTriggerIcon');
+        const sortMenu = document.getElementById('sortMenu');
         const categoryDropdown = document.querySelector('.category-dropdown');
         const categoryTrigger = document.getElementById('categoryTrigger');
         const categoryTriggerLabel = document.getElementById('categoryTriggerLabel');
         const categoryTriggerIcon = document.getElementById('categoryTriggerIcon');
         const categoryMenu = document.getElementById('categoryMenu');
+        const kindDropdown = document.querySelector('.kind-dropdown');
+        const kindTrigger = document.getElementById('kindTrigger');
+        const kindTriggerLabel = document.getElementById('kindTriggerLabel');
+        const kindTriggerIcon = document.getElementById('kindTriggerIcon');
+        const kindMenu = document.getElementById('kindMenu');
         const libraryGrid = document.getElementById('libraryGrid');
         const lastBuiltAt = document.getElementById('lastBuiltAt');
         const weightDropdown = document.querySelector('.weight-dropdown');
@@ -1285,8 +1875,148 @@
         const statusToast = document.getElementById('statusToast');
         const generatedFontStyle = document.getElementById('generatedFontStyle');
         const dropdownComponents = [];
+        const glyphCharacterMap = new Map();
         let dragOverlayHideTimer = null;
         let dragOverlayResetTimer = null;
+
+        function decodeCssGlyphCharacter(rawValue = '') {
+            const match = rawValue.match(/\\([0-9a-f]{1,6})/i);
+            if (!match) {
+                return '';
+            }
+
+            const codePoint = Number.parseInt(match[1], 16);
+            if (!Number.isFinite(codePoint)) {
+                return '';
+            }
+
+            try {
+                return String.fromCodePoint(codePoint);
+            } catch (error) {
+                return '';
+            }
+        }
+
+        function syncGlyphCharacterMap(cssContent = '') {
+            glyphCharacterMap.clear();
+
+            const glyphRulePattern = /\.icon--([a-z0-9_-]+)::before\s*\{\s*content:\s*"((?:\\.|[^"])*)"/g;
+            for (const match of cssContent.matchAll(glyphRulePattern)) {
+                const glyphName = match[1];
+                const glyphCharacter = decodeCssGlyphCharacter(match[2] || '');
+                if (glyphCharacter) {
+                    glyphCharacterMap.set(glyphName, glyphCharacter);
+                }
+            }
+        }
+
+        function getGlyphCharacter(glyphKey = '') {
+            return glyphCharacterMap.get(glyphKey) || '';
+        }
+
+        function getSourceIconUrl(icon) {
+            const sourceStem = (icon?.key || '').replace(/_(line|fill)$/u, '');
+            return icon.kind === 'fill' ? `/fill-icons/${sourceStem}.svg` : `/line-icons/${sourceStem}.svg`;
+        }
+
+        function getSourceIconFileName(icon, extension = 'svg') {
+            const sourceStem = (icon?.key || '').replace(/_(line|fill)$/u, '');
+            return `${sourceStem || 'icon'}.${extension}`;
+        }
+
+        async function fetchSourceIconSvg(icon) {
+            const response = await fetch(getSourceIconUrl(icon), { cache: 'no-store' });
+            if (!response.ok) {
+                throw new Error('원본 SVG를 불러오지 못했습니다.');
+            }
+            return response.text();
+        }
+
+        async function copySvgSource(icon) {
+            const svgSource = await fetchSourceIconSvg(icon);
+            await navigator.clipboard.writeText(svgSource);
+        }
+
+        function downloadBlob(blob, fileName) {
+            const objectUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = objectUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+        }
+
+        async function downloadSvgSource(icon) {
+            const svgSource = await fetchSourceIconSvg(icon);
+            const blob = new Blob([svgSource], { type: 'image/svg+xml;charset=utf-8' });
+            downloadBlob(blob, getSourceIconFileName(icon, 'svg'));
+        }
+
+        async function renderGlyphPngBlob(icon) {
+            const glyphCharacter = getGlyphCharacter(icon.key);
+            if (!glyphCharacter) {
+                throw new Error('PNG로 내보낼 글리프를 찾지 못했습니다.');
+            }
+
+            const canvasSize = Math.max(state.previewSize, 24);
+            const padding = Math.max(12, Math.round(canvasSize * 0.5));
+            const surfaceSize = canvasSize + padding * 2;
+            const scale = Math.max(2, Math.ceil(window.devicePixelRatio || 1));
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            if (!ctx) {
+                throw new Error('PNG 렌더링을 시작하지 못했습니다.');
+            }
+
+            canvas.width = surfaceSize * scale;
+            canvas.height = surfaceSize * scale;
+            ctx.scale(scale, scale);
+            ctx.clearRect(0, 0, surfaceSize, surfaceSize);
+            await document.fonts.load(`${state.previewWeight} ${canvasSize}px 'MyIconFont'`);
+            await document.fonts.ready;
+            ctx.font = `${state.previewWeight} ${canvasSize}px 'MyIconFont'`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = state.previewColor;
+            ctx.fillText(glyphCharacter, surfaceSize / 2, surfaceSize / 2 + canvasSize * 0.04);
+
+            const blob = await new Promise((resolve, reject) => {
+                canvas.toBlob((value) => {
+                    if (value) {
+                        resolve(value);
+                        return;
+                    }
+                    reject(new Error('PNG 데이터 생성에 실패했습니다.'));
+                }, 'image/png');
+            });
+
+            return blob;
+        }
+
+        async function copyPng(icon) {
+            if (typeof ClipboardItem === 'undefined' || !navigator.clipboard?.write) {
+                throw new Error('이 브라우저에서는 PNG 복사를 지원하지 않습니다.');
+            }
+
+            const blob = await renderGlyphPngBlob(icon);
+            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+        }
+
+        async function downloadPng(icon) {
+            const blob = await renderGlyphPngBlob(icon);
+            downloadBlob(blob, getSourceIconFileName(icon, 'png'));
+        }
+
+        function syncLibraryHeroChrome() {
+            if (!contentScroll || !libraryHero) {
+                return;
+            }
+
+            libraryHero.classList.toggle('is-scrolled', contentScroll.scrollTop > 8);
+        }
 
         function classifyGlyph(glyphKey) {
             const normalized = glyphKey.replace(/_(fill|line)$/u, '');
@@ -1306,11 +2036,34 @@
         }
 
         function getVisibleIcons() {
-            const query = state.query.trim().toLowerCase();
+            const rawQuery = state.query.trim();
+            const query = rawQuery.toLowerCase();
             return state.icons.filter((icon) => {
                 const matchesCategory = state.category === 'all' || icon.category === state.category;
-                const matchesQuery = query === '' || (icon.searchText || '').includes(query) || icon.displayName.toLowerCase().includes(query);
-                return matchesCategory && matchesQuery;
+                const matchesKind = state.kind === 'all' || icon.kind === state.kind;
+                const categoryLabel = getCategoryLabel(icon.category).toLowerCase();
+                const glyphCharacter = getGlyphCharacter(icon.key);
+                const matchesGlyph = rawQuery !== '' && glyphCharacter && glyphCharacter.includes(rawQuery);
+                const matchesQuery = rawQuery === '' || (icon.searchText || '').includes(query) || icon.displayName.toLowerCase().includes(query) || categoryLabel.includes(query) || matchesGlyph;
+                return matchesCategory && matchesKind && matchesQuery;
+            });
+        }
+
+        function sortVisibleIcons(icons) {
+            return [...icons].sort((left, right) => {
+                if (state.sortMode === 'name') {
+                    return left.displayName.localeCompare(right.displayName);
+                }
+
+                if (state.sortMode === 'category') {
+                    const categoryComparison = (left.category || '').localeCompare(right.category || '');
+                    if (categoryComparison !== 0) {
+                        return categoryComparison;
+                    }
+                    return left.displayName.localeCompare(right.displayName);
+                }
+
+                return left.displayName.localeCompare(right.displayName);
             });
         }
 
@@ -1337,12 +2090,93 @@
             return options;
         }
 
+        function getKindLabel(kindKey) {
+            if (kindKey === 'all') return '전체';
+            if (kindKey === 'line') return 'Line';
+            if (kindKey === 'fill') return 'Fill';
+            if (kindKey === 'mixed') return 'Mixed';
+            return kindKey;
+        }
+
+        function getEmptyStateFilters() {
+            const filters = [];
+            const query = state.query.trim();
+
+            if (query) {
+                filters.push(`검색어 "${query}"`);
+            }
+            if (state.category !== 'all') {
+                filters.push(`카테고리 ${getCategoryLabel(state.category)}`);
+            }
+            if (state.kind !== 'all') {
+                filters.push(`타입 ${getKindLabel(state.kind)}`);
+            }
+
+            return filters;
+        }
+
+        function getKindOptions() {
+            const counts = state.icons.reduce((map, icon) => {
+                map[icon.kind] = (map[icon.kind] || 0) + 1;
+                return map;
+            }, {});
+
+            const options = [{ key: 'all', count: state.icons.length }];
+            ['line', 'fill', 'mixed'].forEach((kindKey) => {
+                if (counts[kindKey]) {
+                    options.push({ key: kindKey, count: counts[kindKey] });
+                }
+            });
+
+            return options;
+        }
+
         function closeAllDropdowns(except = null) {
             dropdownComponents.forEach((component) => {
                 if (component !== except) {
                     component.close();
                 }
             });
+        }
+
+        function getIconFromActionTarget(target) {
+            const card = target.closest('.list-card');
+            const glyphKey = card?.dataset.glyphKey;
+            if (!glyphKey) {
+                return null;
+            }
+            return state.icons.find((icon) => icon.key === glyphKey) || null;
+        }
+
+        function closeAllListActionMenus(exceptGroup = null) {
+            libraryGrid.querySelectorAll('.list-action-group.open').forEach((group) => {
+                if (group !== exceptGroup) {
+                    group.classList.remove('open');
+                    group.querySelector('.list-action-menu-toggle')?.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        function toggleListActionMenu(actionGroup) {
+            if (!actionGroup) {
+                return;
+            }
+
+            const isOpen = actionGroup.classList.contains('open');
+            closeAllListActionMenus(isOpen ? null : actionGroup);
+            actionGroup.classList.toggle('open', !isOpen);
+            actionGroup.querySelector('.list-action-menu-toggle')?.setAttribute('aria-expanded', String(!isOpen));
+        }
+
+        function syncViewToggleState() {
+            const isGrid = state.viewMode === 'grid';
+            viewToggleButton.setAttribute('aria-pressed', isGrid ? 'false' : 'true');
+            viewToggleButton.setAttribute('aria-label', isGrid ? '리스트 카드 형식으로 전환' : '그리드 카드 형식으로 전환');
+            viewToggleButton.setAttribute('data-tooltip', isGrid ? '리스트 카드 형식으로 전환' : '그리드 카드 형식으로 전환');
+            viewToggleLabel.textContent = isGrid ? 'Grid' : 'List';
+            viewToggleIcon.className = isGrid
+                ? 'icon icon--grid_view_sm_line hero-view-icon'
+                : 'icon icon--card_list_view_line hero-view-icon';
         }
 
         function createDropdownComponent({
@@ -1401,6 +2235,7 @@
                     const optionContent = renderOptionContent
                         ? renderOptionContent(optionData, selected)
                         : `<span>${formatOptionLabel(optionData)}</span>`;
+                    const optionCheck = selected ? '<i class="icon icon--approve_line dropdown-option-check" aria-hidden="true"></i>' : '';
                     return `
                         <button
                             type="button"
@@ -1410,6 +2245,7 @@
                             aria-selected="${selected ? 'true' : 'false'}"
                         >
                             ${optionContent}
+                            ${optionCheck}
                         </button>
                     `;
                 }).join('');
@@ -1464,6 +2300,29 @@
             }
         });
 
+        const kindDropdownComponent = createDropdownComponent({
+            root: kindDropdown,
+            trigger: kindTrigger,
+            triggerLabel: kindTriggerLabel,
+            triggerIcon: kindTriggerIcon,
+            menu: kindMenu,
+            optionClassName: 'kind-option',
+            getOptions: getKindOptions,
+            getActiveOption: (options) => {
+                if (!options.some((optionData) => optionData.key === state.kind)) {
+                    state.kind = 'all';
+                }
+                return options.find((optionData) => optionData.key === state.kind) || options[0];
+            },
+            getOptionValue: (optionData) => optionData.key,
+            formatTriggerLabel: (optionData) => `${getKindLabel(optionData.key)}`,
+            formatOptionLabel: (optionData) => `${getKindLabel(optionData.key)}${optionData.key === 'all' ? '' : ` (${optionData.count})`}`,
+            onSelect: (value) => {
+                state.kind = value || 'all';
+                renderGrid();
+            }
+        });
+
         const weightDropdownComponent = createDropdownComponent({
             root: weightDropdown,
             trigger: weightTrigger,
@@ -1474,8 +2333,8 @@
             getOptions: () => previewWeights,
             getActiveOption: (options) => options.find((weight) => weight === state.previewWeight) || options[0],
             getOptionValue: (weight) => String(weight),
-            formatTriggerLabel: (weight) => `${weightNames[weight]} ${weight}`,
-            formatOptionLabel: (weight) => `${weightNames[weight]} ${weight}`,
+            formatTriggerLabel: (weight) => `${weightNames[weight]}`,
+            formatOptionLabel: (weight) => `${weightNames[weight]}`,
             onSelect: (value) => {
                 state.previewWeight = Number(value || state.previewWeight);
                 applyPreviewStyles();
@@ -1527,6 +2386,24 @@
             }
         });
 
+        const sortDropdownComponent = createDropdownComponent({
+            root: sortDropdown,
+            trigger: sortTrigger,
+            triggerLabel: sortTriggerLabel,
+            triggerIcon: sortTriggerIcon,
+            menu: sortMenu,
+            optionClassName: 'hero-sort-option',
+            getOptions: () => SORT_OPTIONS,
+            getActiveOption: (options) => options.find((option) => option.key === state.sortMode) || options[0],
+            getOptionValue: (option) => option.key,
+            formatTriggerLabel: (option) => option.label,
+            formatOptionLabel: (option) => option.label,
+            onSelect: (value) => {
+                state.sortMode = value || 'name';
+                renderGrid();
+            }
+        });
+
         function syncControllerHeight() {
             const height = bottomController?.offsetHeight || 116;
             document.documentElement.style.setProperty('--controller-height', `${Math.ceil(height)}px`);
@@ -1534,8 +2411,11 @@
 
         function setUploadAvailability() {
             const busy = state.isUploading;
+            const label = busy ? '빌드 중...' : 'SVG 업로드';
             uploadButton.disabled = busy;
-            uploadButton.textContent = busy ? '빌드 중...' : 'SVG 업로드';
+            uploadButtonLabel.textContent = label;
+            uploadButton.setAttribute('aria-label', label);
+            uploadButton.setAttribute('data-tooltip', label);
             uploadInput.disabled = busy;
         }
 
@@ -1702,11 +2582,103 @@
             document.documentElement.style.setProperty('--preview-color', state.previewColor);
             document.documentElement.style.setProperty('--preview-size', `${state.previewSize}px`);
             document.documentElement.style.setProperty('--preview-weight', `${state.previewWeight}`);
-            weightTriggerLabel.textContent = `${weightNames[state.previewWeight]} ${state.previewWeight}`;
+            weightTriggerLabel.textContent = `${weightNames[state.previewWeight]}`;
+            syncViewToggleState();
+        }
+
+        function renderGridCard(icon) {
+            const glyphCharacter = getGlyphCharacter(icon.key);
+            return `
+                <article class="icon-card grid-card">
+                    <div class="card-top">
+                        <span class="kind-pill ${icon.kind}">${icon.kind}</span>
+                        <span class="card-subtitle">${getCategoryLabel(icon.category)}</span>
+                    </div>
+                    <div class="card-icon-wrap">
+                        <i class="icon ${icon.className} library-icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="card-label">
+                        <div class="card-title">${icon.displayName}</div>
+                    </div>
+                    <div class="card-devtools">
+                        <div class="card-devtools-key">${escapeHtml(icon.key)}</div>
+                        <button type="button" class="card-copy-button" data-copy-kind="glyph" data-copy-value="${escapeHtml(glyphCharacter)}">Copy</button>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderListCard(icon) {
+            const glyphCharacter = getGlyphCharacter(icon.key);
+            const supplementalTerms = (Array.isArray(icon.synonyms) && icon.synonyms.length > 0 ? icon.synonyms : icon.keywords || []).slice(0, 3);
+            return `
+                <article class="icon-card list-card" data-card-type="list" data-glyph-key="${escapeHtml(icon.key)}" data-category="${escapeHtml(icon.category)}" data-kind="${escapeHtml(icon.kind)}">
+                    <div class="list-card-preview">
+                        <i class="icon ${icon.className} library-icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="list-card-main">
+                        <div class="card-title">${icon.displayName}</div>
+                        ${supplementalTerms.length > 0 ? `<div class="list-card-search-terms">${escapeHtml(supplementalTerms.join(' · '))}</div>` : ''}
+                        <div class="list-card-meta">
+                            <span class="list-card-meta-chip">${getCategoryLabel(icon.category)}</span>
+                            <span class="list-card-meta-chip">${icon.kind}</span>
+                        </div>
+                    </div>
+                    <div class="list-card-actions" aria-label="${icon.displayName} 액션">
+                        <div class="list-action-group copy-action-group">
+                            <button type="button" class="list-action-main glyph-copy-button" data-action-kind="copy-glyph" data-copy-kind="glyph" data-copy-value="${escapeHtml(glyphCharacter)}">
+                                <i class="icon icon--copy_line list-copy-button-icon" aria-hidden="true"></i>
+                                <span>글리프 복사</span>
+                            </button>
+                            <button type="button" class="list-action-menu-toggle" data-menu-group="copy" aria-haspopup="menu" aria-expanded="false" aria-label="복사 메뉴 열기">
+                                <i class="icon icon--chevron_down_line" aria-hidden="true"></i>
+                            </button>
+                            <div class="list-action-menu" role="menu" aria-label="복사 액션 메뉴">
+                                <button type="button" class="list-action-item" data-action-kind="copy-glyph" data-copy-kind="glyph" data-copy-value="${escapeHtml(glyphCharacter)}" role="menuitem">
+                                    <i class="icon icon--copy_line list-action-item-icon" aria-hidden="true"></i>
+                                    <span>글리프 복사</span>
+                                </button>
+                                <button type="button" class="list-action-item" data-action-kind="copy-class" data-copy-kind="class" data-copy-value="${escapeHtml(icon.className)}" role="menuitem">
+                                    <i class="icon icon--copy_line list-action-item-icon" aria-hidden="true"></i>
+                                    <span>클래스 복사</span>
+                                </button>
+                                <button type="button" class="list-action-item" data-action-kind="copy-svg" role="menuitem">
+                                    <i class="icon icon--copy_line list-action-item-icon" aria-hidden="true"></i>
+                                    <span>SVG 복사</span>
+                                </button>
+                                <button type="button" class="list-action-item" data-action-kind="copy-png" role="menuitem">
+                                    <i class="icon icon--copy_line list-action-item-icon" aria-hidden="true"></i>
+                                    <span>PNG 복사</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="list-action-group download-action-group">
+                            <button type="button" class="list-action-main svg-download-button" data-action-kind="download-svg">
+                                <i class="icon icon--copy_line list-copy-button-icon" aria-hidden="true"></i>
+                                <span>SVG 다운로드</span>
+                            </button>
+                            <button type="button" class="list-action-menu-toggle" data-menu-group="download" aria-haspopup="menu" aria-expanded="false" aria-label="다운로드 메뉴 열기">
+                                <i class="icon icon--chevron_down_line" aria-hidden="true"></i>
+                            </button>
+                            <div class="list-action-menu" role="menu" aria-label="다운로드 액션 메뉴">
+                                <button type="button" class="list-action-item" data-action-kind="download-svg" role="menuitem">
+                                    <i class="icon icon--copy_line list-action-item-icon" aria-hidden="true"></i>
+                                    <span>SVG 다운로드</span>
+                                </button>
+                                <button type="button" class="list-action-item" data-action-kind="download-png" role="menuitem">
+                                    <i class="icon icon--copy_line list-action-item-icon" aria-hidden="true"></i>
+                                    <span>PNG 다운로드</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
         }
 
         function renderGrid() {
-            const visibleIcons = getVisibleIcons();
+            const visibleIcons = sortVisibleIcons(getVisibleIcons());
+            libraryGrid.classList.toggle('list-view', state.viewMode === 'list');
             const pendingCards = state.pendingBuilds.map((build, index) => `
                 <article class="pending-build-card">
                     <div class="pending-build-kicker">${state.pendingBuilds.length > 1 ? `${index + 1}/${state.pendingBuilds.length}` : '변환 중'}</div>
@@ -1732,35 +2704,27 @@
             }
 
             if (visibleIcons.length === 0 && state.pendingBuilds.length === 0) {
+                const emptyStateFilters = getEmptyStateFilters();
                 libraryGrid.innerHTML = `
                     <article class="empty-card">
-                        <div>
+                        <div class="empty-card-content">
                             <strong>${state.icons.length === 0 ? '아직 빌드된 웹폰트 아이콘이 없습니다.' : '조건에 맞는 웹폰트 아이콘이 없습니다.'}</strong>
                             <p>${state.icons.length === 0 ? 'SVG를 업로드하면 자동 빌드 후 라이브러리에 바로 반영됩니다.' : '검색어를 바꾸거나 카테고리를 다시 선택해보세요.'}</p>
+                            ${state.icons.length === 0 || emptyStateFilters.length === 0 ? '' : `<div class="empty-card-filters">현재 조건: ${escapeHtml(emptyStateFilters.join(' · '))}</div>`}
                         </div>
                     </article>
                 `;
                 return;
             }
 
-            libraryGrid.innerHTML = `${pendingCards}${visibleIcons.map((icon) => `
-                <article class="icon-card">
-                    <div class="card-top">
-                        <span class="kind-pill ${icon.kind}">${icon.kind}</span>
-                        <span class="card-subtitle">${getCategoryLabel(icon.category)}</span>
-                    </div>
-                    <div class="card-icon-wrap">
-                        <i class="icon ${icon.className} library-icon" aria-hidden="true"></i>
-                    </div>
-                    <div class="card-label">
-                        <div class="card-title">${icon.displayName}</div>
-                    </div>
-                    <div class="card-devtools">
-                        <div class="card-devtools-key">${escapeHtml(icon.key)}</div>
-                        <button type="button" class="card-copy-button" data-copy-value="${escapeHtml(icon.key)}">Copy</button>
-                    </div>
-                </article>
-            `).join('')}`;
+            let cardMarkup = '';
+            if (state.viewMode === 'grid') {
+                cardMarkup = visibleIcons.map(renderGridCard).join('');
+            } else {
+                cardMarkup = visibleIcons.map(renderListCard).join('');
+            }
+
+            libraryGrid.innerHTML = `${pendingCards}${cardMarkup}`;
         }
 
         function showToast(message, isError = false) {
@@ -1782,6 +2746,7 @@
             if (!response.ok) {
                 if (!required && response.status === 404) {
                     generatedFontStyle.textContent = '';
+                    glyphCharacterMap.clear();
                     return false;
                 }
 
@@ -1793,6 +2758,7 @@
                 /url\((['"]?)(?:\.\/)?(MyIconFont-[^)'"?]+\.woff2)\1\)/g,
                 `url('/generated-fonts/$2?v=${version}')`
             );
+            syncGlyphCharacterMap(css);
             return true;
         }
 
@@ -1810,6 +2776,7 @@
             state.loadError = false;
 
             categoryDropdownComponent.populate();
+            kindDropdownComponent.populate();
             renderGrid();
             if (payload.lastBuiltAt) {
                 lastBuiltAt.textContent = `Last build ${new Date(payload.lastBuiltAt).toLocaleString()}`;
@@ -1938,15 +2905,36 @@
         }
 
         function initController() {
+            syncViewToggleState();
+            syncLibraryHeroChrome();
+            kindDropdownComponent.populate();
             weightDropdownComponent.populate();
             sizeDropdownComponent.populate();
             paletteDropdownComponent.populate();
-
+            sortDropdownComponent.populate();
+            searchCombo.classList.toggle('has-value', Boolean(state.query));
             applyPreviewStyles();
         }
 
+        contentScroll?.addEventListener('scroll', syncLibraryHeroChrome, { passive: true });
+
         searchInput.addEventListener('input', (event) => {
             state.query = event.target.value || '';
+            searchCombo.classList.toggle('has-value', Boolean(state.query));
+            renderGrid();
+        });
+
+        searchClearButton.addEventListener('click', () => {
+            state.query = '';
+            searchInput.value = '';
+            searchCombo.classList.remove('has-value');
+            searchInput.focus();
+            renderGrid();
+        });
+
+        viewToggleButton.addEventListener('click', () => {
+            state.viewMode = state.viewMode === 'grid' ? 'list' : 'grid';
+            syncViewToggleState();
             renderGrid();
         });
 
@@ -1954,17 +2942,55 @@
             if (!dropdownComponents.some((component) => component.root.contains(event.target))) {
                 closeAllDropdowns();
             }
+            if (!event.target.closest('.list-action-group')) {
+                closeAllListActionMenus();
+            }
         });
 
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 closeAllDropdowns();
+                closeAllListActionMenus();
             }
         });
 
         libraryGrid.addEventListener('click', async (event) => {
-            const copyButton = event.target.closest('.card-copy-button');
+            const menuToggle = event.target.closest('.list-action-menu-toggle');
+            if (menuToggle) {
+                toggleListActionMenu(menuToggle.closest('.list-action-group'));
+                return;
+            }
+
+            const copyButton = event.target.closest('.card-copy-button, .list-action-main[data-copy-kind], .list-action-item[data-copy-kind]');
             if (!copyButton) {
+                const actionButton = event.target.closest('.list-action-item, .list-action-main');
+                if (!actionButton) {
+                    return;
+                }
+
+                const icon = getIconFromActionTarget(actionButton);
+                if (!icon) {
+                    return;
+                }
+
+                try {
+                    if (actionButton.dataset.actionKind === 'copy-svg') {
+                        await copySvgSource(icon);
+                        showToast('SVG를 복사했습니다.');
+                    } else if (actionButton.dataset.actionKind === 'copy-png') {
+                        await copyPng(icon);
+                        showToast('PNG를 복사했습니다.');
+                    } else if (actionButton.dataset.actionKind === 'download-svg') {
+                        await downloadSvgSource(icon);
+                        showToast('SVG를 다운로드했습니다.');
+                    } else if (actionButton.dataset.actionKind === 'download-png') {
+                        await downloadPng(icon);
+                        showToast('PNG를 다운로드했습니다.');
+                    }
+                    closeAllListActionMenus();
+                } catch (error) {
+                    showToast(error.message || '액션을 실행하지 못했습니다.', true);
+                }
                 return;
             }
 
@@ -1975,7 +3001,12 @@
 
             try {
                 await navigator.clipboard.writeText(value);
-                showToast(`클래스 키를 복사했습니다: ${value}`);
+                if (copyButton.dataset.copyKind === 'glyph') {
+                    showToast('글리프를 복사했습니다.');
+                } else {
+                    showToast(`클래스 키를 복사했습니다: ${value}`);
+                }
+                closeAllListActionMenus();
             } catch (error) {
                 showToast('복사에 실패했습니다.', true);
             }

@@ -242,7 +242,8 @@ async function readIconMetadata() {
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(PROJECT_ROOT, 'font_factory/public')));
 // 원본 아이콘 서빙 (미리보기용)
-app.use('/line-icons', express.static(path.join(PROJECT_ROOT, 'line')));
+app.use('/line-icons', express.static(LINE_DIR));
+app.use('/fill-icons', express.static(FILL_DIR));
 // 빌드된 폰트/스타일 서빙 (Vercel에서는 /tmp를 사용)
 app.use('/generated-fonts', express.static(OUTPUT_DIR));
 
