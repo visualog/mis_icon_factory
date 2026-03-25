@@ -905,12 +905,12 @@
         .empty-card {
             border-radius: 24px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.74));
-            box-shadow: 0 12px 30px rgba(48, 41, 29, 0.05);
             min-height: 210px;
         }
 
         .empty-card {
             border: 1px solid rgba(30, 31, 36, 0.06);
+            box-shadow: 0 12px 30px rgba(48, 41, 29, 0.05);
         }
 
         .icon-card {
@@ -918,6 +918,7 @@
         }
 
         .icon-card {
+            box-shadow: none;
             padding: 18px 18px 14px;
             display: flex;
             flex-direction: column;
@@ -926,7 +927,8 @@
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
 
-        .icon-card:hover {
+        .icon-card:hover,
+        .icon-card:focus-within {
             transform: translateY(-3px);
             box-shadow: 0 18px 34px rgba(48, 41, 29, 0.1);
         }
@@ -1155,6 +1157,23 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
+        }
+
+        .grid-card .card-top {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 18px;
+            opacity: 0;
+            transform: translateY(-4px);
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .grid-card:hover .card-top,
+        .grid-card:focus-within .card-top {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .kind-pill {
@@ -1708,7 +1727,7 @@
         <div class="controller-group">
             <div class="kind-dropdown dropdown dropdown--up">
                 <button id="kindTrigger" class="dropdown-trigger kind-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="kindMenu">
-                    <span id="kindTriggerLabel">전체</span>
+                    <span id="kindTriggerLabel">Line</span>
                     <i id="kindTriggerIcon" class="icon icon--chevron_down_line dropdown-trigger-icon" aria-hidden="true"></i>
                 </button>
                 <div id="kindMenu" class="dropdown-menu kind-menu" role="listbox" aria-label="타입 선택"></div>
@@ -1729,7 +1748,7 @@
         <div class="controller-group">
             <div class="weight-dropdown dropdown dropdown--up">
                 <button id="weightTrigger" class="dropdown-trigger weight-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="weightMenu">
-                    <span id="weightTriggerLabel">Regular</span>
+                    <span id="weightTriggerLabel">Medium</span>
                     <i id="weightTriggerIcon" class="icon icon--chevron_down_line dropdown-trigger-icon" aria-hidden="true"></i>
                 </button>
                 <div id="weightMenu" class="dropdown-menu weight-menu" role="listbox" aria-label="아이콘 두께 선택"></div>
@@ -1739,7 +1758,7 @@
         <div class="controller-group">
             <div class="size-dropdown dropdown dropdown--up">
                 <button id="sizeTrigger" class="dropdown-trigger size-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sizeMenu">
-                    <span id="sizeTriggerLabel">24px</span>
+                    <span id="sizeTriggerLabel">64px</span>
                     <i id="sizeTriggerIcon" class="icon icon--chevron_down_line dropdown-trigger-icon size-trigger-icon" aria-hidden="true"></i>
                 </button>
                 <div id="sizeMenu" class="dropdown-menu size-menu" role="listbox" aria-label="아이콘 크기 선택"></div>
@@ -1810,12 +1829,12 @@
             icons: [],
             pendingBuilds: [],
             category: 'all',
-            kind: 'all',
+            kind: 'line',
             query: '',
             viewMode: 'grid',
             sortMode: 'name',
-            previewWeight: 400,
-            previewSize: 24,
+            previewWeight: 500,
+            previewSize: 64,
             previewColor: '#1e1f24',
             isUploading: false,
             loadError: false
@@ -2907,7 +2926,6 @@
         function initController() {
             syncViewToggleState();
             syncLibraryHeroChrome();
-            kindDropdownComponent.populate();
             weightDropdownComponent.populate();
             sizeDropdownComponent.populate();
             paletteDropdownComponent.populate();

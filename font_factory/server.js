@@ -8,6 +8,7 @@ const { buildLibraryEntries } = require('./library-manifest');
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 const DEFAULT_PATHS = {
     projectRoot: getProjectRoot(),
     outputDir: getOutputDir()
@@ -433,10 +434,13 @@ app.post('/api/build', async (req, res) => {
 
 
 if (require.main === module) {
-    app.listen(PORT, () => {
+    app.listen(PORT, HOST, () => {
         console.log(`================================================`);
         console.log(`🚀 아이콘 팩토리 서버가 시작되었습니다!`);
         console.log(`🔗 접속 주소: http://localhost:${PORT}`);
+        if (HOST === '0.0.0.0') {
+            console.log(`🌐 내부망 접속 가능: http://<이 컴퓨터 IP>:${PORT}`);
+        }
         console.log(`================================================`);
     });
 }

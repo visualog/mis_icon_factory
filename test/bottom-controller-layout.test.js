@@ -14,6 +14,15 @@ test('category and kind dropdowns are placed before search and weight controls i
     );
 });
 
+test('default controller state starts with line kind, medium weight, and 64px preview size', () => {
+    assert.match(indexHtml, /<span id="kindTriggerLabel">Line<\/span>/);
+    assert.match(indexHtml, /<span id="weightTriggerLabel">Medium<\/span>/);
+    assert.match(indexHtml, /<span id="sizeTriggerLabel">64px<\/span>/);
+    assert.match(indexHtml, /kind:\s*'line'/);
+    assert.match(indexHtml, /previewWeight:\s*500/);
+    assert.match(indexHtml, /previewSize:\s*64/);
+});
+
 test('bottom category menu is anchored from the left edge of its trigger', () => {
     assert.match(indexHtml, /\.category-menu\s*\{[\s\S]*left:\s*0;[\s\S]*right:\s*auto;[\s\S]*transform-origin:\s*bottom left;/s);
 });
@@ -100,6 +109,10 @@ test('library grid has a list view layout and list card template', () => {
     assert.match(indexHtml, /\.library-grid\.list-view\s*\{[\s\S]*grid-template-columns:\s*1fr;/s);
     assert.match(indexHtml, /\.library-grid\.list-view\s*\{[\s\S]*gap:\s*4px;/s);
     assert.match(indexHtml, /\.icon-card\s*\{[\s\S]*border:\s*0;/s);
+    assert.match(indexHtml, /\.icon-card\s*\{[\s\S]*box-shadow:\s*none;/s);
+    assert.match(indexHtml, /\.icon-card:hover,\s*\.icon-card:focus-within\s*\{[\s\S]*box-shadow:\s*0 18px 34px rgba\(48,\s*41,\s*29,\s*0\.1\);/s);
+    assert.match(indexHtml, /\.grid-card \.card-top\s*\{[\s\S]*opacity:\s*0;/s);
+    assert.match(indexHtml, /\.grid-card:hover \.card-top,\s*\.grid-card:focus-within \.card-top\s*\{[\s\S]*opacity:\s*1;/s);
     assert.match(indexHtml, /function renderGridCard\(icon\)\s*\{/);
     assert.match(indexHtml, /function renderGridCard\(icon\)\s*\{[\s\S]*const glyphCharacter = getGlyphCharacter\(icon\.key\);/s);
     assert.match(indexHtml, /class="card-copy-button" data-copy-kind="glyph" data-copy-value="\$\{escapeHtml\(glyphCharacter\)\}">Copy<\/button>/);

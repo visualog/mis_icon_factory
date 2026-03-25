@@ -2,6 +2,23 @@
   "$schema": "./icon-metadata.schema.json",
   "version": 1,
   "icons": {
+    "aaa_test_1_line": {
+      "displayName": "AAA Test 1 Line",
+      "category": "misc",
+      "keywords": [
+        "aaa",
+        "test",
+        "test icon",
+        "aaa test 1 line"
+      ],
+      "synonyms": [
+        "aaa test 1 line",
+        "aaa test 1",
+        "aaa_test_1",
+        "test",
+        "테스트"
+      ]
+    },
     "a_apple_line": {
       "displayName": "A Apple Line",
       "category": "misc",
@@ -2212,6 +2229,23 @@
         "폴더",
         "디렉터리",
         "directory"
+      ]
+    },
+    "flower_line": {
+      "displayName": "Flower Line",
+      "category": "misc",
+      "keywords": [
+        "flower",
+        "plant",
+        "blossom",
+        "flower line"
+      ],
+      "synonyms": [
+        "flower line",
+        "flower",
+        "꽃",
+        "식물",
+        "blossom"
       ]
     },
     "folder_off_line": {
