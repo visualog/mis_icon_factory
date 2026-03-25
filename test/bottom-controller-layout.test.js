@@ -181,3 +181,52 @@ test('view toggle click rerenders the library immediately', () => {
         });`)
     );
 });
+
+test('icon detail bottom sheet shell exists with dialog semantics and state hooks', () => {
+    assert.match(indexHtml, /selectedIconKey:\s*null/);
+    assert.match(
+        indexHtml,
+        /<div id="iconDetailSheetBackdrop" class="icon-detail-sheet-backdrop" hidden><\/div>[\s\S]*<section id="iconDetailSheet" class="icon-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="iconDetailTitle" hidden>/s
+    );
+    assert.match(indexHtml, /<button id="iconDetailCloseButton" class="icon-detail-close" type="button" aria-label="상세 닫기">/);
+});
+
+test('icon detail bottom sheet includes source preview, keyline toggle, metadata, and size previews', () => {
+    assert.match(indexHtml, /function getSelectedIcon\(\)\s*\{/);
+    assert.match(indexHtml, /function renderIconDetailSheet\(\)\s*\{/);
+    assert.match(indexHtml, /class="icon-detail-source-panel"/);
+    assert.match(indexHtml, /class="icon-detail-source-stage/);
+    assert.match(indexHtml, /id="iconDetailSourceImage"/);
+    assert.match(indexHtml, /id="iconDetailKeylineToggle"/);
+    assert.match(indexHtml, /키라인 보기/);
+    assert.match(indexHtml, /class="icon-detail-webfont-panel"/);
+    assert.match(indexHtml, /id="iconDetailGlyphKey"/);
+    assert.match(indexHtml, /id="iconDetailClassKey"/);
+    assert.match(indexHtml, /id="iconDetailCategory"/);
+    assert.match(indexHtml, /id="iconDetailKind"/);
+    assert.match(indexHtml, /class="icon-detail-size-previews"/);
+    assert.match(indexHtml, /const detailPreviewSizes = \[16,\s*20,\s*24,\s*32,\s*48,\s*64\];/);
+});
+
+test('icon detail bottom sheet includes consolidated copy and download actions', () => {
+    assert.match(indexHtml, /class="icon-detail-actions"/);
+    assert.match(indexHtml, /data-detail-action="copy-glyph"/);
+    assert.match(indexHtml, /data-detail-action="copy-class"/);
+    assert.match(indexHtml, /data-detail-action="copy-svg"/);
+    assert.match(indexHtml, /data-detail-action="copy-png"/);
+    assert.match(indexHtml, /data-detail-action="download-svg"/);
+    assert.match(indexHtml, /data-detail-action="download-png"/);
+});
+
+test('icon cards open the detail sheet but inner action buttons do not', () => {
+    assert.match(indexHtml, /function openIconDetail\(/);
+    assert.match(indexHtml, /function closeIconDetail\(/);
+    assert.match(indexHtml, /const detailOpenButton = event\.target\.closest\('\.card-copy-button, \.list-action-main, \.list-action-item, \.list-action-menu-toggle'\);/);
+    assert.match(indexHtml, /const clickableCard = event\.target\.closest\('\.icon-card'\);/);
+    assert.match(indexHtml, /openIconDetail\(cardIcon\);/);
+});
+
+test('icon detail bottom sheet supports backdrop and escape dismissal', () => {
+    assert.match(indexHtml, /iconDetailSheetBackdrop\.addEventListener\('click',\s*\(\)\s*=>\s*\{\s*closeIconDetail\(\);\s*\}\);/s);
+    assert.match(indexHtml, /if \(event\.key === 'Escape'\) \{[\s\S]*closeIconDetail\(\);/s);
+});

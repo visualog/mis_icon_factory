@@ -1590,6 +1590,318 @@
             background: rgba(230, 76, 60, 0.94);
         }
 
+        .icon-detail-sheet-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 19, 24, 0.24);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+            backdrop-filter: blur(10px) saturate(120%);
+            z-index: 55;
+        }
+
+        .icon-detail-sheet {
+            position: fixed;
+            left: 50%;
+            bottom: 14px;
+            width: min(1180px, calc(100vw - 28px));
+            max-height: min(78vh, 860px);
+            transform: translateX(-50%);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.38);
+            background: rgba(251, 249, 244, 0.82);
+            -webkit-backdrop-filter: blur(28px) saturate(155%);
+            backdrop-filter: blur(28px) saturate(155%);
+            box-shadow: 0 24px 60px rgba(26, 21, 12, 0.16);
+            display: grid;
+            grid-template-rows: auto 1fr;
+            overflow: hidden;
+            z-index: 56;
+        }
+
+        .icon-detail-sheet[hidden],
+        .icon-detail-sheet-backdrop[hidden] {
+            display: none;
+        }
+
+        .icon-detail-sheet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 20px 12px;
+            border-bottom: 1px solid rgba(30, 31, 36, 0.06);
+        }
+
+        .icon-detail-title-block {
+            min-width: 0;
+        }
+
+        .icon-detail-title {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.15;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .icon-detail-subtitle {
+            margin: 6px 0 0;
+            color: var(--text-subtle);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .icon-detail-close {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.52);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 24px rgba(48, 41, 29, 0.05);
+        }
+
+        .icon-detail-close:hover,
+        .icon-detail-close:focus-visible {
+            border-color: var(--line-strong);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
+            outline: none;
+        }
+
+        .icon-detail-close .icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .icon-detail-sheet-body {
+            min-height: 0;
+            overflow: auto;
+            display: grid;
+            grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 1.05fr);
+            gap: 20px;
+            padding: 0 20px 20px;
+        }
+
+        .icon-detail-source-panel,
+        .icon-detail-webfont-panel {
+            min-width: 0;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .icon-detail-panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .icon-detail-panel-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+        }
+
+        .icon-detail-keyline-toggle {
+            min-height: 40px;
+            padding: 0 14px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.58);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .icon-detail-keyline-toggle:hover,
+        .icon-detail-keyline-toggle:focus-visible,
+        .icon-detail-keyline-toggle[aria-pressed="true"] {
+            border-color: var(--line-strong);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
+            outline: none;
+        }
+
+        .icon-detail-source-stage {
+            position: relative;
+            min-height: 380px;
+            padding: 28px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72) 58%, rgba(245, 242, 235, 0.86)),
+                linear-gradient(180deg, rgba(252, 250, 246, 0.92), rgba(243, 239, 231, 0.88));
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.58);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .icon-detail-source-stage.keyline-visible::before,
+        .icon-detail-source-stage.keyline-visible::after {
+            content: '';
+            position: absolute;
+            inset: 28px;
+            border-radius: 24px;
+            pointer-events: none;
+        }
+
+        .icon-detail-source-stage.keyline-visible::before {
+            border: 1px solid rgba(31, 111, 255, 0.22);
+            background:
+                linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(31, 111, 255, 0.22) calc(50% - 0.5px), rgba(31, 111, 255, 0.22) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+                linear-gradient(180deg, transparent calc(50% - 0.5px), rgba(31, 111, 255, 0.22) calc(50% - 0.5px), rgba(31, 111, 255, 0.22) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+        }
+
+        .icon-detail-source-stage.keyline-visible::after {
+            inset: 18%;
+            border-radius: 50%;
+            border: 1px dashed rgba(31, 111, 255, 0.24);
+        }
+
+        .icon-detail-source-image {
+            width: min(72%, 320px);
+            max-width: 100%;
+            max-height: 320px;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 24px rgba(30, 31, 36, 0.08));
+        }
+
+        .icon-detail-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .icon-detail-info-card {
+            min-height: 72px;
+            padding: 14px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.52);
+            border: 1px solid rgba(30, 31, 36, 0.06);
+        }
+
+        .icon-detail-info-label {
+            display: block;
+            color: var(--text-subtle);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .icon-detail-info-value {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            word-break: break-word;
+        }
+
+        .icon-detail-actions {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .icon-detail-action {
+            min-height: 44px;
+            padding: 0 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(30, 31, 36, 0.08);
+            background: rgba(255, 255, 255, 0.52);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            text-align: center;
+        }
+
+        .icon-detail-action:hover,
+        .icon-detail-action:focus-visible {
+            border-color: var(--line-strong);
+            box-shadow: inset 0 0 0 1px var(--line-strong), 0 14px 32px rgba(48, 41, 29, 0.08);
+            outline: none;
+        }
+
+        .icon-detail-action .icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .icon-detail-size-previews {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .icon-detail-size-card {
+            min-height: 116px;
+            padding: 12px 10px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.52);
+            border: 1px solid rgba(30, 31, 36, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .icon-detail-size-icon {
+            color: var(--preview-color);
+            font-weight: var(--preview-weight);
+            line-height: 1;
+        }
+
+        .icon-detail-size-label {
+            font-size: 11px;
+            color: var(--text-subtle);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .icon-detail-metadata {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .icon-detail-metadata-row {
+            padding: 14px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.52);
+            border: 1px solid rgba(30, 31, 36, 0.06);
+        }
+
+        .icon-detail-token-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .icon-detail-token {
+            min-height: 24px;
+            padding: 0 10px;
+            border-radius: 999px;
+            background: rgba(30, 31, 36, 0.05);
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
         button:focus-visible:not(.dropdown-trigger),
         input:focus-visible:not(.search-field),
         select:focus-visible {
@@ -1663,6 +1975,21 @@
             .library-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
+            .icon-detail-sheet {
+                width: calc(100vw - 20px);
+                bottom: 10px;
+                max-height: calc(100vh - 20px);
+            }
+
+            .icon-detail-sheet-body {
+                grid-template-columns: 1fr;
+            }
+
+            .icon-detail-actions,
+            .icon-detail-size-previews {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
         }
     </style>
 </head>
@@ -1712,6 +2039,85 @@
         </div>
         <div id="dragOverlayBuildLayer" class="drag-overlay-build-layer" aria-hidden="true"></div>
     </div>
+
+    <div id="iconDetailSheetBackdrop" class="icon-detail-sheet-backdrop" hidden></div>
+    <section id="iconDetailSheet" class="icon-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="iconDetailTitle" hidden>
+        <div class="icon-detail-sheet-header">
+            <div class="icon-detail-title-block">
+                <h2 id="iconDetailTitle" class="icon-detail-title">아이콘 상세</h2>
+                <p id="iconDetailSubtitle" class="icon-detail-subtitle">원본 SVG와 웹폰트 결과를 한 곳에서 확인합니다.</p>
+            </div>
+            <button id="iconDetailCloseButton" class="icon-detail-close" type="button" aria-label="상세 닫기">
+                <i class="icon icon--close_sm_line" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="icon-detail-sheet-body">
+            <div class="icon-detail-source-panel">
+                <div class="icon-detail-panel-heading">
+                    <span class="icon-detail-panel-title">Source SVG</span>
+                    <button id="iconDetailKeylineToggle" class="icon-detail-keyline-toggle" type="button" aria-pressed="false">
+                        <i class="icon icon--grid_view_sm_line" aria-hidden="true"></i>
+                        <span>키라인 보기</span>
+                    </button>
+                </div>
+                <div id="iconDetailSourceStage" class="icon-detail-source-stage">
+                    <img id="iconDetailSourceImage" class="icon-detail-source-image" alt="">
+                </div>
+            </div>
+            <div class="icon-detail-webfont-panel">
+                <div class="icon-detail-panel-heading">
+                    <span class="icon-detail-panel-title">Webfont Detail</span>
+                </div>
+                <div class="icon-detail-info-grid">
+                    <div class="icon-detail-info-card">
+                        <span class="icon-detail-info-label">Glyph Key</span>
+                        <div id="iconDetailGlyphKey" class="icon-detail-info-value"></div>
+                    </div>
+                    <div class="icon-detail-info-card">
+                        <span class="icon-detail-info-label">Class Key</span>
+                        <div id="iconDetailClassKey" class="icon-detail-info-value"></div>
+                    </div>
+                    <div class="icon-detail-info-card">
+                        <span class="icon-detail-info-label">카테고리</span>
+                        <div id="iconDetailCategory" class="icon-detail-info-value"></div>
+                    </div>
+                    <div class="icon-detail-info-card">
+                        <span class="icon-detail-info-label">타입</span>
+                        <div id="iconDetailKind" class="icon-detail-info-value"></div>
+                    </div>
+                </div>
+                <div class="icon-detail-actions">
+                    <button type="button" class="icon-detail-action" data-detail-action="copy-glyph"><i class="icon icon--copy_line" aria-hidden="true"></i><span>글리프 복사</span></button>
+                    <button type="button" class="icon-detail-action" data-detail-action="copy-class"><i class="icon icon--copy_line" aria-hidden="true"></i><span>클래스 복사</span></button>
+                    <button type="button" class="icon-detail-action" data-detail-action="copy-svg"><i class="icon icon--copy_line" aria-hidden="true"></i><span>SVG 복사</span></button>
+                    <button type="button" class="icon-detail-action" data-detail-action="copy-png"><i class="icon icon--copy_line" aria-hidden="true"></i><span>PNG 복사</span></button>
+                    <button type="button" class="icon-detail-action" data-detail-action="download-svg"><i class="icon icon--copy_line" aria-hidden="true"></i><span>SVG 다운로드</span></button>
+                    <button type="button" class="icon-detail-action" data-detail-action="download-png"><i class="icon icon--copy_line" aria-hidden="true"></i><span>PNG 다운로드</span></button>
+                </div>
+                <div class="icon-detail-panel-heading">
+                    <span class="icon-detail-panel-title">Webfont Preview</span>
+                </div>
+                <div id="iconDetailSizePreviews" class="icon-detail-size-previews"></div>
+                <div class="icon-detail-panel-heading">
+                    <span class="icon-detail-panel-title">Metadata</span>
+                </div>
+                <div class="icon-detail-metadata">
+                    <div class="icon-detail-metadata-row">
+                        <span class="icon-detail-info-label">displayName</span>
+                        <div id="iconDetailDisplayName" class="icon-detail-info-value"></div>
+                    </div>
+                    <div class="icon-detail-metadata-row">
+                        <span class="icon-detail-info-label">keywords</span>
+                        <div id="iconDetailKeywords" class="icon-detail-token-list"></div>
+                    </div>
+                    <div class="icon-detail-metadata-row">
+                        <span class="icon-detail-info-label">synonyms</span>
+                        <div id="iconDetailSynonyms" class="icon-detail-token-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <aside id="bottomController" class="bottom-controller" aria-label="웹폰트 미리보기 컨트롤러">
         <div class="controller-group">
@@ -1833,9 +2239,11 @@
             query: '',
             viewMode: 'grid',
             sortMode: 'name',
+            selectedIconKey: null,
             previewWeight: 500,
             previewSize: 64,
             previewColor: '#1e1f24',
+            detailKeylineVisible: false,
             isUploading: false,
             loadError: false
         };
@@ -1848,6 +2256,22 @@
         const dragOverlayKicker = document.getElementById('dragOverlayKicker');
         const dragOverlayTitle = document.getElementById('dragOverlayTitle');
         const dragOverlayDesc = document.getElementById('dragOverlayDesc');
+        const iconDetailSheetBackdrop = document.getElementById('iconDetailSheetBackdrop');
+        const iconDetailSheet = document.getElementById('iconDetailSheet');
+        const iconDetailTitle = document.getElementById('iconDetailTitle');
+        const iconDetailSubtitle = document.getElementById('iconDetailSubtitle');
+        const iconDetailCloseButton = document.getElementById('iconDetailCloseButton');
+        const iconDetailSourceStage = document.getElementById('iconDetailSourceStage');
+        const iconDetailSourceImage = document.getElementById('iconDetailSourceImage');
+        const iconDetailKeylineToggle = document.getElementById('iconDetailKeylineToggle');
+        const iconDetailGlyphKey = document.getElementById('iconDetailGlyphKey');
+        const iconDetailClassKey = document.getElementById('iconDetailClassKey');
+        const iconDetailCategory = document.getElementById('iconDetailCategory');
+        const iconDetailKind = document.getElementById('iconDetailKind');
+        const iconDetailDisplayName = document.getElementById('iconDetailDisplayName');
+        const iconDetailKeywords = document.getElementById('iconDetailKeywords');
+        const iconDetailSynonyms = document.getElementById('iconDetailSynonyms');
+        const iconDetailSizePreviews = document.getElementById('iconDetailSizePreviews');
         const bottomController = document.getElementById('bottomController');
         const contentScroll = document.querySelector('.content-scroll');
         const libraryHero = document.querySelector('.library-hero');
@@ -1895,6 +2319,7 @@
         const generatedFontStyle = document.getElementById('generatedFontStyle');
         const dropdownComponents = [];
         const glyphCharacterMap = new Map();
+        const detailPreviewSizes = [16, 20, 24, 32, 48, 64];
         let dragOverlayHideTimer = null;
         let dragOverlayResetTimer = null;
 
@@ -1941,6 +2366,13 @@
         function getSourceIconFileName(icon, extension = 'svg') {
             const sourceStem = (icon?.key || '').replace(/_(line|fill)$/u, '');
             return `${sourceStem || 'icon'}.${extension}`;
+        }
+
+        function getSelectedIcon() {
+            if (!state.selectedIconKey) {
+                return null;
+            }
+            return state.icons.find((icon) => icon.key === state.selectedIconKey) || null;
         }
 
         async function fetchSourceIconSvg(icon) {
@@ -2027,6 +2459,66 @@
         async function downloadPng(icon) {
             const blob = await renderGlyphPngBlob(icon);
             downloadBlob(blob, getSourceIconFileName(icon, 'png'));
+        }
+
+        function renderTokenList(container, values = []) {
+            if (!container) {
+                return;
+            }
+            if (!Array.isArray(values) || values.length === 0) {
+                container.innerHTML = '<span class="icon-detail-token">등록되지 않음</span>';
+                return;
+            }
+            container.innerHTML = values.map((value) => `<span class="icon-detail-token">${escapeHtml(value)}</span>`).join('');
+        }
+
+        function renderIconDetailSheet() {
+            const icon = getSelectedIcon();
+            if (!icon) {
+                iconDetailSheet.hidden = true;
+                iconDetailSheetBackdrop.hidden = true;
+                document.body.style.overflow = '';
+                return;
+            }
+
+            const glyphCharacter = getGlyphCharacter(icon.key);
+            const previewMarkup = detailPreviewSizes.map((size) => `
+                <div class="icon-detail-size-card">
+                    <i class="icon ${icon.className} icon-detail-size-icon" aria-hidden="true" style="font-size:${size}px;"></i>
+                    <span class="icon-detail-size-label">${size}px</span>
+                </div>
+            `).join('');
+
+            iconDetailTitle.textContent = icon.displayName;
+            iconDetailSubtitle.textContent = `${getCategoryLabel(icon.category)} · ${getKindLabel(icon.kind)} · ${icon.className}`;
+            iconDetailSourceImage.src = getSourceIconUrl(icon);
+            iconDetailSourceImage.alt = `${icon.displayName} 원본 SVG`;
+            iconDetailSourceStage.classList.toggle('keyline-visible', state.detailKeylineVisible);
+            iconDetailKeylineToggle.setAttribute('aria-pressed', String(state.detailKeylineVisible));
+            iconDetailGlyphKey.textContent = icon.key;
+            iconDetailClassKey.textContent = icon.className;
+            iconDetailCategory.textContent = getCategoryLabel(icon.category);
+            iconDetailKind.textContent = getKindLabel(icon.kind);
+            iconDetailDisplayName.textContent = icon.displayName;
+            renderTokenList(iconDetailKeywords, icon.keywords);
+            renderTokenList(iconDetailSynonyms, icon.synonyms);
+            iconDetailSizePreviews.innerHTML = previewMarkup;
+            iconDetailSheet.hidden = false;
+            iconDetailSheetBackdrop.hidden = false;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openIconDetail(icon) {
+            if (!icon) {
+                return;
+            }
+            state.selectedIconKey = icon.key;
+            renderIconDetailSheet();
+        }
+
+        function closeIconDetail() {
+            state.selectedIconKey = null;
+            renderIconDetailSheet();
         }
 
         function syncLibraryHeroChrome() {
@@ -2167,6 +2659,15 @@
             return state.icons.find((icon) => icon.key === glyphKey) || null;
         }
 
+        function getIconFromCardTarget(target) {
+            const card = target.closest('.icon-card');
+            if (!card) {
+                return null;
+            }
+
+            return state.icons.find((icon) => icon.key === card.dataset.glyphKey) || null;
+        }
+
         function closeAllListActionMenus(exceptGroup = null) {
             libraryGrid.querySelectorAll('.list-action-group.open').forEach((group) => {
                 if (group !== exceptGroup) {
@@ -2196,6 +2697,52 @@
             viewToggleIcon.className = isGrid
                 ? 'icon icon--grid_view_sm_line hero-view-icon'
                 : 'icon icon--card_list_view_line hero-view-icon';
+        }
+
+        async function runDetailAction(actionKind) {
+            const icon = getSelectedIcon();
+            if (!icon) {
+                return;
+            }
+
+            if (actionKind === 'copy-glyph') {
+                const glyphCharacter = getGlyphCharacter(icon.key);
+                if (!glyphCharacter) {
+                    throw new Error('글리프를 찾지 못했습니다.');
+                }
+                await navigator.clipboard.writeText(glyphCharacter);
+                showToast('글리프를 복사했습니다.');
+                return;
+            }
+
+            if (actionKind === 'copy-class') {
+                await navigator.clipboard.writeText(icon.className);
+                showToast(`클래스 키를 복사했습니다: ${icon.className}`);
+                return;
+            }
+
+            if (actionKind === 'copy-svg') {
+                await copySvgSource(icon);
+                showToast('SVG를 복사했습니다.');
+                return;
+            }
+
+            if (actionKind === 'copy-png') {
+                await copyPng(icon);
+                showToast('PNG를 복사했습니다.');
+                return;
+            }
+
+            if (actionKind === 'download-svg') {
+                await downloadSvgSource(icon);
+                showToast('SVG를 다운로드했습니다.');
+                return;
+            }
+
+            if (actionKind === 'download-png') {
+                await downloadPng(icon);
+                showToast('PNG를 다운로드했습니다.');
+            }
         }
 
         function createDropdownComponent({
@@ -2603,12 +3150,13 @@
             document.documentElement.style.setProperty('--preview-weight', `${state.previewWeight}`);
             weightTriggerLabel.textContent = `${weightNames[state.previewWeight]}`;
             syncViewToggleState();
+            renderIconDetailSheet();
         }
 
         function renderGridCard(icon) {
             const glyphCharacter = getGlyphCharacter(icon.key);
             return `
-                <article class="icon-card grid-card">
+                <article class="icon-card grid-card" data-glyph-key="${escapeHtml(icon.key)}" data-category="${escapeHtml(icon.category)}" data-kind="${escapeHtml(icon.kind)}">
                     <div class="card-top">
                         <span class="kind-pill ${icon.kind}">${icon.kind}</span>
                         <span class="card-subtitle">${getCategoryLabel(icon.category)}</span>
@@ -2744,6 +3292,7 @@
             }
 
             libraryGrid.innerHTML = `${pendingCards}${cardMarkup}`;
+            renderIconDetailSheet();
         }
 
         function showToast(message, isError = false) {
@@ -2967,8 +3516,34 @@
 
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
+                closeIconDetail();
                 closeAllDropdowns();
                 closeAllListActionMenus();
+            }
+        });
+
+        iconDetailSheetBackdrop.addEventListener('click', () => {
+            closeIconDetail();
+        });
+
+        iconDetailCloseButton.addEventListener('click', () => {
+            closeIconDetail();
+        });
+
+        iconDetailKeylineToggle.addEventListener('click', () => {
+            state.detailKeylineVisible = !state.detailKeylineVisible;
+            renderIconDetailSheet();
+        });
+
+        iconDetailSheet.addEventListener('click', async (event) => {
+            const detailAction = event.target.closest('[data-detail-action]');
+            if (!detailAction) {
+                return;
+            }
+            try {
+                await runDetailAction(detailAction.dataset.detailAction);
+            } catch (error) {
+                showToast(error.message || '상세 액션을 실행하지 못했습니다.', true);
             }
         });
 
@@ -2977,6 +3552,17 @@
             if (menuToggle) {
                 toggleListActionMenu(menuToggle.closest('.list-action-group'));
                 return;
+            }
+
+            const detailOpenButton = event.target.closest('.card-copy-button, .list-action-main, .list-action-item, .list-action-menu-toggle');
+            if (!detailOpenButton) {
+                const clickableCard = event.target.closest('.icon-card');
+                if (clickableCard) {
+                    const cardIcon = getIconFromCardTarget(clickableCard);
+                    if (cardIcon) {
+                        openIconDetail(cardIcon);
+                    }
+                }
             }
 
             const copyButton = event.target.closest('.card-copy-button, .list-action-main[data-copy-kind], .list-action-item[data-copy-kind]');
