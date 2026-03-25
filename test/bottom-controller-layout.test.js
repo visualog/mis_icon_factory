@@ -231,3 +231,24 @@ test('icon detail bottom sheet supports backdrop and escape dismissal', () => {
     assert.match(indexHtml, /iconDetailSheetBackdrop\.addEventListener\('click',\s*\(\)\s*=>\s*\{\s*closeIconDetail\(\);\s*\}\);/s);
     assert.match(indexHtml, /if \(event\.key === 'Escape'\) \{[\s\S]*closeIconDetail\(\);/s);
 });
+
+test('icon detail phase 2 exposes half-sheet polish hooks and selected card state hooks', () => {
+    assert.match(indexHtml, /\.icon-detail-sheet\s*\{[\s\S]*max-height:\s*min\(82vh,\s*920px\);/s);
+    assert.match(indexHtml, /\.icon-detail-sheet-backdrop\s*\{[\s\S]*background:\s*rgba\(18,\s*19,\s*24,\s*0\.32\);/s);
+    assert.match(indexHtml, /\.icon-card\.detail-active\s*\{/);
+    assert.match(indexHtml, /class="icon-detail-sheet-body icon-detail-sheet-body--phase2"/);
+});
+
+test('icon detail metadata section exposes edit-mode structural hooks and safe area guide hook', () => {
+    assert.match(indexHtml, /detailEditing:\s*false/);
+    assert.match(indexHtml, /detailDirty:\s*false/);
+    assert.match(indexHtml, /id="iconDetailMetadataHeader"/);
+    assert.match(indexHtml, /id="iconDetailEditButton"/);
+    assert.match(indexHtml, /id="iconDetailSaveButton"/);
+    assert.match(indexHtml, /id="iconDetailCancelButton"/);
+    assert.match(indexHtml, /id="iconDetailUnsavedBadge"/);
+    assert.match(indexHtml, /id="iconDetailDisplayNameInput"/);
+    assert.match(indexHtml, /id="iconDetailKeywordsInput"/);
+    assert.match(indexHtml, /id="iconDetailSynonymsInput"/);
+    assert.match(indexHtml, /\.icon-detail-source-stage\.keyline-visible \.icon-detail-safe-area/);
+});
