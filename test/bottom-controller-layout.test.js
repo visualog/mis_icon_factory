@@ -252,3 +252,18 @@ test('icon detail metadata section exposes edit-mode structural hooks and safe a
     assert.match(indexHtml, /id="iconDetailSynonymsInput"/);
     assert.match(indexHtml, /\.icon-detail-source-stage\.keyline-visible \.icon-detail-safe-area/);
 });
+
+test('icon detail phase 2 uses animated half-sheet classes and selected-card active state in both views', () => {
+    assert.match(indexHtml, /\.icon-detail-sheet\s*\{[\s\S]*opacity:\s*0;[\s\S]*transform:\s*translateX\(-50%\) translateY\(20px\);[\s\S]*transition:\s*opacity 220ms ease,\s*transform 260ms cubic-bezier\(0\.22,\s*1,\s*0\.36,\s*1\);/s);
+    assert.match(indexHtml, /\.icon-detail-sheet\.is-open\s*\{[\s\S]*opacity:\s*1;[\s\S]*transform:\s*translateX\(-50%\) translateY\(0\);/s);
+    assert.match(indexHtml, /\.icon-detail-sheet-backdrop\s*\{[\s\S]*opacity:\s*0;[\s\S]*transition:\s*opacity 220ms ease;/s);
+    assert.match(indexHtml, /\.icon-detail-sheet-backdrop\.is-open\s*\{[\s\S]*opacity:\s*1;/s);
+    assert.match(indexHtml, /function renderGridCard\(icon\)\s*\{[\s\S]*const isDetailActive = state\.selectedIconKey === icon\.key;[\s\S]*class="icon-card grid-card\$\{isDetailActive \? ' detail-active' : ''\}"/s);
+    assert.match(indexHtml, /function renderListCard\(icon\)\s*\{[\s\S]*const isDetailActive = state\.selectedIconKey === icon\.key;[\s\S]*class="icon-card list-card\$\{isDetailActive \? ' detail-active' : ''\}"/s);
+});
+
+test('icon detail subtitle is simplified and open/close logic toggles animated open classes', () => {
+    assert.match(indexHtml, /iconDetailSubtitle\.textContent = `\$\{getCategoryLabel\(icon\.category\)\} · \$\{getKindLabel\(icon\.kind\)\}`;/);
+    assert.match(indexHtml, /requestAnimationFrame\(\(\) => \{\s*iconDetailSheetBackdrop\.classList\.add\('is-open'\);\s*iconDetailSheet\.classList\.add\('is-open'\);\s*\}\);/s);
+    assert.match(indexHtml, /iconDetailSheetBackdrop\.classList\.remove\('is-open'\);\s*iconDetailSheet\.classList\.remove\('is-open'\);/s);
+});
