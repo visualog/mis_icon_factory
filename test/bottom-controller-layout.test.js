@@ -196,6 +196,7 @@ test('icon detail bottom sheet includes source preview, keyline toggle, metadata
     assert.match(indexHtml, /function renderIconDetailSheet\(\)\s*\{/);
     assert.match(indexHtml, /class="icon-detail-source-panel"/);
     assert.match(indexHtml, /class="icon-detail-source-stage/);
+    assert.match(indexHtml, /\.icon-detail-source-stage\s*\{[\s\S]*aspect-ratio:\s*1 \/ 1;/s);
     assert.match(indexHtml, /id="iconDetailSourceImage"/);
     assert.match(indexHtml, /id="iconDetailKeylineToggle"/);
     assert.match(indexHtml, /키라인 보기/);

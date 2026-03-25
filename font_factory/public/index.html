@@ -1693,6 +1693,14 @@
             gap: 16px;
         }
 
+        .icon-detail-source-panel {
+            align-items: center;
+        }
+
+        .icon-detail-source-panel > .icon-detail-panel-heading {
+            width: 100%;
+        }
+
         .icon-detail-panel-heading {
             display: flex;
             align-items: center;
@@ -1732,7 +1740,8 @@
 
         .icon-detail-source-stage {
             position: relative;
-            min-height: 380px;
+            width: min(100%, 520px);
+            aspect-ratio: 1 / 1;
             padding: 28px;
             border-radius: 28px;
             background:
