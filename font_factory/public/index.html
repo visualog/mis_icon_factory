@@ -1966,6 +1966,44 @@
             display: none;
         }
 
+        .icon-detail-sheet.editing-detail-metadata .icon-detail-edit-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .icon-detail-sheet.editing-detail-metadata .icon-detail-read-value {
+            display: none;
+        }
+
+        .icon-detail-text-input,
+        .icon-detail-select-input,
+        .icon-detail-token-input {
+            width: 100%;
+            min-height: 40px;
+            padding: 0 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(30, 31, 36, 0.08);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--text);
+        }
+
+        .icon-detail-token-remove {
+            width: 18px;
+            height: 18px;
+            padding: 0;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(30, 31, 36, 0.08);
+            color: var(--text-subtle);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            line-height: 1;
+        }
+
         .icon-detail-metadata-row {
             padding: 14px 16px;
             border-radius: 20px;
@@ -2199,28 +2237,31 @@
                 <div class="icon-detail-metadata">
                     <div class="icon-detail-metadata-row">
                         <span class="icon-detail-info-label">displayName</span>
-                        <div id="iconDetailDisplayName" class="icon-detail-info-value"></div>
+                        <div id="iconDetailDisplayName" class="icon-detail-info-value icon-detail-read-value"></div>
                         <div class="icon-detail-edit-fields">
-                            <input id="iconDetailDisplayNameInput" type="text" autocomplete="off">
+                            <input id="iconDetailDisplayNameInput" class="icon-detail-text-input" type="text" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="icon-detail-metadata-row">
+                        <span class="icon-detail-info-label">category</span>
+                        <div id="iconDetailMetadataCategory" class="icon-detail-info-value icon-detail-read-value"></div>
+                        <div class="icon-detail-edit-fields">
+                            <select id="iconDetailCategoryInput" class="icon-detail-select-input"></select>
                         </div>
                     </div>
                     <div class="icon-detail-metadata-row">
                         <span class="icon-detail-info-label">keywords</span>
-                        <div id="iconDetailKeywords" class="icon-detail-token-list"></div>
+                        <div id="iconDetailKeywords" class="icon-detail-token-list icon-detail-read-value"></div>
                         <div class="icon-detail-edit-fields">
-                            <input id="iconDetailKeywordsInput" type="text" autocomplete="off">
+                            <input id="iconDetailKeywordsInput" class="icon-detail-token-input" type="text" autocomplete="off">
                         </div>
                     </div>
                     <div class="icon-detail-metadata-row">
                         <span class="icon-detail-info-label">synonyms</span>
-                        <div id="iconDetailSynonyms" class="icon-detail-token-list"></div>
+                        <div id="iconDetailSynonyms" class="icon-detail-token-list icon-detail-read-value"></div>
                         <div class="icon-detail-edit-fields">
-                            <input id="iconDetailSynonymsInput" type="text" autocomplete="off">
+                            <input id="iconDetailSynonymsInput" class="icon-detail-token-input" type="text" autocomplete="off">
                         </div>
-                    </div>
-                    <div class="icon-detail-metadata-row icon-detail-edit-fields">
-                        <span class="icon-detail-info-label">category</span>
-                        <input id="iconDetailCategoryInput" type="text" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -2350,6 +2391,7 @@
             selectedIconKey: null,
             detailEditing: false,
             detailDirty: false,
+            detailDraft: null,
             previewWeight: 500,
             previewSize: 64,
             previewColor: '#1e1f24',
@@ -2378,9 +2420,18 @@
         const iconDetailClassKey = document.getElementById('iconDetailClassKey');
         const iconDetailCategory = document.getElementById('iconDetailCategory');
         const iconDetailKind = document.getElementById('iconDetailKind');
+        const iconDetailEditButton = document.getElementById('iconDetailEditButton');
+        const iconDetailSaveButton = document.getElementById('iconDetailSaveButton');
+        const iconDetailCancelButton = document.getElementById('iconDetailCancelButton');
+        const iconDetailUnsavedBadge = document.getElementById('iconDetailUnsavedBadge');
         const iconDetailDisplayName = document.getElementById('iconDetailDisplayName');
+        const iconDetailDisplayNameInput = document.getElementById('iconDetailDisplayNameInput');
+        const iconDetailMetadataCategory = document.getElementById('iconDetailMetadataCategory');
+        const iconDetailCategoryInput = document.getElementById('iconDetailCategoryInput');
         const iconDetailKeywords = document.getElementById('iconDetailKeywords');
+        const iconDetailKeywordsInput = document.getElementById('iconDetailKeywordsInput');
         const iconDetailSynonyms = document.getElementById('iconDetailSynonyms');
+        const iconDetailSynonymsInput = document.getElementById('iconDetailSynonymsInput');
         const iconDetailSizePreviews = document.getElementById('iconDetailSizePreviews');
         const bottomController = document.getElementById('bottomController');
         const contentScroll = document.querySelector('.content-scroll');
@@ -2582,15 +2633,151 @@
             container.innerHTML = values.map((value) => `<span class="icon-detail-token">${escapeHtml(value)}</span>`).join('');
         }
 
+        function renderEditableTokenList(container, values = [], field) {
+            if (!container) {
+                return;
+            }
+            if (!Array.isArray(values) || values.length === 0) {
+                container.innerHTML = '<span class="icon-detail-token">등록되지 않음</span>';
+                return;
+            }
+            container.innerHTML = values.map((value, index) => `
+                <span class="icon-detail-token">
+                    <span>${escapeHtml(value)}</span>
+                    <button type="button" class="icon-detail-token-remove" data-detail-token-field="${escapeHtml(field)}" data-detail-token-index="${index}" aria-label="${escapeHtml(value)} 제거">×</button>
+                </span>
+            `).join('');
+        }
+
+        function createDetailDraft(icon) {
+            return {
+                displayName: icon.displayName || '',
+                category: icon.category || 'misc',
+                keywords: Array.isArray(icon.keywords) ? [...icon.keywords] : [],
+                synonyms: Array.isArray(icon.synonyms) ? [...icon.synonyms] : []
+            };
+        }
+
+        function getDetailDraftSource(icon) {
+            return state.detailEditing && state.detailDraft ? state.detailDraft : icon;
+        }
+
+        function updateDetailDirtyState(icon) {
+            if (!icon || !state.detailDraft) {
+                state.detailDirty = false;
+                return;
+            }
+
+            const normalizedOriginal = JSON.stringify(createDetailDraft(icon));
+            const normalizedDraft = JSON.stringify(state.detailDraft);
+            state.detailDirty = normalizedOriginal !== normalizedDraft;
+        }
+
+        function setDetailDraftField(field, value) {
+            if (!state.detailDraft) {
+                return;
+            }
+            state.detailDraft[field] = value;
+            updateDetailDirtyState(getSelectedIcon());
+            syncDetailEditingState(getSelectedIcon());
+        }
+
+        function normalizeDetailToken(rawValue = '') {
+            return rawValue.trim().replace(/\s+/g, ' ');
+        }
+
+        function addDetailToken(field, rawValue) {
+            if (!state.detailDraft || !Array.isArray(state.detailDraft[field])) {
+                return false;
+            }
+            const normalized = normalizeDetailToken(rawValue);
+            if (!normalized || state.detailDraft[field].includes(normalized)) {
+                return false;
+            }
+            state.detailDraft[field] = [...state.detailDraft[field], normalized];
+            updateDetailDirtyState(getSelectedIcon());
+            syncDetailEditingState(getSelectedIcon());
+            return true;
+        }
+
+        function removeDetailToken(field, index) {
+            if (!state.detailDraft || !Array.isArray(state.detailDraft[field])) {
+                return;
+            }
+            state.detailDraft[field] = state.detailDraft[field].filter((_, tokenIndex) => tokenIndex !== index);
+            updateDetailDirtyState(getSelectedIcon());
+            syncDetailEditingState(getSelectedIcon());
+        }
+
+        function syncDetailEditingState(icon) {
+            const draft = icon ? getDetailDraftSource(icon) : null;
+            iconDetailSheet.classList.toggle('editing-detail-metadata', state.detailEditing);
+            iconDetailEditButton.hidden = state.detailEditing;
+            iconDetailSaveButton.hidden = !state.detailEditing;
+            iconDetailCancelButton.hidden = !state.detailEditing;
+            iconDetailUnsavedBadge.hidden = !state.detailEditing || !state.detailDirty;
+            iconDetailSaveButton.disabled = !state.detailDirty;
+
+            if (!draft) {
+                return;
+            }
+
+            iconDetailDisplayNameInput.value = draft.displayName || '';
+            iconDetailMetadataCategory.textContent = getCategoryLabel(draft.category || 'misc');
+            iconDetailCategoryInput.innerHTML = [
+                ...CATEGORY_CONFIG.map((category) => `<option value="${escapeHtml(category.key)}">${escapeHtml(category.label)}</option>`),
+                '<option value="misc">기타</option>'
+            ].join('');
+            iconDetailCategoryInput.value = draft.category || 'misc';
+
+            if (state.detailEditing) {
+                renderEditableTokenList(iconDetailKeywords, draft.keywords, 'keywords');
+                renderEditableTokenList(iconDetailSynonyms, draft.synonyms, 'synonyms');
+            } else {
+                renderTokenList(iconDetailKeywords, draft.keywords);
+                renderTokenList(iconDetailSynonyms, draft.synonyms);
+            }
+        }
+
+        function buildDetailSearchText(draft) {
+            return [
+                draft.displayName || '',
+                ...(Array.isArray(draft.keywords) ? draft.keywords : []),
+                ...(Array.isArray(draft.synonyms) ? draft.synonyms : []),
+                getCategoryLabel(draft.category || 'misc')
+            ]
+                .join(' ')
+                .toLowerCase();
+        }
+
+        function commitDetailDraft() {
+            const icon = getSelectedIcon();
+            if (!icon || !state.detailDraft) {
+                return;
+            }
+
+            icon.displayName = state.detailDraft.displayName;
+            icon.category = state.detailDraft.category;
+            icon.keywords = [...state.detailDraft.keywords];
+            icon.synonyms = [...state.detailDraft.synonyms];
+            icon.searchText = buildDetailSearchText(state.detailDraft);
+            state.detailEditing = false;
+            state.detailDirty = false;
+            state.detailDraft = null;
+        }
+
         function renderIconDetailSheet() {
             const icon = getSelectedIcon();
             if (!icon) {
                 iconDetailSheet.hidden = true;
                 iconDetailSheetBackdrop.hidden = true;
+                iconDetailSheet.classList.remove('is-open', 'editing-detail-metadata');
+                iconDetailSheetBackdrop.classList.remove('is-open');
                 document.body.style.overflow = '';
                 return;
             }
 
+            const metadataSource = getDetailDraftSource(icon);
             const glyphCharacter = getGlyphCharacter(icon.key);
             const previewMarkup = detailPreviewSizes.map((size) => `
                 <div class="icon-detail-size-card">
@@ -2609,9 +2796,9 @@
             iconDetailClassKey.textContent = icon.className;
             iconDetailCategory.textContent = getCategoryLabel(icon.category);
             iconDetailKind.textContent = getKindLabel(icon.kind);
-            iconDetailDisplayName.textContent = icon.displayName;
-            renderTokenList(iconDetailKeywords, icon.keywords);
-            renderTokenList(iconDetailSynonyms, icon.synonyms);
+            iconDetailDisplayName.textContent = metadataSource.displayName;
+            iconDetailMetadataCategory.textContent = getCategoryLabel(metadataSource.category || 'misc');
+            syncDetailEditingState(icon);
             iconDetailSizePreviews.innerHTML = previewMarkup;
             iconDetailSheet.hidden = false;
             iconDetailSheetBackdrop.hidden = false;
@@ -2627,14 +2814,22 @@
                 return;
             }
             state.selectedIconKey = icon.key;
+            state.detailEditing = false;
+            state.detailDirty = false;
+            state.detailDraft = null;
             renderIconDetailSheet();
+            renderGrid();
         }
 
         function closeIconDetail() {
             iconDetailSheetBackdrop.classList.remove('is-open');
             iconDetailSheet.classList.remove('is-open');
+            state.detailEditing = false;
+            state.detailDirty = false;
+            state.detailDraft = null;
             state.selectedIconKey = null;
             renderIconDetailSheet();
+            renderGrid();
         }
 
         function syncLibraryHeroChrome() {
@@ -3653,7 +3848,69 @@
             renderIconDetailSheet();
         });
 
+        iconDetailEditButton.addEventListener('click', () => {
+            const icon = getSelectedIcon();
+            if (!icon) {
+                return;
+            }
+            state.detailEditing = true;
+            state.detailDirty = false;
+            state.detailDraft = createDetailDraft(icon);
+            syncDetailEditingState(icon);
+        });
+
+        iconDetailCancelButton.addEventListener('click', () => {
+            state.detailEditing = false;
+            state.detailDirty = false;
+            state.detailDraft = null;
+            renderIconDetailSheet();
+        });
+
+        iconDetailSaveButton.addEventListener('click', () => {
+            if (!state.detailDirty || !state.detailDraft) {
+                return;
+            }
+            commitDetailDraft();
+            renderIconDetailSheet();
+            renderGrid();
+            showToast('메타데이터를 업데이트했습니다.');
+        });
+
+        iconDetailDisplayNameInput.addEventListener('input', (event) => {
+            setDetailDraftField('displayName', event.target.value);
+        });
+
+        iconDetailCategoryInput.addEventListener('change', (event) => {
+            setDetailDraftField('category', event.target.value);
+        });
+
+        iconDetailKeywordsInput.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ',') {
+                return;
+            }
+            event.preventDefault();
+            if (addDetailToken('keywords', event.target.value)) {
+                event.target.value = '';
+            }
+        });
+
+        iconDetailSynonymsInput.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ',') {
+                return;
+            }
+            event.preventDefault();
+            if (addDetailToken('synonyms', event.target.value)) {
+                event.target.value = '';
+            }
+        });
+
         iconDetailSheet.addEventListener('click', async (event) => {
+            const tokenRemoveButton = event.target.closest('.icon-detail-token-remove');
+            if (tokenRemoveButton) {
+                removeDetailToken(tokenRemoveButton.dataset.detailTokenField, Number(tokenRemoveButton.dataset.detailTokenIndex));
+                return;
+            }
+
             const detailAction = event.target.closest('[data-detail-action]');
             if (!detailAction) {
                 return;

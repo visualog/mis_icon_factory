@@ -267,3 +267,26 @@ test('icon detail subtitle is simplified and open/close logic toggles animated o
     assert.match(indexHtml, /requestAnimationFrame\(\(\) => \{\s*iconDetailSheetBackdrop\.classList\.add\('is-open'\);\s*iconDetailSheet\.classList\.add\('is-open'\);\s*\}\);/s);
     assert.match(indexHtml, /iconDetailSheetBackdrop\.classList\.remove\('is-open'\);\s*iconDetailSheet\.classList\.remove\('is-open'\);/s);
 });
+
+test('icon detail metadata edit mode keeps a local draft and dirty-state helpers', () => {
+    assert.match(indexHtml, /detailDraft:\s*null/);
+    assert.match(indexHtml, /function createDetailDraft\(icon\)\s*\{/);
+    assert.match(indexHtml, /function setDetailDraftField\(field,\s*value\)\s*\{/);
+    assert.match(indexHtml, /function addDetailToken\(field,\s*rawValue\)\s*\{/);
+    assert.match(indexHtml, /function removeDetailToken\(field,\s*index\)\s*\{/);
+    assert.match(indexHtml, /function syncDetailEditingState\(icon\)\s*\{/);
+});
+
+test('icon detail metadata edit mode wires edit cancel and local token input behavior', () => {
+    assert.match(indexHtml, /iconDetailEditButton\.addEventListener\('click',\s*\(\)\s*=>\s*\{/);
+    assert.match(indexHtml, /state\.detailEditing = true;/);
+    assert.match(indexHtml, /state\.detailDraft = createDetailDraft\(icon\);/);
+    assert.match(indexHtml, /iconDetailCancelButton\.addEventListener\('click',\s*\(\)\s*=>\s*\{/);
+    assert.match(indexHtml, /state\.detailEditing = false;/);
+    assert.match(indexHtml, /state\.detailDirty = false;/);
+    assert.match(indexHtml, /state\.detailDraft = null;/);
+    assert.match(indexHtml, /iconDetailDisplayNameInput\.addEventListener\('input',/);
+    assert.match(indexHtml, /iconDetailKeywordsInput\.addEventListener\('keydown',/);
+    assert.match(indexHtml, /iconDetailSynonymsInput\.addEventListener\('keydown',/);
+    assert.match(indexHtml, /class="icon-detail-token-remove"/);
+});
