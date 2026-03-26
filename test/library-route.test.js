@@ -348,3 +348,93 @@ test('POST /api/build rejects overlapping builds with 409', async () => {
         }
     });
 });
+
+test('POST /api/icon-metadata/:key validates payload and persists metadata updates', async () => {
+    await withTempRuntime(async ({ tempRoot }) => {
+        await fs.ensureDir(path.join(tempRoot, 'font_factory'));
+        await fs.writeJson(path.join(tempRoot, 'font_factory', 'icon-metadata.json'), {
+            version: 1,
+            icons: {
+                a_apple_line: {
+                    displayName: 'A Apple Line',
+                    category: 'misc',
+                    keywords: ['apple'],
+                    synonyms: ['사과']
+                }
+            }
+        });
+
+        const server = app.listen(0);
+
+        try {
+            const { port } = server.address();
+            const response = await fetch(`http://127.0.0.1:${port}/api/icon-metadata/a_apple_line`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    displayName: 'Apple Line',
+                    category: 'files',
+                    keywords: ['fruit', 'brand'],
+                    synonyms: ['애플', '사과 아이콘']
+                })
+            });
+
+            assert.equal(response.status, 200);
+
+            const payload = await response.json();
+            assert.equal(payload.success, true);
+            assert.equal(payload.icon.displayName, 'Apple Line');
+            assert.equal(payload.icon.category, 'files');
+            assert.deepEqual(payload.icon.keywords, ['fruit', 'brand']);
+            assert.deepEqual(payload.icon.synonyms, ['애플', '사과 아이콘']);
+
+            const metadata = await fs.readJson(path.join(tempRoot, 'font_factory', 'icon-metadata.json'));
+            assert.equal(metadata.icons.a_apple_line.displayName, 'Apple Line');
+            assert.equal(metadata.icons.a_apple_line.category, 'files');
+            assert.deepEqual(metadata.icons.a_apple_line.keywords, ['fruit', 'brand']);
+            assert.deepEqual(metadata.icons.a_apple_line.synonyms, ['애플', '사과 아이콘']);
+        } finally {
+            await closeServer(server);
+        }
+    });
+});
+
+test('POST /api/icon-metadata/:key rejects invalid payloads', async () => {
+    await withTempRuntime(async ({ tempRoot }) => {
+        await fs.ensureDir(path.join(tempRoot, 'font_factory'));
+        await fs.writeJson(path.join(tempRoot, 'font_factory', 'icon-metadata.json'), {
+            version: 1,
+            icons: {
+                a_apple_line: {
+                    displayName: 'A Apple Line',
+                    category: 'misc',
+                    keywords: ['apple'],
+                    synonyms: ['사과']
+                }
+            }
+        });
+
+        const server = app.listen(0);
+
+        try {
+            const { port } = server.address();
+            const response = await fetch(`http://127.0.0.1:${port}/api/icon-metadata/a_apple_line`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    displayName: '',
+                    category: 'not-a-category',
+                    keywords: 'bad',
+                    synonyms: []
+                })
+            });
+
+            assert.equal(response.status, 400);
+
+            const payload = await response.json();
+            assert.match(payload.error, /invalid metadata payload/i);
+        } finally {
+            await closeServer(server);
+        }
+    });
+});

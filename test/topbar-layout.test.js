@@ -23,14 +23,21 @@ test('topbar category dropdown uses the shared dropdown component helper', () =>
 test('hero meta includes view toggle and sort controls', () => {
     assert.match(indexHtml, /viewMode:\s*'grid'/);
     assert.match(indexHtml, /sortMode:\s*'name'/);
+    assert.match(indexHtml, /--bg-rgb:\s*246,\s*243,\s*238;/);
     assert.match(indexHtml, /\.library-hero\s*\{[\s\S]*position:\s*sticky;[\s\S]*top:\s*0;[\s\S]*z-index:\s*30;/s);
-    assert.match(indexHtml, /\.library-hero::before\s*\{[\s\S]*left:\s*50%;[\s\S]*width:\s*100vw;[\s\S]*transform:\s*translateX\(-50%\);/s);
-    assert.match(indexHtml, /\.library-hero\.is-scrolled::before\s*\{[\s\S]*blur\(18px\) saturate\(145%\);[\s\S]*box-shadow:\s*inset 0 -1px 0 rgba\(30,\s*31,\s*36,\s*0\.08\);/s);
+    assert.doesNotMatch(indexHtml, /\.library-hero::before\s*\{/s);
+    assert.doesNotMatch(indexHtml, /\.library-hero-dim\s*\{/s);
+    assert.doesNotMatch(indexHtml, /\.library-hero-dim-layer\s*\{/s);
+    assert.doesNotMatch(indexHtml, /\.library-hero-dim-overlay\s*\{/s);
+    assert.match(indexHtml, /\.library-hero-gradient\s*\{[\s\S]*left:\s*50%;[\s\S]*width:\s*100vw;[\s\S]*height:\s*60px;[\s\S]*transform:\s*translateX\(-50%\);/s);
+    assert.match(indexHtml, /\.library-hero-gradient\s*\{[\s\S]*rgba\(var\(--bg-rgb\),\s*1\)\s*50%[\s\S]*rgba\(var\(--bg-rgb\),\s*0\.5\)\s*80%[\s\S]*rgba\(var\(--bg-rgb\),\s*0\)\s*100%/s);
+    assert.match(indexHtml, /\.library-hero\.is-scrolled \.library-hero-gradient\s*\{[\s\S]*rgba\(var\(--bg-rgb\),\s*1\)\s*0%[\s\S]*rgba\(var\(--bg-rgb\),\s*0\.75\)\s*45%[\s\S]*rgba\(var\(--bg-rgb\),\s*0\.2\)\s*80%[\s\S]*rgba\(var\(--bg-rgb\),\s*0\)\s*100%/s);
+    assert.match(indexHtml, /\.hero-meta\s*\{[\s\S]*position:\s*relative;[\s\S]*z-index:\s*1;/s);
     assert.match(indexHtml, /function syncLibraryHeroChrome\(\)\s*\{[\s\S]*libraryHero\.classList\.toggle\('is-scrolled',\s*contentScroll\.scrollTop > 8\);/s);
     assert.match(indexHtml, /contentScroll\?\.addEventListener\('scroll',\s*syncLibraryHeroChrome,\s*\{\s*passive:\s*true\s*\}\);/s);
     assert.match(
         indexHtml,
-        /<div class="hero-meta">[\s\S]*<span id="lastBuiltAt" class="meta-pill success">[\s\S]*<\/span>[\s\S]*<div class="hero-meta-actions">[\s\S]*<button id="viewToggleButton"[\s\S]*data-tooltip="리스트 카드 형식으로 전환"[\s\S]*grid_view_sm_line[\s\S]*<\/button>[\s\S]*<div class="hero-sort dropdown dropdown--down">[\s\S]*<button id="sortTrigger" class="dropdown-trigger hero-sort-trigger"[\s\S]*<div id="sortMenu" class="dropdown-menu hero-sort-menu"[\s\S]*이름순[\s\S]*카테고리순[\s\S]*<\/div>[\s\S]*<\/div>[\s\S]*<\/div>/s
+        /<section class="library-hero">[\s\S]*<div class="library-hero-gradient" aria-hidden="true"><\/div>[\s\S]*<div class="hero-meta">[\s\S]*<span id="lastBuiltAt" class="meta-pill success">[\s\S]*<\/span>[\s\S]*<div class="hero-meta-actions">[\s\S]*<button id="viewToggleButton"[\s\S]*data-tooltip="리스트 카드 형식으로 전환"[\s\S]*grid_view_sm_line[\s\S]*<\/button>[\s\S]*<div class="hero-sort dropdown dropdown--down">[\s\S]*<button id="sortTrigger" class="dropdown-trigger hero-sort-trigger"[\s\S]*<div id="sortMenu" class="dropdown-menu hero-sort-menu"[\s\S]*이름순[\s\S]*카테고리순[\s\S]*<\/div>[\s\S]*<\/div>[\s\S]*<\/div>/s
     );
     assert.doesNotMatch(indexHtml, /타입순/);
     assert.doesNotMatch(indexHtml, /id="viewToggleButton"[\s\S]*title="/s);

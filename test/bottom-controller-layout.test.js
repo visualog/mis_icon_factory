@@ -97,11 +97,38 @@ test('upload button uses custom tooltip and color transition instead of lift-on-
     assert.match(indexHtml, /uploadButton\.setAttribute\('data-tooltip',\s*label\);/);
 });
 
-test('bottom controller uses a liquid glass shell with bottom glow', () => {
-    assert.match(indexHtml, /\.bottom-controller::before\s*\{[\s\S]*border:\s*1px solid rgba\(255,\s*255,\s*255,\s*0\.38\);/s);
-    assert.match(indexHtml, /\.bottom-controller::before\s*\{[\s\S]*radial-gradient\(140% 140% at 50% -28%/s);
-    assert.match(indexHtml, /\.bottom-controller::before\s*\{[\s\S]*blur\(28px\) saturate\(180%\);/s);
-    assert.match(indexHtml, /\.bottom-controller::after\s*\{[\s\S]*bottom:\s*-6px;[\s\S]*height:\s*14px;[\s\S]*radial-gradient\(ellipse at center,/s);
+test('bottom controller now uses a single shell without pseudo-element glass layers', () => {
+    assert.doesNotMatch(indexHtml, /\.bottom-controller::before\s*\{/s);
+    assert.doesNotMatch(indexHtml, /\.bottom-controller::after\s*\{/s);
+    assert.match(indexHtml, /<div id="bottomControllerDim" class="bottom-controller-dim" aria-hidden="true">[\s\S]*bottom-controller-dim-layer layer-1[\s\S]*bottom-controller-dim-layer layer-5[\s\S]*bottom-controller-dim-overlay[\s\S]*<\/div>\s*<aside id="bottomController"/s);
+    assert.match(indexHtml, /\.bottom-controller-dim\s*\{[\s\S]*position:\s*fixed;[\s\S]*height:\s*80px;[\s\S]*pointer-events:\s*none;/s);
+    assert.match(indexHtml, /\.bottom-controller-dim-layer\s*\{[\s\S]*-webkit-backdrop-filter:\s*blur\(var\(--blur\)\) saturate\(118%\);/s);
+    assert.match(indexHtml, /\.bottom-controller-dim-layer\.layer-1\s*\{[\s\S]*--blur:\s*40px;[\s\S]*--mask:\s*linear-gradient\(to top,/s);
+    assert.match(indexHtml, /\.bottom-controller-dim-layer\.layer-5\s*\{[\s\S]*--blur:\s*6px;[\s\S]*--mask:\s*linear-gradient\(to top,/s);
+    assert.match(indexHtml, /\.bottom-controller-dim-overlay\s*\{[\s\S]*background:\s*linear-gradient\(\s*0deg,/s);
+    assert.match(indexHtml, /\.bottom-controller\s*\{[\s\S]*background:\s*rgba\(255,\s*255,\s*255,\s*0\.22\);/s);
+    assert.match(indexHtml, /\.bottom-controller\s*\{[\s\S]*-webkit-backdrop-filter:\s*blur\(28px\) saturate\(180%\);/s);
+    assert.match(indexHtml, /\.bottom-controller\s*\{[\s\S]*box-shadow:\s*0 12px 28px rgba\(48,\s*41,\s*29,\s*0\.08\),\s*inset 0 1px 0 rgba\(255,\s*255,\s*255,\s*0\.72\),\s*inset 0 -1px 0 rgba\(122,\s*114,\s*98,\s*0\.06\),\s*inset 0 12px 24px rgba\(255,\s*255,\s*255,\s*0\.14\);/s);
+});
+
+test('content can visibly pass underneath the bottom controller like an iOS tab bar', () => {
+    assert.match(indexHtml, /\.content-scroll\s*\{[\s\S]*padding:\s*0 24px calc\(var\(--controller-height\)\s*\+\s*28px\);/s);
+    assert.match(indexHtml, /\.library-shell\s*\{[\s\S]*padding-bottom:\s*0;/s);
+    assert.match(indexHtml, /@media \(max-width:\s*640px\)\s*\{[\s\S]*\.content-scroll\s*\{[\s\S]*padding:\s*0 14px calc\(var\(--controller-height\)\s*\+\s*28px\);/s);
+    assert.match(indexHtml, /\.bottom-controller\s*\{[\s\S]*background:\s*rgba\(255,\s*255,\s*255,\s*0\.22\);/s);
+});
+
+test('content scroll reserves bottom space from the measured bottom controller height', () => {
+    assert.match(
+        indexHtml,
+        /\.content-scroll\s*\{[\s\S]*padding:\s*0 24px calc\(var\(--controller-height\)\s*\+\s*28px\);/s
+    );
+    assert.match(
+        indexHtml,
+        /@media \(max-width:\s*640px\)\s*\{[\s\S]*\.content-scroll\s*\{[\s\S]*padding:\s*0 14px calc\(var\(--controller-height\)\s*\+\s*28px\);/s
+    );
+    assert.match(indexHtml, /function syncControllerHeight\(\)\s*\{/);
+    assert.match(indexHtml, /document\.documentElement\.style\.setProperty\('--controller-height', `\$\{Math\.ceil\(height\)\}px`\);/);
 });
 
 test('library grid has a list view layout and list card template', () => {
@@ -127,11 +154,10 @@ test('library grid has a list view layout and list card template', () => {
     assert.match(indexHtml, /const supplementalTerms = \(Array\.isArray\(icon\.synonyms\) && icon\.synonyms\.length > 0 \? icon\.synonyms : icon\.keywords \|\| \[\]\)\.slice\(0,\s*3\);/);
     assert.match(indexHtml, /class="list-card-search-terms">\$\{escapeHtml\(supplementalTerms\.join\(' · '\)\)\}<\/div>/);
     assert.match(indexHtml, /class="list-action-group copy-action-group"/);
-    assert.match(indexHtml, /class="list-action-main glyph-copy-button" data-action-kind="copy-glyph"/);
+    assert.match(indexHtml, /class="list-action-main glyph-copy-button" data-menu-group="copy" aria-haspopup="menu" aria-expanded="false"/);
     assert.match(indexHtml, /class="list-action-group download-action-group"/);
-    assert.match(indexHtml, /class="list-action-main svg-download-button" data-action-kind="download-svg"/);
-    assert.match(indexHtml, /class="list-action-menu-toggle" data-menu-group="copy"/);
-    assert.match(indexHtml, /class="list-action-menu-toggle" data-menu-group="download"/);
+    assert.match(indexHtml, /class="list-action-main svg-download-button" data-menu-group="download" aria-haspopup="menu" aria-expanded="false"/);
+    assert.match(indexHtml, /icon--chevron_down_line list-action-main-chevron/);
     assert.match(indexHtml, /icon--chevron_down_line/);
     assert.match(indexHtml, /글리프 복사/);
     assert.match(indexHtml, /클래스 복사/);
@@ -191,15 +217,17 @@ test('icon detail bottom sheet shell exists with dialog semantics and state hook
     assert.match(indexHtml, /<button id="iconDetailCloseButton" class="icon-detail-close" type="button" aria-label="상세 닫기">/);
 });
 
-test('icon detail bottom sheet includes source preview, keyline toggle, metadata, and size previews', () => {
+test('icon detail bottom sheet includes source preview, metadata, and size previews', () => {
     assert.match(indexHtml, /function getSelectedIcon\(\)\s*\{/);
     assert.match(indexHtml, /function renderIconDetailSheet\(\)\s*\{/);
     assert.match(indexHtml, /class="icon-detail-source-panel"/);
+    assert.match(indexHtml, /<span class="icon-detail-panel-title">Preview<\/span>/);
     assert.match(indexHtml, /class="icon-detail-source-stage/);
     assert.match(indexHtml, /\.icon-detail-source-stage\s*\{[\s\S]*aspect-ratio:\s*1 \/ 1;/s);
+    assert.match(indexHtml, /id="iconDetailSourceStage" class="icon-detail-source-stage">[\s\S]*id="iconDetailKeylineToggle"[\s\S]*hidden/);
     assert.match(indexHtml, /id="iconDetailSourceImage"/);
-    assert.match(indexHtml, /id="iconDetailKeylineToggle"/);
-    assert.match(indexHtml, /키라인 보기/);
+    assert.match(indexHtml, /class="icon-detail-source-preview-block"/);
+    assert.match(indexHtml, /class="icon-detail-source-panel"[\s\S]*id="iconDetailSizePreviews"/);
     assert.match(indexHtml, /class="icon-detail-webfont-panel"/);
     assert.match(indexHtml, /id="iconDetailGlyphKey"/);
     assert.match(indexHtml, /id="iconDetailClassKey"/);
@@ -222,7 +250,7 @@ test('icon detail bottom sheet includes consolidated copy and download actions',
 test('icon cards open the detail sheet but inner action buttons do not', () => {
     assert.match(indexHtml, /function openIconDetail\(/);
     assert.match(indexHtml, /function closeIconDetail\(/);
-    assert.match(indexHtml, /const detailOpenButton = event\.target\.closest\('\.card-copy-button, \.list-action-main, \.list-action-item, \.list-action-menu-toggle'\);/);
+    assert.match(indexHtml, /const detailOpenButton = event\.target\.closest\('\.card-copy-button, \.list-action-main, \.list-action-item'\);/);
     assert.match(indexHtml, /const clickableCard = event\.target\.closest\('\.icon-card'\);/);
     assert.match(indexHtml, /openIconDetail\(cardIcon\);/);
 });
@@ -242,6 +270,7 @@ test('icon detail phase 2 exposes half-sheet polish hooks and selected card stat
 test('icon detail metadata section exposes edit-mode structural hooks and safe area guide hook', () => {
     assert.match(indexHtml, /detailEditing:\s*false/);
     assert.match(indexHtml, /detailDirty:\s*false/);
+    assert.match(indexHtml, /detailKeylineVisible:\s*true/);
     assert.match(indexHtml, /id="iconDetailMetadataHeader"/);
     assert.match(indexHtml, /id="iconDetailEditButton"/);
     assert.match(indexHtml, /id="iconDetailSaveButton"/);
@@ -289,4 +318,19 @@ test('icon detail metadata edit mode wires edit cancel and local token input beh
     assert.match(indexHtml, /iconDetailKeywordsInput\.addEventListener\('keydown',/);
     assert.match(indexHtml, /iconDetailSynonymsInput\.addEventListener\('keydown',/);
     assert.match(indexHtml, /class="icon-detail-token-remove"/);
+});
+
+test('icon detail metadata save persists through the metadata API before committing local state', () => {
+    assert.match(indexHtml, /async function persistDetailDraft\(\)\s*\{/);
+    assert.match(indexHtml, /fetch\(`\/api\/icon-metadata\/\$\{encodeURIComponent\(icon\.key\)\}`,\s*\{/);
+    assert.match(indexHtml, /method:\s*'POST'/);
+    assert.match(indexHtml, /const savedIcon = await persistDetailDraft\(\);/);
+    assert.match(indexHtml, /commitDetailDraft\(savedIcon\);/);
+    assert.match(indexHtml, /showToast\('메타데이터를 업데이트했습니다\.'\);/);
+});
+
+test('icon detail keyline overlay exposes square and circular inspection guides with helper copy', () => {
+    assert.match(indexHtml, /class="icon-detail-frame-guide" aria-hidden="true"/);
+    assert.match(indexHtml, /class="icon-detail-circle-guide" aria-hidden="true"/);
+    assert.match(indexHtml, /class="icon-detail-safe-area" aria-hidden="true"/);
 });

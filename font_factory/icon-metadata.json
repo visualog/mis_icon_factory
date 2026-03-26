@@ -2,89 +2,6 @@
   "$schema": "./icon-metadata.schema.json",
   "version": 1,
   "icons": {
-    "aaa_test_1_line": {
-      "displayName": "AAA Test 1 Line",
-      "category": "misc",
-      "keywords": [
-        "aaa",
-        "test",
-        "test icon",
-        "aaa test 1 line"
-      ],
-      "synonyms": [
-        "aaa test 1 line",
-        "aaa test 1",
-        "aaa_test_1",
-        "test",
-        "테스트"
-      ]
-    },
-    "a_apple_line": {
-      "displayName": "A Apple Line",
-      "category": "misc",
-      "keywords": [
-        "a",
-        "apple",
-        "fruit",
-        "a apple line"
-      ],
-      "synonyms": [
-        "a apple line",
-        "a apple",
-        "a_apple",
-        "a",
-        "사과",
-        "apple"
-      ]
-    },
-    "a_banana_line": {
-      "displayName": "A Banana Line",
-      "category": "misc",
-      "keywords": [
-        "a",
-        "banana",
-        "fruit",
-        "a banana line"
-      ],
-      "synonyms": [
-        "a banana line",
-        "a banana",
-        "a_banana",
-        "a",
-        "바나나",
-        "banana"
-      ]
-    },
-    "a_bird_line": {
-      "displayName": "A Bird Line",
-      "category": "misc",
-      "keywords": [
-        "a",
-        "bird",
-        "animal",
-        "a bird line"
-      ],
-      "synonyms": [
-        "a bird line",
-        "a bird",
-        "a_bird",
-        "a",
-        "새",
-        "bird"
-      ]
-    },
-    "accessibility_line": {
-      "displayName": "Accessibility Line",
-      "category": "misc",
-      "keywords": [
-        "accessibility",
-        "accessibility line"
-      ],
-      "synonyms": [
-        "accessibility line",
-        "accessibility"
-      ]
-    },
     "add_circle_line": {
       "displayName": "Add Circle Line",
       "category": "actions",
@@ -2197,6 +2114,23 @@
         "순서도"
       ]
     },
+    "flower_line": {
+      "displayName": "Flower Line",
+      "category": "misc",
+      "keywords": [
+        "flower",
+        "plant",
+        "blossom",
+        "flower line"
+      ],
+      "synonyms": [
+        "flower line",
+        "flower",
+        "꽃",
+        "식물",
+        "blossom"
+      ]
+    },
     "folder_fill": {
       "displayName": "Folder Fill",
       "category": "files",
@@ -2229,23 +2163,6 @@
         "폴더",
         "디렉터리",
         "directory"
-      ]
-    },
-    "flower_line": {
-      "displayName": "Flower Line",
-      "category": "misc",
-      "keywords": [
-        "flower",
-        "plant",
-        "blossom",
-        "flower line"
-      ],
-      "synonyms": [
-        "flower line",
-        "flower",
-        "꽃",
-        "식물",
-        "blossom"
       ]
     },
     "folder_off_line": {

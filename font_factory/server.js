@@ -26,6 +26,19 @@ let buildRunner = async (selectedIcons) => {
     const { buildAllWeights } = require('./build-engine');
     return buildAllWeights(selectedIcons);
 };
+const VALID_METADATA_CATEGORIES = new Set([
+    'actions',
+    'navigation',
+    'communication',
+    'files',
+    'user',
+    'security',
+    'feedback',
+    'layout',
+    'device',
+    'time',
+    'misc'
+]);
 
 function sanitizeGlyphStem(fileName = '') {
     const baseName = fileName.trim().toLowerCase();
@@ -240,6 +253,70 @@ async function readIconMetadata() {
     }
 }
 
+function normalizeMetadataTokens(values) {
+    if (!Array.isArray(values)) {
+        return null;
+    }
+
+    const seen = new Set();
+    const normalized = [];
+
+    values.forEach((value) => {
+        if (typeof value !== 'string') {
+            return;
+        }
+
+        const trimmed = value.trim().replace(/\s+/g, ' ');
+        if (!trimmed || seen.has(trimmed)) {
+            return;
+        }
+
+        seen.add(trimmed);
+        normalized.push(trimmed);
+    });
+
+    return normalized;
+}
+
+function sanitizeMetadataUpdate(payload = {}) {
+    const displayName = typeof payload.displayName === 'string'
+        ? payload.displayName.trim().replace(/\s+/g, ' ')
+        : '';
+    const category = typeof payload.category === 'string' ? payload.category.trim() : '';
+    const keywords = normalizeMetadataTokens(payload.keywords);
+    const synonyms = normalizeMetadataTokens(payload.synonyms);
+
+    if (!displayName || !VALID_METADATA_CATEGORIES.has(category) || !keywords || !synonyms) {
+        return null;
+    }
+
+    return {
+        displayName,
+        category,
+        keywords,
+        synonyms
+    };
+}
+
+async function saveIconMetadataEntry(iconKey, nextEntry) {
+    const metadata = await readIconMetadata();
+    const existingEntry = metadata.icons?.[iconKey] || {};
+
+    metadata.version = metadata.version || 1;
+    metadata.icons = metadata.icons || {};
+    metadata.icons[iconKey] = {
+        ...existingEntry,
+        displayName: nextEntry.displayName,
+        category: nextEntry.category,
+        keywords: nextEntry.keywords,
+        synonyms: nextEntry.synonyms
+    };
+
+    await fs.ensureDir(path.dirname(METADATA_FILE));
+    await fs.writeJson(METADATA_FILE, metadata, { spaces: 2 });
+    return metadata.icons[iconKey];
+}
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(PROJECT_ROOT, 'font_factory/public')));
 // 원본 아이콘 서빙 (미리보기용)
@@ -303,6 +380,28 @@ app.get('/api/library-icons', async (req, res) => {
         });
     } catch (err) {
         return res.status(500).json({ error: 'Failed to load built library' });
+    }
+});
+
+app.post('/api/icon-metadata/:key', async (req, res) => {
+    try {
+        const iconKey = typeof req.params?.key === 'string' ? req.params.key.trim() : '';
+        const nextEntry = sanitizeMetadataUpdate(req.body);
+
+        if (!iconKey || !nextEntry) {
+            return res.status(400).json({ error: 'Invalid metadata payload' });
+        }
+
+        const savedEntry = await saveIconMetadataEntry(iconKey, nextEntry);
+        return res.json({
+            success: true,
+            icon: {
+                key: iconKey,
+                ...savedEntry
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ error: err.message || 'Failed to update metadata' });
     }
 });
 
