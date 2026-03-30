@@ -3,3 +3,4 @@ node_modules
 dist_font_custom
 font_factory/build_temp
 .worktrees/
+frontend/dist

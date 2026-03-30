@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node font_factory/server.js",
     "start:3002": "PORT=3002 node font_factory/server.js",
+    "dev:react": "vite --config vite.config.mjs",
+    "build:react": "vite build --config vite.config.mjs",
+    "build:react:agentation": "VITE_ENABLE_AGENTATION=1 vite build --config vite.config.mjs",
     "test": "node --test"
   },
   "keywords": [],
@@ -15,6 +18,13 @@
     "express": "^5.2.1",
     "fantasticon": "^4.1.0",
     "fs-extra": "^11.3.3",
-    "oslllo-svg-fixer": "^6.0.1"
+    "oslllo-svg-fixer": "^6.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.0",
+    "agentation": "^3.0.2",
+    "vite": "^7.1.12"
   }
 }

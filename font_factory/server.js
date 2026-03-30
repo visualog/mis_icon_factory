@@ -87,6 +87,15 @@ function resetBuildRunner() {
     };
 }
 
+function resolveAppStaticDir(projectRoot = PROJECT_ROOT) {
+    const reactBuildDir = path.join(projectRoot, 'frontend', 'dist');
+    if (process.env.USE_REACT_FRONTEND === '1' && fs.pathExistsSync(reactBuildDir)) {
+        return reactBuildDir;
+    }
+
+    return path.join(projectRoot, 'font_factory', 'public');
+}
+
 async function runBuildExclusively(job) {
     if (activeBuildPromise) {
         return null;
@@ -318,7 +327,7 @@ async function saveIconMetadataEntry(iconKey, nextEntry) {
 }
 
 app.use(express.json({ limit: '10mb' }));
-app.use(express.static(path.join(PROJECT_ROOT, 'font_factory/public')));
+app.use(express.static(resolveAppStaticDir()));
 // 원본 아이콘 서빙 (미리보기용)
 app.use('/line-icons', express.static(LINE_DIR));
 app.use('/fill-icons', express.static(FILL_DIR));
@@ -546,6 +555,7 @@ if (require.main === module) {
 
 module.exports = app;
 app.__internal = {
+    resolveAppStaticDir,
     sanitizeUploadFileName,
     setRuntimePaths,
     resetRuntimePaths,
