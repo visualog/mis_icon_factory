@@ -89,7 +89,7 @@ function resetBuildRunner() {
 
 function resolveAppStaticDir(projectRoot = PROJECT_ROOT) {
     const reactBuildDir = path.join(projectRoot, 'frontend', 'dist');
-    if (process.env.USE_REACT_FRONTEND === '1' && fs.pathExistsSync(reactBuildDir)) {
+    if ((process.env.USE_REACT_FRONTEND === '1' || process.env.VERCEL === '1') && fs.pathExistsSync(reactBuildDir)) {
         return reactBuildDir;
     }
 
