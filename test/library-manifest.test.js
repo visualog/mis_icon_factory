@@ -4,7 +4,8 @@ const assert = require('node:assert/strict');
 const {
     extractBuiltGlyphNames,
     formatLibraryLabel,
-    buildLibraryEntries
+    buildLibraryEntries,
+    buildSourceLibraryEntries
 } = require('../font_factory/library-manifest');
 
 test('extractBuiltGlyphNames returns sorted unique glyph names from generated css', () => {
@@ -88,4 +89,52 @@ test('buildLibraryEntries merges metadata into category and search text', () => 
             synonyms: ['공지', '알림', '안내']
         }
     ]);
+});
+
+test('buildSourceLibraryEntries creates line and fill entries from source SVG file names', () => {
+    const metadata = {
+        icons: {
+            calendar_line: {
+                displayName: 'Calendar',
+                category: 'time',
+                keywords: ['schedule'],
+                synonyms: ['일정']
+            },
+            shield_fill: {
+                displayName: 'Shield',
+                category: 'security',
+                keywords: ['protect'],
+                synonyms: ['보안']
+            }
+        }
+    };
+
+    assert.deepEqual(
+        buildSourceLibraryEntries({
+            lineFiles: ['calendar.svg'],
+            fillFiles: ['shield.svg']
+        }, metadata),
+        [
+            {
+                category: 'time',
+                className: 'icon--calendar_line',
+                displayName: 'Calendar',
+                key: 'calendar_line',
+                kind: 'line',
+                keywords: ['schedule'],
+                searchText: 'calendar schedule 일정 time',
+                synonyms: ['일정']
+            },
+            {
+                category: 'security',
+                className: 'icon--shield_fill',
+                displayName: 'Shield',
+                key: 'shield_fill',
+                kind: 'fill',
+                keywords: ['protect'],
+                searchText: 'shield protect 보안 security',
+                synonyms: ['보안']
+            }
+        ]
+    );
 });

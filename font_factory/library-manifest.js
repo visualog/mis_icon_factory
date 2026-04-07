@@ -51,8 +51,7 @@ function getGlyphKind(glyphName = '') {
     return 'mixed';
 }
 
-function buildLibraryEntries(cssContent = '', metadataCatalog = {}) {
-    return extractBuiltGlyphNames(cssContent).map((glyphName) => {
+function buildEntry(glyphName = '', metadataCatalog = {}) {
         const metadataEntry = getMetadataEntry(metadataCatalog, glyphName) || {};
         const displayName = metadataEntry.displayName || formatLibraryLabel(glyphName);
         const category = metadataEntry.category || 'misc';
@@ -75,11 +74,28 @@ function buildLibraryEntries(cssContent = '', metadataCatalog = {}) {
             kind: getGlyphKind(glyphName),
             searchText
         };
-    });
+}
+
+function buildLibraryEntries(cssContent = '', metadataCatalog = {}) {
+    return extractBuiltGlyphNames(cssContent).map((glyphName) => buildEntry(glyphName, metadataCatalog));
+}
+
+function buildSourceLibraryEntries({ lineFiles = [], fillFiles = [] } = {}, metadataCatalog = {}) {
+    const glyphNames = [
+        ...lineFiles
+            .filter((fileName) => fileName.endsWith('.svg'))
+            .map((fileName) => `${fileName.replace(/\.svg$/i, '')}_line`),
+        ...fillFiles
+            .filter((fileName) => fileName.endsWith('.svg'))
+            .map((fileName) => `${fileName.replace(/\.svg$/i, '')}_fill`)
+    ].sort((left, right) => left.localeCompare(right));
+
+    return glyphNames.map((glyphName) => buildEntry(glyphName, metadataCatalog));
 }
 
 module.exports = {
     extractBuiltGlyphNames,
     formatLibraryLabel,
-    buildLibraryEntries
+    buildLibraryEntries,
+    buildSourceLibraryEntries
 };

@@ -3,7 +3,7 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs-extra');
 const { getOutputDir, getProjectRoot } = require('./runtime-paths');
-const { buildLibraryEntries } = require('./library-manifest');
+const { buildLibraryEntries, buildSourceLibraryEntries } = require('./library-manifest');
 // build-engine is lazy loaded in the route handler
 
 const app = express();
@@ -374,14 +374,22 @@ app.get('/api/icons', async (req, res) => {
 
 app.get('/api/library-icons', async (req, res) => {
     try {
+        const metadata = await readIconMetadata();
         const cssExists = await fs.pathExists(OUTPUT_CSS_FILE);
         if (!cssExists) {
-            return res.json({ icons: [], lastBuiltAt: null });
+            const [lineFiles, fillFiles] = await Promise.all([
+                await fs.pathExists(LINE_DIR) ? fs.readdir(LINE_DIR) : [],
+                await fs.pathExists(FILL_DIR) ? fs.readdir(FILL_DIR) : []
+            ]);
+
+            return res.json({
+                icons: buildSourceLibraryEntries({ lineFiles, fillFiles }, metadata),
+                lastBuiltAt: null
+            });
         }
 
         const css = await fs.readFile(OUTPUT_CSS_FILE, 'utf-8');
         const artifactMeta = await getBuildArtifactMeta();
-        const metadata = await readIconMetadata();
 
         return res.json({
             icons: buildLibraryEntries(css, metadata),
