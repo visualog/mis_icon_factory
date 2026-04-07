@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+
 export default function IconDetailSheet({
   selectedIcon,
   onClose,
@@ -29,6 +31,24 @@ export default function IconDetailSheet({
   detailTokenInputs,
   commitDetailToken
 }) {
+  const [openActionMenu, setOpenActionMenu] = useState(null);
+  const actionMenusRef = useRef(null);
+
+  useEffect(() => {
+    function handlePointerDown(event) {
+      if (!actionMenusRef.current?.contains(event.target)) {
+        setOpenActionMenu(null);
+      }
+    }
+
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => document.removeEventListener('mousedown', handlePointerDown);
+  }, []);
+
+  useEffect(() => {
+    setOpenActionMenu(null);
+  }, [selectedIcon]);
+
   if (!selectedIcon) {
     return null;
   }
@@ -108,13 +128,37 @@ export default function IconDetailSheet({
                 </div>
               </div>
 
-              <div className="icon-detail-actions">
-                <button type="button" className="icon-detail-action" onClick={async () => { try { await copyText(selectedIcon.key); showToast('글리프 키를 복사했습니다.'); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}><i className="icon icon--copy_line" aria-hidden="true" /><span>글리프 복사</span></button>
-                <button type="button" className="icon-detail-action" onClick={async () => { try { await copyText(selectedIcon.className); showToast('클래스를 복사했습니다.'); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}><i className="icon icon--copy_line" aria-hidden="true" /><span>클래스 복사</span></button>
-                <button type="button" className="icon-detail-action" onClick={async () => { try { await copySvgSource(selectedIcon); showToast('SVG를 복사했습니다.'); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}><i className="icon icon--copy_line" aria-hidden="true" /><span>SVG 복사</span></button>
-                <button type="button" className="icon-detail-action" onClick={async () => { try { await copyText(selectedIcon.displayName); showToast('이름을 복사했습니다.'); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}><i className="icon icon--copy_line" aria-hidden="true" /><span>이름 복사</span></button>
-                <button type="button" className="icon-detail-action" onClick={async () => { try { await downloadSvgSource(selectedIcon); showToast('SVG를 다운로드했습니다.'); } catch (error) { showToast(error.message || '다운로드하지 못했습니다.', 'error'); } }}><i className="icon icon--download_line" aria-hidden="true" /><span>SVG 다운로드</span></button>
-                <button type="button" className="icon-detail-action" onClick={async () => { try { await downloadPng(selectedIcon); showToast('PNG를 다운로드했습니다.'); } catch (error) { showToast(error.message || '다운로드하지 못했습니다.', 'error'); } }}><i className="icon icon--download_line" aria-hidden="true" /><span>PNG 다운로드</span></button>
+              <div className="icon-detail-actions" ref={actionMenusRef}>
+                <div className={`detail-action-dropdown detail-copy-dropdown ${openActionMenu === 'copy' ? 'open' : ''}`}>
+                  <button
+                    type="button"
+                    className="detail-action-trigger"
+                    onClick={() => setOpenActionMenu((current) => current === 'copy' ? null : 'copy')}
+                  >
+                    <span>복사</span>
+                    <i className={`icon ${openActionMenu === 'copy' ? 'icon--chevron_up_line' : 'icon--chevron_down_line'} detail-action-trigger-icon`} aria-hidden="true" />
+                  </button>
+                  <div className="detail-action-menu">
+                    <button type="button" className="detail-action-item" onClick={async () => { try { await copyText(selectedIcon.key); showToast('글리프 키를 복사했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}>글리프 키 복사</button>
+                    <button type="button" className="detail-action-item" onClick={async () => { try { await copyText(selectedIcon.className); showToast('클래스를 복사했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}>클래스 복사</button>
+                    <button type="button" className="detail-action-item" onClick={async () => { try { await copySvgSource(selectedIcon); showToast('SVG를 복사했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}>SVG 복사</button>
+                    <button type="button" className="detail-action-item" onClick={async () => { try { await copyText(selectedIcon.displayName); showToast('이름을 복사했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}>이름 복사</button>
+                  </div>
+                </div>
+                <div className={`detail-action-dropdown detail-download-dropdown ${openActionMenu === 'download' ? 'open' : ''}`}>
+                  <button
+                    type="button"
+                    className="detail-action-trigger"
+                    onClick={() => setOpenActionMenu((current) => current === 'download' ? null : 'download')}
+                  >
+                    <span>다운로드</span>
+                    <i className={`icon ${openActionMenu === 'download' ? 'icon--chevron_up_line' : 'icon--chevron_down_line'} detail-action-trigger-icon`} aria-hidden="true" />
+                  </button>
+                  <div className="detail-action-menu">
+                    <button type="button" className="detail-action-item" onClick={async () => { try { await downloadSvgSource(selectedIcon); showToast('SVG를 다운로드했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '다운로드하지 못했습니다.', 'error'); } }}>SVG 다운로드</button>
+                    <button type="button" className="detail-action-item" onClick={async () => { try { await downloadPng(selectedIcon); showToast('PNG를 다운로드했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '다운로드하지 못했습니다.', 'error'); } }}>PNG 다운로드</button>
+                  </div>
+                </div>
               </div>
 
               <div className="icon-detail-metadata-stack">

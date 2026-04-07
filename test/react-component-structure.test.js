@@ -96,8 +96,32 @@ test('card and detail components expose dedicated layout hooks for design polish
     assert.match(controllerSource, /icon--plus_circle_fill/);
     assert.match(detailSource, /icon--close_sm_line/);
     assert.match(detailSource, /icon--preview_line/);
-    assert.match(detailSource, /icon--copy_line/);
-    assert.match(detailSource, /icon--download_line/);
+    assert.match(detailSource, /detail-action-dropdown/);
+    assert.match(detailSource, /detail-copy-dropdown/);
+    assert.match(detailSource, /detail-download-dropdown/);
+    assert.match(detailSource, /복사<\/span>/);
+    assert.match(detailSource, /다운로드<\/span>/);
+    assert.match(detailSource, /글리프 키 복사/);
+    assert.match(detailSource, /클래스 복사/);
+    assert.match(detailSource, /SVG 복사/);
+    assert.match(detailSource, /이름 복사/);
+    assert.match(detailSource, /SVG 다운로드/);
+    assert.match(detailSource, /PNG 다운로드/);
+    assert.doesNotMatch(detailSource, /className="icon-detail-action"/);
+});
+
+test('grid card hover meta renders kind then category in a single left-aligned row', () => {
+    const cardSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'components', 'IconCard.jsx'), 'utf8');
+    const stylesSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'styles.css'), 'utf8');
+    const cardTopBlock = stylesSource.match(/\.card-top\s*\{[^}]*\}/);
+
+    assert.match(
+        cardSource,
+        /<div className="card-top">\s*<span className=\{`kind-pill \$\{icon\.kind\}`\}>\{icon\.kind\}<\/span>\s*<span className="card-subtitle">\{getCategoryLabel\(icon\.category\)\}<\/span>\s*<\/div>/s
+    );
+    assert.ok(cardTopBlock, 'card-top block should exist');
+    assert.match(cardTopBlock[0], /justify-content:\s*flex-start;/);
+    assert.match(cardTopBlock[0], /gap:\s*8px;/);
 });
 
 test('react typography polish keeps key title and detail label values aligned with the static design', () => {
@@ -115,14 +139,15 @@ test('react typography polish keeps key title and detail label values aligned wi
     assert.match(stylesSource, /\.search-field\s*\{[\s\S]*font-size:\s*14px;/);
     assert.match(stylesSource, /\.search-field::\-webkit-search-cancel-button\s*\{[\s\S]*appearance:\s*none;/);
     assert.match(stylesSource, /\.list-card\s+\.card-subtitle\s*\{[\s\S]*font-size:\s*12px;/);
-    assert.match(stylesSource, /\.icon-detail-action\s*\{[\s\S]*text-align:\s*center;/);
+    assert.match(stylesSource, /\.detail-action-dropdown\s*\{[\s\S]*position:\s*relative;/);
+    assert.match(stylesSource, /\.detail-action-trigger\s*\{[\s\S]*text-align:\s*center;/);
     assert.match(stylesSource, /\.list-action-group\s*\{[\s\S]*z-index:\s*0;/);
     assert.match(stylesSource, /\.icon-detail-token-remove\s*\{[\s\S]*font-size:\s*11px;/);
     assert.doesNotMatch(stylesSource, /\.icon-detail-token-remove\s*\{[\s\S]*margin-left:\s*6px;/);
     assert.match(stylesSource, /\.grid-card\s+\.card-top\s*\{[\s\S]*transform:\s*translateY\(-4px\);/);
-    assert.match(stylesSource, /\.card-devtools\s*\{[\s\S]*padding:\s*8px 10px;/);
-    assert.match(stylesSource, /\.card-copy-button\s*\{[\s\S]*font-size:\s*11px;/);
-    assert.match(stylesSource, /\.icon-detail-size-card\s*\{[\s\S]*gap:\s*10px;/);
+    assert.doesNotMatch(stylesSource, /\.card-devtools\s*\{/);
+    assert.doesNotMatch(stylesSource, /\.card-copy-button\s*\{/);
+    assert.match(stylesSource, /\.icon-detail-size-card\s*\{[\s\S]*gap:\s*8px;/);
     assert.match(stylesSource, /\.icon-card:hover,\s*\.icon-card:focus-within\s*\{[\s\S]*transform:\s*none;/);
     assert.match(stylesSource, /\.dropdown-menu\s*\{[\s\S]*background:\s*rgba\(255,\s*255,\s*255,\s*0\.42\);/);
     assert.match(stylesSource, /\.dropdown-menu\s*\{[\s\S]*-webkit-backdrop-filter:\s*blur\(8px\)\s*saturate\(145%\);/);
@@ -132,6 +157,6 @@ test('react typography polish keeps key title and detail label values aligned wi
     assert.match(stylesSource, /\.dropdown-menu::before\s*\{[\s\S]*backdrop-filter:\s*blur\(8px\)\s*saturate\(150%\);/);
     assert.match(stylesSource, /\.palette-option\s*\{[\s\S]*min-height:\s*42px;/);
     assert.match(stylesSource, /\.palette-option-content\s*\{[\s\S]*display:\s*inline-flex;/);
-    assert.match(stylesSource, /\.palette-option-swatch\s*\{[\s\S]*width:\s*18px;/);
+    assert.match(stylesSource, /\.palette-option-swatch\s*\{[\s\S]*width:\s*20px;/);
     assert.match(stylesSource, /\.palette-option-label\s*\{[\s\S]*white-space:\s*nowrap;/);
 });

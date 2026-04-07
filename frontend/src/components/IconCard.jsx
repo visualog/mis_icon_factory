@@ -9,9 +9,7 @@ export default function IconCard({
   setSelectedIcon,
   setOpenListMenuKey,
   openListMenuKey,
-  handleListAction,
-  copyText,
-  showToast
+  handleListAction
 }) {
   return (
     <article
@@ -83,27 +81,6 @@ export default function IconCard({
                 SVG 다운로드
               </button>
             </div>
-          </div>
-        ) : null}
-
-        {viewMode === 'grid' ? (
-          <div className="card-devtools">
-            <div className="card-devtools-key">{icon.key}</div>
-            <button
-              type="button"
-              className="card-copy-button"
-              onClick={async (event) => {
-                event.stopPropagation();
-                try {
-                  await copyText(icon.className);
-                  showToast('클래스를 복사했습니다.');
-                } catch (error) {
-                  showToast(error.message || '복사하지 못했습니다.', 'error');
-                }
-              }}
-            >
-              Copy
-            </button>
           </div>
         ) : null}
       </div>
