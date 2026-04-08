@@ -15,12 +15,25 @@ test('normalizeLibraryPayload preserves icons and derives sorted categories', ()
             { key: 'calendar_line', displayName: 'Calendar', category: 'time', kind: 'line', searchText: 'calendar time' },
             { key: 'user_line', displayName: 'User', category: 'user', kind: 'line', searchText: 'user profile' }
         ],
-        lastBuiltAt: '2026-03-30T00:00:00.000Z'
+        lastBuiltAt: '2026-03-30T00:00:00.000Z',
+        hasGeneratedFontStyles: true
     });
 
     assert.deepEqual(payload.categories, ['all', 'security', 'time', 'user']);
     assert.equal(payload.icons.length, 3);
     assert.equal(payload.lastBuiltAt, '2026-03-30T00:00:00.000Z');
+    assert.equal(payload.hasGeneratedFontStyles, true);
+});
+
+test('normalizeLibraryPayload defaults generated font style availability to false', () => {
+    const payload = normalizeLibraryPayload({
+        icons: [
+            { key: 'calendar_line', displayName: 'Calendar', category: 'time', kind: 'line', searchText: 'calendar time' }
+        ],
+        lastBuiltAt: null
+    });
+
+    assert.equal(payload.hasGeneratedFontStyles, false);
 });
 
 test('filterLibraryIcons applies search query, category, and kind together', () => {
@@ -63,7 +76,8 @@ test('fetchLibraryIcons requests the library API and returns normalized data', a
                     icons: [
                         { key: 'calendar_line', displayName: 'Calendar', category: 'time', kind: 'line', searchText: 'calendar time' }
                     ],
-                    lastBuiltAt: null
+                    lastBuiltAt: null,
+                    hasGeneratedFontStyles: false
                 };
             }
         };
@@ -72,6 +86,7 @@ test('fetchLibraryIcons requests the library API and returns normalized data', a
     assert.deepEqual(calls, ['/api/library-icons']);
     assert.deepEqual(result.categories, ['all', 'time']);
     assert.equal(result.icons[0].key, 'calendar_line');
+    assert.equal(result.hasGeneratedFontStyles, false);
 });
 
 test('fetchLibraryIcons throws a readable error when the API fails', async () => {

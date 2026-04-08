@@ -384,7 +384,8 @@ app.get('/api/library-icons', async (req, res) => {
 
             return res.json({
                 icons: buildSourceLibraryEntries({ lineFiles, fillFiles }, metadata),
-                lastBuiltAt: null
+                lastBuiltAt: null,
+                hasGeneratedFontStyles: false
             });
         }
 
@@ -393,7 +394,8 @@ app.get('/api/library-icons', async (req, res) => {
 
         return res.json({
             icons: buildLibraryEntries(css, metadata),
-            lastBuiltAt: artifactMeta?.lastBuiltAt || null
+            lastBuiltAt: artifactMeta?.lastBuiltAt || null,
+            hasGeneratedFontStyles: true
         });
     } catch (err) {
         return res.status(500).json({ error: 'Failed to load built library' });

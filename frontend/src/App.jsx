@@ -81,8 +81,8 @@ function getSourceIconFileName(icon, extension) {
 
 export default function App() {
   const shouldEnableAgentation =
-    import.meta.env.DEV || import.meta.env.VITE_ENABLE_AGENTATION === '1';
-  const [library, setLibrary] = useState({ icons: [], categories: ['all'], lastBuiltAt: null });
+    import.meta.env.DEV && typeof window !== 'undefined' && window.location.hostname === 'localhost';
+  const [library, setLibrary] = useState({ icons: [], categories: ['all'], lastBuiltAt: null, hasGeneratedFontStyles: false });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [fontStylesVersion, setFontStylesVersion] = useState(() => Date.now());
@@ -564,7 +564,9 @@ export default function App() {
 
   return (
     <main className="app-shell">
-      <link rel="stylesheet" href={`/generated-fonts/my-icon-font.css?v=${fontStylesVersion}`} />
+      {library.hasGeneratedFontStyles ? (
+        <link rel="stylesheet" href={`/generated-fonts/my-icon-font.css?v=${fontStylesVersion}`} />
+      ) : null}
       <header className="topbar">
         <span className="visually-hidden">IconFactory</span>
       </header>

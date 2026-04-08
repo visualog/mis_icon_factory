@@ -8,6 +8,7 @@
             "config": {
                 "includeFiles": [
                     "line/**",
+                    "fill/**",
                     "font_factory/public/**",
                     "frontend/dist/**"
                 ]

@@ -12,7 +12,8 @@ export function normalizeLibraryPayload(payload = {}) {
   return {
     icons,
     categories: ['all', ...categories],
-    lastBuiltAt: payload.lastBuiltAt || null
+    lastBuiltAt: payload.lastBuiltAt || null,
+    hasGeneratedFontStyles: payload.hasGeneratedFontStyles === true
   };
 }
 
