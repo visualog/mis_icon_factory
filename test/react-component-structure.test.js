@@ -13,6 +13,7 @@ test('react migration ui is split into reusable component files', () => {
         'frontend/src/components/BottomController.jsx',
         'frontend/src/components/IconCard.jsx',
         'frontend/src/components/IconDetailSheet.jsx',
+        'frontend/src/components/UiIcon.jsx',
         'frontend/src/components/StatusToast.jsx',
         'frontend/src/components/DragOverlay.jsx'
     ];
@@ -59,6 +60,8 @@ test('card and detail components expose dedicated layout hooks for design polish
     const detailSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'components', 'IconDetailSheet.jsx'), 'utf8');
     const heroSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'components', 'LibraryHero.jsx'), 'utf8');
     const controllerSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'components', 'BottomController.jsx'), 'utf8');
+    const dropdownSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'components', 'Dropdown.jsx'), 'utf8');
+    const uiIconSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'components', 'UiIcon.jsx'), 'utf8');
     const appSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'App.jsx'), 'utf8');
 
     assert.match(cardSource, /icon-card-surface/);
@@ -69,9 +72,17 @@ test('card and detail components expose dedicated layout hooks for design polish
     assert.match(detailSource, /icon-detail-sheet-shell/);
     assert.match(detailSource, /icon-detail-metadata-stack/);
     assert.match(detailSource, /icon-detail-source-preview-block/);
+    assert.match(detailSource, /hasGeneratedFontStyles/);
+    assert.match(detailSource, /UiIcon/);
+    assert.match(detailSource, /ui-icon-fallback icon-detail-size-icon/);
     assert.match(heroSource, /data-tooltip=/);
     assert.match(heroSource, /hero-sort-wrap/);
     assert.match(heroSource, /hero-summary-pill hidden/);
+    assert.match(heroSource, /hasGeneratedFontStyles/);
+    assert.match(controllerSource, /hasGeneratedFontStyles/);
+    assert.match(dropdownSource, /hasGeneratedFontStyles/);
+    assert.match(uiIconSource, /getUiIconUrl/);
+    assert.match(uiIconSource, /ui-icon-fallback/);
     assert.match(heroSource, /icon--grid_view_sm_line/);
     assert.match(heroSource, /icon--card_list_view_line/);
     assert.match(appSource, /const \[kind, setKind\] = useState\('line'\)/);
@@ -144,6 +155,8 @@ test('react typography polish keeps key title and detail label values aligned wi
     assert.match(stylesSource, /\.list-card\s+\.card-subtitle\s*\{[\s\S]*font-size:\s*12px;/);
     assert.match(stylesSource, /\.library-icon-fallback\s*\{/);
     assert.match(stylesSource, /\.library-icon-fallback\s*\{[\s\S]*object-fit:\s*contain;/);
+    assert.match(stylesSource, /\.ui-icon-fallback\s*\{/);
+    assert.match(stylesSource, /\.ui-icon-fallback\s*\{[\s\S]*object-fit:\s*contain;/);
     assert.match(stylesSource, /\.detail-action-dropdown\s*\{[\s\S]*position:\s*relative;/);
     assert.match(stylesSource, /\.detail-action-trigger\s*\{[\s\S]*text-align:\s*center;/);
     assert.match(stylesSource, /\.list-action-group\s*\{[\s\S]*z-index:\s*0;/);

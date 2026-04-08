@@ -1,4 +1,5 @@
 import Dropdown from './Dropdown.jsx';
+import UiIcon from './UiIcon.jsx';
 
 export default function BottomController({
   category,
@@ -20,6 +21,7 @@ export default function BottomController({
   palette,
   paletteOptions,
   paletteSwatches,
+  hasGeneratedFontStyles,
   onChangePalette,
   uploading,
   uploadInputRef,
@@ -45,6 +47,7 @@ export default function BottomController({
             getValue={(option) => option.key}
             getLabel={(option) => `${getCategoryLabel(option.key)} (${option.count})`}
             onChange={onChangeCategory}
+            hasGeneratedFontStyles={hasGeneratedFontStyles}
             className="category-dropdown"
             triggerClassName="category-trigger"
             menuClassName="category-menu"
@@ -58,6 +61,7 @@ export default function BottomController({
             getValue={(option) => option.key}
             getLabel={(option) => option.key === 'all' ? getKindLabel(option.key) : `${getKindLabel(option.key)} (${option.count})`}
             onChange={onChangeKind}
+            hasGeneratedFontStyles={hasGeneratedFontStyles}
             className="kind-dropdown"
             triggerClassName="kind-trigger"
             menuClassName="kind-menu"
@@ -80,7 +84,14 @@ export default function BottomController({
                 aria-label="검색어 지우기"
                 onClick={() => onChangeQuery('')}
               >
-                <i className="icon icon--close_sm_line" aria-hidden="true" />
+                <UiIcon
+                  glyphClassName="icon icon--close_sm_line"
+                  fallbackClassName="search-clear-icon"
+                  hasGeneratedFontStyles={hasGeneratedFontStyles}
+                  aria-hidden="true"
+                  alt=""
+                  style={{ width: '16px', height: '16px' }}
+                />
               </button>
             </div>
           </div>
@@ -93,6 +104,7 @@ export default function BottomController({
             getValue={(option) => option.key}
             getLabel={(option) => option.label}
             onChange={onChangeWeight}
+            hasGeneratedFontStyles={hasGeneratedFontStyles}
             className="weight-dropdown"
             triggerClassName="weight-trigger"
             menuClassName="weight-menu"
@@ -106,6 +118,7 @@ export default function BottomController({
             getValue={(option) => option}
             getLabel={(option) => option}
             onChange={onChangePreviewSize}
+            hasGeneratedFontStyles={hasGeneratedFontStyles}
             className="size-dropdown"
             triggerClassName="size-trigger"
             menuClassName="size-menu"
@@ -131,6 +144,7 @@ export default function BottomController({
               </span>
             )}
             onChange={onChangePalette}
+            hasGeneratedFontStyles={hasGeneratedFontStyles}
             className="palette-dropdown"
             triggerClassName="palette-trigger"
             menuClassName="palette-menu"
@@ -146,7 +160,14 @@ export default function BottomController({
             disabled={uploading}
             onClick={onOpenUpload}
           >
-            <i className="icon icon--plus_circle_fill upload-button-icon" aria-hidden="true" />
+            <UiIcon
+              glyphClassName="icon icon--plus_circle_fill upload-button-icon"
+              fallbackClassName="upload-button-icon"
+              hasGeneratedFontStyles={hasGeneratedFontStyles}
+              aria-hidden="true"
+              alt=""
+              style={{ width: '18px', height: '18px' }}
+            />
           </button>
           <input
             ref={uploadInputRef}

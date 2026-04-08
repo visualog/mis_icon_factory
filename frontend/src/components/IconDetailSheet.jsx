@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import UiIcon from './UiIcon.jsx';
 
 export default function IconDetailSheet({
   selectedIcon,
@@ -10,6 +11,7 @@ export default function IconDetailSheet({
   detailPreviewSizes,
   previewColor,
   previewWeightValue,
+  hasGeneratedFontStyles,
   getSourceIconUrl,
   copyText,
   copySvgSource,
@@ -67,7 +69,14 @@ export default function IconDetailSheet({
               <p className="icon-detail-subtitle">{`${getCategoryLabel(selectedIcon.category)} · ${getKindLabel(selectedIcon.kind)}`}</p>
             </div>
             <button className="icon-detail-close" type="button" onClick={onClose}>
-              <i className="icon icon--close_sm_line" aria-hidden="true" />
+              <UiIcon
+                glyphClassName="icon icon--close_sm_line"
+                fallbackClassName="icon-detail-close-icon"
+                hasGeneratedFontStyles={hasGeneratedFontStyles}
+                aria-hidden="true"
+                alt=""
+                style={{ width: '20px', height: '20px' }}
+              />
             </button>
           </div>
 
@@ -84,7 +93,14 @@ export default function IconDetailSheet({
                   aria-label="키라인 보기"
                   onClick={onToggleKeyline}
                 >
-                  <i className="icon icon--preview_line" aria-hidden="true" />
+                  <UiIcon
+                    glyphClassName="icon icon--preview_line"
+                    fallbackClassName="icon-detail-keyline-icon"
+                    hasGeneratedFontStyles={hasGeneratedFontStyles}
+                    aria-hidden="true"
+                    alt=""
+                    style={{ width: '16px', height: '16px' }}
+                  />
                 </button>
                 <div className="icon-detail-frame-guide" aria-hidden="true" />
                 <div className="icon-detail-circle-guide" aria-hidden="true" />
@@ -97,7 +113,17 @@ export default function IconDetailSheet({
                 <div className="icon-detail-size-previews">
                   {detailPreviewSizes.map((size) => (
                     <div className="icon-detail-size-card" key={size}>
-                      <i className={`${selectedIcon.className} icon-detail-size-icon`} aria-hidden="true" style={{ fontSize: `${size}px`, color: previewColor, fontWeight: previewWeightValue }} />
+                      {hasGeneratedFontStyles ? (
+                        <i className={`${selectedIcon.className} icon-detail-size-icon`} aria-hidden="true" style={{ fontSize: `${size}px`, color: previewColor, fontWeight: previewWeightValue }} />
+                      ) : (
+                        <img
+                          className="ui-icon-fallback icon-detail-size-icon"
+                          aria-hidden="true"
+                          alt=""
+                          src={getSourceIconUrl(selectedIcon)}
+                          style={{ width: `${size}px`, height: `${size}px` }}
+                        />
+                      )}
                       <span className="icon-detail-size-label">{size}px</span>
                     </div>
                   ))}
@@ -132,12 +158,19 @@ export default function IconDetailSheet({
                 <div className={`detail-action-dropdown detail-copy-dropdown ${openActionMenu === 'copy' ? 'open' : ''}`}>
                   <button
                     type="button"
-                    className="detail-action-trigger"
-                    onClick={() => setOpenActionMenu((current) => current === 'copy' ? null : 'copy')}
-                  >
-                    <span>복사</span>
-                    <i className={`icon ${openActionMenu === 'copy' ? 'icon--chevron_up_line' : 'icon--chevron_down_line'} detail-action-trigger-icon`} aria-hidden="true" />
-                  </button>
+                  className="detail-action-trigger"
+                  onClick={() => setOpenActionMenu((current) => current === 'copy' ? null : 'copy')}
+                >
+                  <span>복사</span>
+                  <UiIcon
+                    glyphClassName={`icon ${openActionMenu === 'copy' ? 'icon--chevron_up_line' : 'icon--chevron_down_line'} detail-action-trigger-icon`}
+                    fallbackClassName="detail-action-trigger-icon"
+                    hasGeneratedFontStyles={hasGeneratedFontStyles}
+                    aria-hidden="true"
+                    alt=""
+                    style={{ width: '18px', height: '18px' }}
+                  />
+                </button>
                   <div className="detail-action-menu">
                     <button type="button" className="detail-action-item" onClick={async () => { try { await copyText(selectedIcon.key); showToast('글리프 키를 복사했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}>글리프 키 복사</button>
                     <button type="button" className="detail-action-item" onClick={async () => { try { await copyText(selectedIcon.className); showToast('클래스를 복사했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '복사하지 못했습니다.', 'error'); } }}>클래스 복사</button>
@@ -148,12 +181,19 @@ export default function IconDetailSheet({
                 <div className={`detail-action-dropdown detail-download-dropdown ${openActionMenu === 'download' ? 'open' : ''}`}>
                   <button
                     type="button"
-                    className="detail-action-trigger"
-                    onClick={() => setOpenActionMenu((current) => current === 'download' ? null : 'download')}
-                  >
-                    <span>다운로드</span>
-                    <i className={`icon ${openActionMenu === 'download' ? 'icon--chevron_up_line' : 'icon--chevron_down_line'} detail-action-trigger-icon`} aria-hidden="true" />
-                  </button>
+                  className="detail-action-trigger"
+                  onClick={() => setOpenActionMenu((current) => current === 'download' ? null : 'download')}
+                >
+                  <span>다운로드</span>
+                  <UiIcon
+                    glyphClassName={`icon ${openActionMenu === 'download' ? 'icon--chevron_up_line' : 'icon--chevron_down_line'} detail-action-trigger-icon`}
+                    fallbackClassName="detail-action-trigger-icon"
+                    hasGeneratedFontStyles={hasGeneratedFontStyles}
+                    aria-hidden="true"
+                    alt=""
+                    style={{ width: '18px', height: '18px' }}
+                  />
+                </button>
                   <div className="detail-action-menu">
                     <button type="button" className="detail-action-item" onClick={async () => { try { await downloadSvgSource(selectedIcon); showToast('SVG를 다운로드했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '다운로드하지 못했습니다.', 'error'); } }}>SVG 다운로드</button>
                     <button type="button" className="detail-action-item" onClick={async () => { try { await downloadPng(selectedIcon); showToast('PNG를 다운로드했습니다.'); setOpenActionMenu(null); } catch (error) { showToast(error.message || '다운로드하지 못했습니다.', 'error'); } }}>PNG 다운로드</button>

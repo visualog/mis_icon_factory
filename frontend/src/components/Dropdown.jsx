@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import UiIcon from './UiIcon.jsx';
 
 export default function Dropdown({
   value,
@@ -9,6 +10,7 @@ export default function Dropdown({
   renderLabel,
   renderOption,
   onChange,
+  hasGeneratedFontStyles,
   className = '',
   triggerClassName = '',
   menuClassName = '',
@@ -110,7 +112,16 @@ export default function Dropdown({
             }}
           >
             {renderOption ? renderOption(option) : <span>{getLabel(option)}</span>}
-            {selected ? <i className="icon icon--approve_line dropdown-option-check" aria-hidden="true" /> : null}
+            {selected ? (
+              <UiIcon
+                glyphClassName="icon icon--approve_line dropdown-option-check"
+                fallbackClassName="dropdown-option-check"
+                hasGeneratedFontStyles={hasGeneratedFontStyles}
+                aria-hidden="true"
+                alt=""
+                style={{ width: '18px', height: '18px' }}
+              />
+            ) : null}
           </button>
         );
       })}
@@ -131,7 +142,14 @@ export default function Dropdown({
         onClick={() => setOpen((current) => !current)}
       >
         <span>{activeOption ? (renderLabel ? renderLabel(activeOption) : getLabel(activeOption)) : ''}</span>
-        <i className={triggerIconClass} aria-hidden="true" />
+        <UiIcon
+          glyphClassName={triggerIconClass}
+          fallbackClassName="dropdown-trigger-icon"
+          hasGeneratedFontStyles={hasGeneratedFontStyles}
+          aria-hidden="true"
+          alt=""
+          style={{ width: '18px', height: '18px' }}
+        />
       </button>
       {typeof document !== 'undefined' ? createPortal(menu, document.body) : null}
     </div>

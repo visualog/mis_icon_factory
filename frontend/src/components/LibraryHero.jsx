@@ -1,4 +1,5 @@
 import Dropdown from './Dropdown.jsx';
+import UiIcon from './UiIcon.jsx';
 
 export default function LibraryHero({
   heroScrolled,
@@ -6,6 +7,7 @@ export default function LibraryHero({
   formatTimestamp,
   viewMode,
   onToggleViewMode,
+  hasGeneratedFontStyles,
   sortMode,
   sortOptions,
   onChangeSortMode,
@@ -32,7 +34,14 @@ export default function LibraryHero({
             data-tooltip={viewTooltip}
             onClick={onToggleViewMode}
           >
-            <i className={viewIconClass} aria-hidden="true" />
+            <UiIcon
+              glyphClassName={viewIconClass}
+              fallbackClassName="hero-view-icon"
+              hasGeneratedFontStyles={hasGeneratedFontStyles}
+              aria-hidden="true"
+              alt=""
+              style={{ width: '18px', height: '18px' }}
+            />
             <span>{viewMode === 'grid' ? 'Grid' : 'List'}</span>
           </button>
           <div className="hero-sort-wrap">
@@ -42,6 +51,7 @@ export default function LibraryHero({
               getValue={(option) => option.key}
               getLabel={(option) => option.label}
               onChange={onChangeSortMode}
+              hasGeneratedFontStyles={hasGeneratedFontStyles}
               className="hero-sort"
               triggerClassName="hero-sort-trigger"
               align="down"

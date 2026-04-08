@@ -574,6 +574,12 @@ button {
   object-fit: contain;
 }
 
+.ui-icon-fallback {
+  display: block;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
 .icon-card-stage,
 .card-icon-wrap .library-icon,
 .list-card-preview .library-icon,

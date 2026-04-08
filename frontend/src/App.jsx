@@ -579,6 +579,7 @@ export default function App() {
             formatTimestamp={formatTimestamp}
             viewMode={viewMode}
             onToggleViewMode={() => setViewMode((current) => (current === 'grid' ? 'list' : 'grid'))}
+            hasGeneratedFontStyles={library.hasGeneratedFontStyles}
             sortMode={sortMode}
             sortOptions={sortOptions}
             onChangeSortMode={setSortMode}
@@ -659,6 +660,7 @@ export default function App() {
         palette={palette}
         paletteOptions={paletteOptions}
         paletteSwatches={paletteSwatches}
+        hasGeneratedFontStyles={library.hasGeneratedFontStyles}
         onChangePalette={setPalette}
         uploading={uploading}
         uploadInputRef={uploadInputRef}
@@ -676,6 +678,7 @@ export default function App() {
         detailPreviewSizes={detailPreviewSizes}
         previewColor={previewColor}
         previewWeightValue={previewWeightValue}
+        hasGeneratedFontStyles={library.hasGeneratedFontStyles}
         getSourceIconUrl={getSourceIconUrl}
         copyText={copyText}
         copySvgSource={copySvgSource}
