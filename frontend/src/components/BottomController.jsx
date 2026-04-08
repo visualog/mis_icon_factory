@@ -166,7 +166,7 @@ export default function BottomController({
               hasGeneratedFontStyles={hasGeneratedFontStyles}
               aria-hidden="true"
               alt=""
-              style={{ width: '18px', height: '18px' }}
+              style={{ width: '40px', height: '40px' }}
             />
           </button>
           <input

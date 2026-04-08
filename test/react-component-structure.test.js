@@ -75,6 +75,33 @@ test('card and detail components expose dedicated layout hooks for design polish
     assert.match(detailSource, /hasGeneratedFontStyles/);
     assert.match(detailSource, /UiIcon/);
     assert.match(detailSource, /ui-icon-fallback icon-detail-size-icon/);
+    assert.match(detailSource, /src=\{getSourceIconUrl\(selectedIcon\)\}/);
+    assert.doesNotMatch(detailSource, /selectedIcon\.className} icon-detail-size-icon/);
+    assert.doesNotMatch(detailSource, /icon-detail-subtitle/);
+    assert.match(
+        detailSource,
+        /<div className="icon-detail-sheet-header">[\s\S]*?>편집<[\s\S]*?className="icon-detail-close"/
+    );
+    assert.match(
+        detailSource,
+        /<div className="icon-detail-webfont-panel">[\s\S]*?<div className="icon-detail-metadata-stack">[\s\S]*?icon-detail-metadata-row icon-detail-metadata-row--split[\s\S]*?>표시 이름<[\s\S]*?>카테고리<[\s\S]*?<div className="icon-detail-metadata-row">[\s\S]*?>검색어<[\s\S]*?<div className="icon-detail-source-preview-block">[\s\S]*?<div className="icon-detail-size-previews">[\s\S]*?<div className="icon-detail-actions"/
+    );
+    assert.match(detailSource, />표시 이름</);
+    assert.match(detailSource, />카테고리</);
+    assert.match(detailSource, />검색어</);
+    assert.doesNotMatch(detailSource, />글리프 키</);
+    assert.doesNotMatch(detailSource, />클래스 키</);
+    assert.doesNotMatch(detailSource, />Glyph Key</);
+    assert.doesNotMatch(detailSource, />Class Key</);
+    assert.doesNotMatch(detailSource, />displayName</);
+    assert.doesNotMatch(detailSource, />category</);
+    assert.doesNotMatch(detailSource, />keywords</);
+    assert.doesNotMatch(detailSource, />synonyms</);
+    assert.doesNotMatch(detailSource, />동의어</);
+    assert.doesNotMatch(detailSource, />타입</);
+    assert.doesNotMatch(detailSource, />Preview</);
+    assert.doesNotMatch(detailSource, />Webfont Detail</);
+    assert.doesNotMatch(detailSource, />Metadata</);
     assert.match(heroSource, /data-tooltip=/);
     assert.match(heroSource, /hero-sort-wrap/);
     assert.match(heroSource, /hero-summary-pill hidden/);
@@ -106,8 +133,9 @@ test('card and detail components expose dedicated layout hooks for design polish
     assert.match(controllerSource, /palette-option-content/);
     assert.match(controllerSource, /palette-option-swatch/);
     assert.match(controllerSource, /palette-option-label/);
+    assert.match(controllerSource, /glyphClassName="icon icon--plus_circle_fill upload-button-icon"/);
+    assert.match(controllerSource, /style=\{\{ width: '40px', height: '40px' \}\}/);
     assert.match(controllerSource, /icon--close_sm_line/);
-    assert.match(controllerSource, /icon--plus_circle_fill/);
     assert.match(detailSource, /icon--close_sm_line/);
     assert.match(detailSource, /icon--preview_line/);
     assert.match(detailSource, /detail-action-dropdown/);
@@ -115,8 +143,6 @@ test('card and detail components expose dedicated layout hooks for design polish
     assert.match(detailSource, /detail-download-dropdown/);
     assert.match(detailSource, /복사<\/span>/);
     assert.match(detailSource, /다운로드<\/span>/);
-    assert.match(detailSource, /글리프 키 복사/);
-    assert.match(detailSource, /클래스 복사/);
     assert.match(detailSource, /SVG 복사/);
     assert.match(detailSource, /이름 복사/);
     assert.match(detailSource, /SVG 다운로드/);
@@ -140,6 +166,9 @@ test('grid card hover meta renders kind then category in a single left-aligned r
 
 test('react typography polish keeps key title and detail label values aligned with the static design', () => {
     const stylesSource = fs.readFileSync(path.join(projectRoot, 'frontend', 'src', 'styles.css'), 'utf8');
+    const closeButtonBlock = stylesSource.match(/\.icon-detail-close\s*\{[^}]*\}/);
+    const closeButtonHoverBlock = stylesSource.match(/\.icon-detail-close:hover,\s*\.icon-detail-close:focus-visible\s*\{[^}]*\}/);
+    const actionTriggerHoverBlock = stylesSource.match(/\.detail-action-trigger:hover,\s*\.detail-action-trigger:focus-visible\s*\{[^}]*\}/);
 
     assert.match(stylesSource, /\.icon-card-title\s*\{[\s\S]*font-weight:\s*500;/);
     assert.match(stylesSource, /\.icon-card-title\s*\{[\s\S]*letter-spacing:\s*-0\.01em;/);
@@ -166,6 +195,18 @@ test('react typography polish keeps key title and detail label values aligned wi
     assert.doesNotMatch(stylesSource, /\.card-devtools\s*\{/);
     assert.doesNotMatch(stylesSource, /\.card-copy-button\s*\{/);
     assert.match(stylesSource, /\.icon-detail-size-card\s*\{[\s\S]*gap:\s*8px;/);
+    assert.match(stylesSource, /\.icon-detail-size-previews\s*\{[\s\S]*display:\s*inline-flex;/);
+    assert.match(stylesSource, /\.icon-detail-size-previews\s*\{[\s\S]*width:\s*fit-content;/);
+    assert.match(stylesSource, /\.icon-detail-metadata-row--split\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*1\.3fr\)\s+minmax\(180px,\s*0\.7fr\);/);
+    assert.match(stylesSource, /\.icon-detail-header-actions\s*\{/);
+    assert.doesNotMatch(stylesSource, /\.icon-detail-sheet-header\s*\{[\s\S]*border-bottom:/);
+    assert.doesNotMatch(stylesSource, /\.icon-detail-metadata-row\s*\{[\s\S]*border-bottom:/);
+    assert.ok(closeButtonBlock, 'icon-detail-close block should exist');
+    assert.ok(closeButtonHoverBlock, 'icon-detail-close hover block should exist');
+    assert.ok(actionTriggerHoverBlock, 'detail-action-trigger hover block should exist');
+    assert.doesNotMatch(closeButtonBlock[0], /box-shadow:/);
+    assert.doesNotMatch(closeButtonHoverBlock[0], /box-shadow:/);
+    assert.doesNotMatch(actionTriggerHoverBlock[0], /box-shadow:/);
     assert.match(stylesSource, /\.icon-card:hover,\s*\.icon-card:focus-within\s*\{[\s\S]*transform:\s*none;/);
     assert.match(stylesSource, /\.dropdown-menu\s*\{[\s\S]*background:\s*rgba\(255,\s*255,\s*255,\s*0\.42\);/);
     assert.match(stylesSource, /\.dropdown-menu\s*\{[\s\S]*-webkit-backdrop-filter:\s*blur\(8px\)\s*saturate\(145%\);/);

@@ -51,6 +51,10 @@ const paletteSwatches = {
   Violet: '#7a3ff2'
 };
 
+function mergeSearchTerms(keywords = [], synonyms = []) {
+  return Array.from(new Set([...(keywords || []), ...(synonyms || [])].filter(Boolean)));
+}
+
 function getCategoryLabel(category) {
   if (!category || category === 'all') return '전체';
   return category.charAt(0).toUpperCase() + category.slice(1);
@@ -81,7 +85,9 @@ function getSourceIconFileName(icon, extension) {
 
 export default function App() {
   const shouldEnableAgentation =
-    import.meta.env.DEV && typeof window !== 'undefined' && window.location.hostname === 'localhost';
+    typeof window !== 'undefined' &&
+    window.location.hostname === 'localhost' &&
+    (import.meta.env.DEV || import.meta.env.VITE_ENABLE_AGENTATION === '1');
   const [library, setLibrary] = useState({ icons: [], categories: ['all'], lastBuiltAt: null, hasGeneratedFontStyles: false });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -124,8 +130,8 @@ export default function App() {
     setDetailDraft({
       displayName: selectedIcon.displayName || '',
       category: selectedIcon.category || 'misc',
-      keywords: [...(selectedIcon.keywords || [])],
-      synonyms: [...(selectedIcon.synonyms || [])]
+      keywords: mergeSearchTerms(selectedIcon.keywords, selectedIcon.synonyms),
+      synonyms: []
     });
     setDetailTokenInputs({ keywords: '', synonyms: '' });
   }, [selectedIcon]);
@@ -449,7 +455,7 @@ export default function App() {
           displayName: detailDraft.displayName,
           category: detailDraft.category,
           keywords: detailDraft.keywords,
-          synonyms: detailDraft.synonyms
+          synonyms: []
         })
       });
 
@@ -558,8 +564,7 @@ export default function App() {
   const detailDirty = !!selectedIcon && !!detailDraft && (
     detailDraft.displayName !== (selectedIcon.displayName || '') ||
     detailDraft.category !== (selectedIcon.category || '') ||
-    JSON.stringify(detailDraft.keywords || []) !== JSON.stringify(selectedIcon.keywords || []) ||
-    JSON.stringify(detailDraft.synonyms || []) !== JSON.stringify(selectedIcon.synonyms || [])
+    JSON.stringify(detailDraft.keywords || []) !== JSON.stringify(mergeSearchTerms(selectedIcon.keywords, selectedIcon.synonyms))
   );
 
   return (
