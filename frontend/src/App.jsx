@@ -621,9 +621,11 @@ export default function App() {
                 icon={icon}
                 viewMode={viewMode}
                 selected={selectedIcon?.key === icon.key}
+                hasGeneratedFontStyles={library.hasGeneratedFontStyles}
                 previewSize={previewSize}
                 previewColor={previewColor}
                 previewWeightValue={previewWeightValue}
+                getSourceIconUrl={getSourceIconUrl}
                 getCategoryLabel={getCategoryLabel}
                 setSelectedIcon={setSelectedIcon}
                 setOpenListMenuKey={setOpenListMenuKey}

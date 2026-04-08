@@ -2,9 +2,11 @@ export default function IconCard({
   icon,
   viewMode,
   selected,
+  hasGeneratedFontStyles,
   previewSize,
   previewColor,
   previewWeightValue,
+  getSourceIconUrl,
   getCategoryLabel,
   setSelectedIcon,
   setOpenListMenuKey,
@@ -25,15 +27,28 @@ export default function IconCard({
         ) : null}
 
         <div className={viewMode === 'list' ? 'list-card-preview card-preview-stage' : 'card-icon-wrap card-preview-stage'}>
-          <i
-            className={`icon library-icon ${icon.className}`}
-            aria-hidden="true"
-            style={{
-              fontSize: viewMode === 'list' ? '36px' : previewSize,
-              color: previewColor,
-              fontWeight: previewWeightValue
-            }}
-          />
+          {hasGeneratedFontStyles ? (
+            <i
+              className={`icon library-icon ${icon.className}`}
+              aria-hidden="true"
+              style={{
+                fontSize: viewMode === 'list' ? '36px' : previewSize,
+                color: previewColor,
+                fontWeight: previewWeightValue
+              }}
+            />
+          ) : (
+            <img
+              className="library-icon-fallback"
+              aria-hidden="true"
+              alt=""
+              src={getSourceIconUrl(icon)}
+              style={{
+                width: viewMode === 'list' ? '36px' : previewSize,
+                height: viewMode === 'list' ? '36px' : previewSize
+              }}
+            />
+          )}
         </div>
 
         <div className={viewMode === 'list' ? 'list-card-main' : 'card-label'}>

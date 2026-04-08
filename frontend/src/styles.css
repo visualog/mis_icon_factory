@@ -569,9 +569,16 @@ button {
   transition: color 0.18s ease, font-size 0.18s ease, font-weight 0.18s ease;
 }
 
+.library-icon-fallback {
+  display: block;
+  object-fit: contain;
+}
+
 .icon-card-stage,
 .card-icon-wrap .library-icon,
-.list-card-preview .library-icon {
+.list-card-preview .library-icon,
+.card-icon-wrap .library-icon-fallback,
+.list-card-preview .library-icon-fallback {
   line-height: 1;
 }
 

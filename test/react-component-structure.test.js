@@ -63,6 +63,9 @@ test('card and detail components expose dedicated layout hooks for design polish
 
     assert.match(cardSource, /icon-card-surface/);
     assert.match(cardSource, /card-preview-stage/);
+    assert.match(cardSource, /library-icon-fallback/);
+    assert.match(cardSource, /hasGeneratedFontStyles \?/);
+    assert.match(cardSource, /getSourceIconUrl\(icon\)/);
     assert.match(detailSource, /icon-detail-sheet-shell/);
     assert.match(detailSource, /icon-detail-metadata-stack/);
     assert.match(detailSource, /icon-detail-source-preview-block/);
@@ -139,6 +142,8 @@ test('react typography polish keeps key title and detail label values aligned wi
     assert.match(stylesSource, /\.search-field\s*\{[\s\S]*font-size:\s*14px;/);
     assert.match(stylesSource, /\.search-field::\-webkit-search-cancel-button\s*\{[\s\S]*appearance:\s*none;/);
     assert.match(stylesSource, /\.list-card\s+\.card-subtitle\s*\{[\s\S]*font-size:\s*12px;/);
+    assert.match(stylesSource, /\.library-icon-fallback\s*\{/);
+    assert.match(stylesSource, /\.library-icon-fallback\s*\{[\s\S]*object-fit:\s*contain;/);
     assert.match(stylesSource, /\.detail-action-dropdown\s*\{[\s\S]*position:\s*relative;/);
     assert.match(stylesSource, /\.detail-action-trigger\s*\{[\s\S]*text-align:\s*center;/);
     assert.match(stylesSource, /\.list-action-group\s*\{[\s\S]*z-index:\s*0;/);
