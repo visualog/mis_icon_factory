@@ -9,6 +9,7 @@
                 "includeFiles": [
                     "line/**",
                     "fill/**",
+                    "font_factory/icon-metadata.json",
                     "font_factory/public/**",
                     "frontend/dist/**"
                 ]

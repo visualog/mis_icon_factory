@@ -31,6 +31,7 @@ test('vercel deployment bundles the built React frontend assets', () => {
 
     assert.ok(includeFiles.includes('frontend/dist/**'));
     assert.ok(includeFiles.includes('fill/**'));
+    assert.ok(includeFiles.includes('font_factory/icon-metadata.json'));
 });
 
 test('server prefers the React build on Vercel when dist assets exist', () => {
