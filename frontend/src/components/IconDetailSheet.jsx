@@ -177,10 +177,10 @@ export default function IconDetailSheet({
                 <div className="icon-detail-metadata">
                   <div className="icon-detail-metadata-groups">
                     <div className="icon-detail-metadata-group">
-                      <div className="icon-detail-metadata-row">
-                        <span className="icon-detail-info-label">표시 이름</span>
+                      <div className="icon-detail-metadata-row icon-detail-metadata-row--inline">
+                        <span className="icon-detail-info-label icon-detail-info-label--inline">표시 이름</span>
                         {detailEditing ? (
-                          <div className="icon-detail-edit-fields">
+                          <div className="icon-detail-edit-fields icon-detail-edit-fields--inline">
                             <input
                               className="icon-detail-text-input"
                               type="text"
@@ -192,10 +192,10 @@ export default function IconDetailSheet({
                           <div className="icon-detail-info-value icon-detail-read-value">{selectedIcon.displayName}</div>
                         )}
                       </div>
-                      <div className="icon-detail-metadata-row">
-                        <span className="icon-detail-info-label">카테고리</span>
+                      <div className="icon-detail-metadata-row icon-detail-metadata-row--inline">
+                        <span className="icon-detail-info-label icon-detail-info-label--inline">카테고리</span>
                         {detailEditing ? (
-                          <div className="icon-detail-edit-fields">
+                          <div className="icon-detail-edit-fields icon-detail-edit-fields--inline">
                             <select
                               className="icon-detail-select-input"
                               value={detailDraft?.category || 'misc'}
@@ -212,12 +212,12 @@ export default function IconDetailSheet({
                       </div>
                     </div>
                     <div className="icon-detail-metadata-group icon-detail-metadata-group--versions" aria-label="아이콘 버전 정보">
-                      <div className="icon-detail-metadata-row">
-                        <span className="icon-detail-info-label">생성 버전</span>
+                      <div className="icon-detail-metadata-row icon-detail-metadata-row--inline">
+                        <span className="icon-detail-info-label icon-detail-info-label--inline">생성 버전</span>
                         <div className="icon-detail-info-value icon-detail-read-value icon-detail-version-value">{createdVersionLabel}</div>
                       </div>
-                      <div className="icon-detail-metadata-row">
-                        <span className="icon-detail-info-label">최근 변경</span>
+                      <div className="icon-detail-metadata-row icon-detail-metadata-row--inline">
+                        <span className="icon-detail-info-label icon-detail-info-label--inline">최근 변경</span>
                         <div className="icon-detail-info-value icon-detail-read-value icon-detail-version-value">{lastChangedVersionLabel}</div>
                       </div>
                     </div>
