@@ -71,12 +71,21 @@ test('card and detail components expose dedicated layout hooks for design polish
     assert.match(cardSource, /getSourceIconUrl\(icon\)/);
     assert.match(detailSource, /icon-detail-sheet-shell/);
     assert.match(detailSource, /icon-detail-metadata-stack/);
-    assert.match(detailSource, /icon-detail-source-preview-block/);
+    assert.match(detailSource, /icon-detail-source-panel/);
     assert.match(detailSource, /hasGeneratedFontStyles/);
     assert.match(detailSource, /UiIcon/);
-    assert.match(detailSource, /ui-icon-fallback icon-detail-size-icon/);
-    assert.match(detailSource, /src=\{getSourceIconUrl\(selectedIcon\)\}/);
-    assert.doesNotMatch(detailSource, /selectedIcon\.className} icon-detail-size-icon/);
+    assert.match(detailSource, /className="icon-detail-source-image icon-detail-source-inline-svg"/);
+    assert.match(detailSource, /const \[inlineSvgMarkup, setInlineSvgMarkup\] = useState\(''\);/);
+    assert.match(detailSource, /await fetch\(getSourceIconUrl\(selectedIcon\), \{ cache: 'no-store' \}\)/);
+    assert.match(detailSource, /new DOMParser\(\)/);
+    assert.match(detailSource, /querySelectorAll\('path, circle, rect, line, polyline, polygon, ellipse'\)/);
+    assert.match(detailSource, /icon-detail-source-svg/);
+    assert.match(detailSource, /dangerouslySetInnerHTML=\{\{ __html: inlineSvgMarkup \}\}/);
+    assert.doesNotMatch(detailSource, /src=\{getSourceIconUrl\(selectedIcon\)\}/);
+    assert.doesNotMatch(detailSource, /icon-detail-source-asset-frame/);
+    assert.doesNotMatch(detailSource, /icon-detail-size-icon/);
+    assert.doesNotMatch(detailSource, /icon-detail-size-previews/);
+    assert.doesNotMatch(detailSource, /icon-detail-keyline-toggle/);
     assert.doesNotMatch(detailSource, /icon-detail-subtitle/);
     assert.match(
         detailSource,
@@ -84,11 +93,16 @@ test('card and detail components expose dedicated layout hooks for design polish
     );
     assert.match(
         detailSource,
-        /<div className="icon-detail-webfont-panel">[\s\S]*?<div className="icon-detail-metadata-stack">[\s\S]*?icon-detail-metadata-row icon-detail-metadata-row--split[\s\S]*?>표시 이름<[\s\S]*?>카테고리<[\s\S]*?<div className="icon-detail-metadata-row">[\s\S]*?>검색어<[\s\S]*?<div className="icon-detail-source-preview-block">[\s\S]*?<div className="icon-detail-size-previews">[\s\S]*?<div className="icon-detail-actions"/
+        /<div className="icon-detail-webfont-panel">[\s\S]*?<div className="icon-detail-metadata-stack">[\s\S]*?<div className="icon-detail-metadata">[\s\S]*?<div className="icon-detail-metadata-groups">[\s\S]*?<div className="icon-detail-metadata-group">[\s\S]*?>표시 이름<[\s\S]*?>카테고리<[\s\S]*?<div className="icon-detail-metadata-group icon-detail-metadata-group--versions"[\s\S]*?>생성 버전<[\s\S]*?>최근 변경<[\s\S]*?<div className="icon-detail-metadata-row">[\s\S]*?>검색어<[\s\S]*?<\/div>[\s\S]*?<\/div>[\s\S]*?<\/div>[\s\S]*?<div className="icon-detail-actions"/
     );
     assert.match(detailSource, />표시 이름</);
     assert.match(detailSource, />카테고리</);
     assert.match(detailSource, />검색어</);
+    assert.match(detailSource, />생성 버전</);
+    assert.match(detailSource, />최근 변경</);
+    assert.match(detailSource, /icon-detail-metadata-groups/);
+    assert.match(detailSource, /icon-detail-metadata-group--versions/);
+    assert.match(detailSource, /icon-detail-version-value/);
     assert.doesNotMatch(detailSource, />글리프 키</);
     assert.doesNotMatch(detailSource, />클래스 키</);
     assert.doesNotMatch(detailSource, />Glyph Key</);
@@ -137,7 +151,6 @@ test('card and detail components expose dedicated layout hooks for design polish
     assert.match(controllerSource, /style=\{\{ width: '40px', height: '40px' \}\}/);
     assert.match(controllerSource, /icon--close_sm_line/);
     assert.match(detailSource, /icon--close_sm_line/);
-    assert.match(detailSource, /icon--preview_line/);
     assert.match(detailSource, /detail-action-dropdown/);
     assert.match(detailSource, /detail-copy-dropdown/);
     assert.match(detailSource, /detail-download-dropdown/);
@@ -194,11 +207,21 @@ test('react typography polish keeps key title and detail label values aligned wi
     assert.match(stylesSource, /\.grid-card\s+\.card-top\s*\{[\s\S]*transform:\s*translateY\(-4px\);/);
     assert.doesNotMatch(stylesSource, /\.card-devtools\s*\{/);
     assert.doesNotMatch(stylesSource, /\.card-copy-button\s*\{/);
-    assert.match(stylesSource, /\.icon-detail-size-card\s*\{[\s\S]*gap:\s*8px;/);
-    assert.match(stylesSource, /\.icon-detail-size-previews\s*\{[\s\S]*display:\s*inline-flex;/);
-    assert.match(stylesSource, /\.icon-detail-size-previews\s*\{[\s\S]*width:\s*fit-content;/);
-    assert.match(stylesSource, /\.icon-detail-metadata-row--split\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*1\.3fr\)\s+minmax\(180px,\s*0\.7fr\);/);
+    assert.doesNotMatch(stylesSource, /\.icon-detail-size-previews\s*\{/);
+    assert.doesNotMatch(stylesSource, /\.icon-detail-size-card\s*\{/);
+    assert.doesNotMatch(stylesSource, /\.icon-detail-keyline-toggle\s*\{/);
+    assert.match(stylesSource, /\.icon-detail-sheet-body\s*\{[\s\S]*grid-template-columns:\s*256px\s+minmax\(360px,\s*1fr\);/);
+    assert.match(stylesSource, /\.icon-detail-metadata-groups\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*1\.3fr\)\s+minmax\(180px,\s*0\.7fr\);/);
+    assert.match(stylesSource, /\.icon-detail-metadata-group\s*\{[\s\S]*flex-direction:\s*column;/);
     assert.match(stylesSource, /\.icon-detail-header-actions\s*\{/);
+    assert.match(stylesSource, /\.icon-detail-version-value\s*\{[\s\S]*background:\s*transparent;/);
+    assert.doesNotMatch(stylesSource, /\.icon-detail-version-pill\s*\{/);
+    assert.match(stylesSource, /\.icon-detail-source-panel\s*\{[\s\S]*width:\s*256px;/);
+    assert.match(stylesSource, /\.icon-detail-source-stage\s*\{[\s\S]*width:\s*256px;[\s\S]*min-height:\s*256px;[\s\S]*background-image:\s*url\('\/preview-guides\/material-24x24\.svg'\);[\s\S]*background-size:\s*256px 256px;/);
+    assert.match(stylesSource, /\.icon-detail-source-image\s*\{[\s\S]*width:\s*256px;[\s\S]*height:\s*256px;/);
+    assert.match(stylesSource, /\.icon-detail-source-svg\s*\{[\s\S]*width:\s*256px;[\s\S]*height:\s*256px;/);
+    assert.match(stylesSource, /\.icon-detail-source-vector-node\s*\{[\s\S]*vector-effect:\s*non-scaling-stroke;/);
+    assert.doesNotMatch(stylesSource, /\.icon-detail-source-asset-frame\s*\{/);
     assert.doesNotMatch(stylesSource, /\.icon-detail-sheet-header\s*\{[\s\S]*border-bottom:/);
     assert.doesNotMatch(stylesSource, /\.icon-detail-metadata-row\s*\{[\s\S]*border-bottom:/);
     assert.ok(closeButtonBlock, 'icon-detail-close block should exist');

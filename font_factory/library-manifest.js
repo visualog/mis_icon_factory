@@ -51,12 +51,32 @@ function getGlyphKind(glyphName = '') {
     return 'mixed';
 }
 
+function normalizeVersionTag(versionValue) {
+    if (!versionValue && versionValue !== 0) {
+        return null;
+    }
+
+    if (typeof versionValue === 'string') {
+        const trimmed = versionValue.trim();
+        return trimmed || null;
+    }
+
+    if (typeof versionValue === 'number' && Number.isFinite(versionValue)) {
+        return `v0.${versionValue}.0`;
+    }
+
+    return null;
+}
+
 function buildEntry(glyphName = '', metadataCatalog = {}) {
         const metadataEntry = getMetadataEntry(metadataCatalog, glyphName) || {};
         const displayName = metadataEntry.displayName || formatLibraryLabel(glyphName);
         const category = metadataEntry.category || 'misc';
         const keywords = Array.isArray(metadataEntry.keywords) ? metadataEntry.keywords : [];
         const synonyms = Array.isArray(metadataEntry.synonyms) ? metadataEntry.synonyms : [];
+        const fallbackVersion = normalizeVersionTag(metadataCatalog.version);
+        const createdVersion = normalizeVersionTag(metadataEntry.createdVersion) || fallbackVersion;
+        const lastChangedVersion = normalizeVersionTag(metadataEntry.lastChangedVersion) || fallbackVersion;
         const searchText = uniq([
             displayName.toLowerCase(),
             ...keywords,
@@ -69,6 +89,8 @@ function buildEntry(glyphName = '', metadataCatalog = {}) {
             className: `icon--${glyphName}`,
             displayName,
             category,
+            createdVersion,
+            lastChangedVersion,
             keywords,
             synonyms,
             kind: getGlyphKind(glyphName),

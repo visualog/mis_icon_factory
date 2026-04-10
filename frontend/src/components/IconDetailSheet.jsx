@@ -5,12 +5,6 @@ export default function IconDetailSheet({
   selectedIcon,
   onClose,
   getCategoryLabel,
-  getKindLabel,
-  detailKeylineVisible,
-  onToggleKeyline,
-  detailPreviewSizes,
-  previewColor,
-  previewWeightValue,
   hasGeneratedFontStyles,
   getSourceIconUrl,
   copyText,
@@ -34,6 +28,7 @@ export default function IconDetailSheet({
   commitDetailToken
 }) {
   const [openActionMenu, setOpenActionMenu] = useState(null);
+  const [inlineSvgMarkup, setInlineSvgMarkup] = useState('');
   const actionMenusRef = useRef(null);
 
   useEffect(() => {
@@ -51,6 +46,58 @@ export default function IconDetailSheet({
     setOpenActionMenu(null);
   }, [selectedIcon]);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadInlineSvg() {
+      if (!selectedIcon) {
+        setInlineSvgMarkup('');
+        return;
+      }
+
+      try {
+        const response = await fetch(getSourceIconUrl(selectedIcon), { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error('원본 SVG를 불러오지 못했습니다.');
+        }
+
+        const source = await response.text();
+        if (cancelled) {
+          return;
+        }
+
+        const parser = new DOMParser();
+        const documentNode = parser.parseFromString(source, 'image/svg+xml');
+        const svg = documentNode.querySelector('svg');
+
+        if (!svg) {
+          setInlineSvgMarkup('');
+          return;
+        }
+
+        svg.classList.add('icon-detail-source-svg');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('focusable', 'false');
+
+        svg
+          .querySelectorAll('path, circle, rect, line, polyline, polygon, ellipse')
+          .forEach((node) => node.classList.add('icon-detail-source-vector-node'));
+
+        setInlineSvgMarkup(svg.outerHTML);
+      } catch (_error) {
+        if (!cancelled) {
+          setInlineSvgMarkup('');
+        }
+      }
+    }
+
+    loadInlineSvg();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [getSourceIconUrl, selectedIcon]);
+
   if (!selectedIcon) {
     return null;
   }
@@ -59,6 +106,8 @@ export default function IconDetailSheet({
     ...(selectedIcon.keywords || []),
     ...(selectedIcon.synonyms || [])
   ].filter(Boolean)));
+  const createdVersionLabel = selectedIcon.createdVersion || '미정';
+  const lastChangedVersionLabel = selectedIcon.lastChangedVersion || '미정';
 
   return (
     <>
@@ -112,29 +161,13 @@ export default function IconDetailSheet({
 
           <div className="icon-detail-sheet-body icon-detail-sheet-body--phase2">
             <div className="icon-detail-source-panel">
-              <div className={`icon-detail-source-stage ${detailKeylineVisible ? 'keyline-visible' : ''}`}>
-                <button
-                  type="button"
-                  className="icon-detail-keyline-toggle"
-                  aria-pressed={detailKeylineVisible}
-                  aria-label="키라인 보기"
-                  onClick={onToggleKeyline}
-                >
-                  <UiIcon
-                    glyphClassName="icon icon--preview_line"
-                    fallbackClassName="icon-detail-keyline-icon"
-                    hasGeneratedFontStyles={hasGeneratedFontStyles}
-                    aria-hidden="true"
-                    alt=""
-                    style={{ width: '16px', height: '16px' }}
+              <div className="icon-detail-source-stage">
+                {inlineSvgMarkup ? (
+                  <div
+                    className="icon-detail-source-image icon-detail-source-inline-svg"
+                    dangerouslySetInnerHTML={{ __html: inlineSvgMarkup }}
                   />
-                </button>
-                <div className="icon-detail-frame-guide" aria-hidden="true" />
-                <div className="icon-detail-circle-guide" aria-hidden="true" />
-                <div className="icon-detail-safe-area" aria-hidden="true" />
-                <div className="icon-detail-source-asset-frame">
-                  <img className="icon-detail-source-image" alt="" src={getSourceIconUrl(selectedIcon)} />
-                </div>
+                ) : null}
               </div>
             </div>
 
@@ -142,39 +175,51 @@ export default function IconDetailSheet({
               <div className="icon-detail-metadata-stack">
                 {detailSaveError ? <div className="icon-detail-save-error">{detailSaveError}</div> : null}
                 <div className="icon-detail-metadata">
-                  <div className="icon-detail-metadata-row icon-detail-metadata-row--split">
-                    <div className="icon-detail-metadata-cell">
-                      <span className="icon-detail-info-label">표시 이름</span>
-                      {detailEditing ? (
-                        <div className="icon-detail-edit-fields">
-                          <input
-                            className="icon-detail-text-input"
-                            type="text"
-                            value={detailDraft?.displayName || ''}
-                            onChange={(event) => setDetailDraft((current) => ({ ...current, displayName: event.target.value }))}
-                          />
-                        </div>
-                      ) : (
-                        <div className="icon-detail-info-value icon-detail-read-value">{selectedIcon.displayName}</div>
-                      )}
+                  <div className="icon-detail-metadata-groups">
+                    <div className="icon-detail-metadata-group">
+                      <div className="icon-detail-metadata-row">
+                        <span className="icon-detail-info-label">표시 이름</span>
+                        {detailEditing ? (
+                          <div className="icon-detail-edit-fields">
+                            <input
+                              className="icon-detail-text-input"
+                              type="text"
+                              value={detailDraft?.displayName || ''}
+                              onChange={(event) => setDetailDraft((current) => ({ ...current, displayName: event.target.value }))}
+                            />
+                          </div>
+                        ) : (
+                          <div className="icon-detail-info-value icon-detail-read-value">{selectedIcon.displayName}</div>
+                        )}
+                      </div>
+                      <div className="icon-detail-metadata-row">
+                        <span className="icon-detail-info-label">카테고리</span>
+                        {detailEditing ? (
+                          <div className="icon-detail-edit-fields">
+                            <select
+                              className="icon-detail-select-input"
+                              value={detailDraft?.category || 'misc'}
+                              onChange={(event) => setDetailDraft((current) => ({ ...current, category: event.target.value }))}
+                            >
+                              {libraryCategories.filter((categoryKey) => categoryKey !== 'all').map((categoryKey) => (
+                                <option key={categoryKey} value={categoryKey}>{getCategoryLabel(categoryKey)}</option>
+                              ))}
+                            </select>
+                          </div>
+                        ) : (
+                          <div className="icon-detail-info-value icon-detail-read-value">{getCategoryLabel(selectedIcon.category)}</div>
+                        )}
+                      </div>
                     </div>
-                    <div className="icon-detail-metadata-cell">
-                      <span className="icon-detail-info-label">카테고리</span>
-                      {detailEditing ? (
-                        <div className="icon-detail-edit-fields">
-                          <select
-                            className="icon-detail-select-input"
-                            value={detailDraft?.category || 'misc'}
-                            onChange={(event) => setDetailDraft((current) => ({ ...current, category: event.target.value }))}
-                          >
-                            {libraryCategories.filter((categoryKey) => categoryKey !== 'all').map((categoryKey) => (
-                              <option key={categoryKey} value={categoryKey}>{getCategoryLabel(categoryKey)}</option>
-                            ))}
-                          </select>
-                        </div>
-                      ) : (
-                        <div className="icon-detail-info-value icon-detail-read-value">{getCategoryLabel(selectedIcon.category)}</div>
-                      )}
+                    <div className="icon-detail-metadata-group icon-detail-metadata-group--versions" aria-label="아이콘 버전 정보">
+                      <div className="icon-detail-metadata-row">
+                        <span className="icon-detail-info-label">생성 버전</span>
+                        <div className="icon-detail-info-value icon-detail-read-value icon-detail-version-value">{createdVersionLabel}</div>
+                      </div>
+                      <div className="icon-detail-metadata-row">
+                        <span className="icon-detail-info-label">최근 변경</span>
+                        <div className="icon-detail-info-value icon-detail-read-value icon-detail-version-value">{lastChangedVersionLabel}</div>
+                      </div>
                     </div>
                   </div>
                   <div className="icon-detail-metadata-row">
@@ -221,23 +266,6 @@ export default function IconDetailSheet({
                       </div>
                     )}
                   </div>
-                </div>
-              </div>
-
-              <div className="icon-detail-source-preview-block">
-                <div className="icon-detail-size-previews">
-                  {detailPreviewSizes.map((size) => (
-                    <div className="icon-detail-size-card" key={size}>
-                      <img
-                        className="ui-icon-fallback icon-detail-size-icon"
-                        aria-hidden="true"
-                        alt=""
-                        src={getSourceIconUrl(selectedIcon)}
-                        style={{ width: `${size}px`, height: `${size}px` }}
-                      />
-                      <span className="icon-detail-size-label">{size}px</span>
-                    </div>
-                  ))}
                 </div>
               </div>
 

@@ -32,12 +32,16 @@ test('icon metadata sample entry follows the documented shape', () => {
     const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
     const sample = metadata.icons.megaphone_line;
 
-    assert.deepEqual(Object.keys(sample), [
-        'displayName',
-        'category',
-        'keywords',
-        'synonyms'
-    ]);
+    assert.ok(sample.displayName);
+    assert.ok(sample.category);
+    assert.ok(Array.isArray(sample.keywords));
+    assert.ok(Array.isArray(sample.synonyms));
+    assert.ok(
+        sample.createdVersion === undefined || typeof sample.createdVersion === 'string'
+    );
+    assert.ok(
+        sample.lastChangedVersion === undefined || typeof sample.lastChangedVersion === 'string'
+    );
 
     assert.equal(sample.displayName, 'Megaphone');
     assert.equal(sample.category, 'communication');

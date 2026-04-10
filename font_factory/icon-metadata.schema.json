@@ -26,6 +26,14 @@
               "type": "string",
               "minLength": 1
             },
+            "createdVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "lastChangedVersion": {
+              "type": "string",
+              "minLength": 1
+            },
             "category": {
               "type": "string",
               "enum": [
