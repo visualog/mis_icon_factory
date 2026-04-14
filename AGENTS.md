@@ -9,6 +9,7 @@ and verification steps inside the repo. If something is missing, add a doc.
 - docs/verification.md (what must pass before shipping)
 - docs/ui-guidelines.md (UI/UX rules and patterns)
 - docs/architecture.md (high-level structure)
+- docs/artifact-policy.md (generated artifact commit policy)
 - docs/plans/ (historical plans and design notes)
 
 ## Working Principles
