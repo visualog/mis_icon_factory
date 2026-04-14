@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./icon-metadata.schema.json",
+  "title": "Icon metadata catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "icons"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "icons": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z0-9]+(?:[_-][a-z0-9]+)*$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["displayName", "category", "keywords", "synonyms"],
+          "properties": {
+            "displayName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "createdVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "lastChangedVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "actions",
+                "navigation",
+                "communication",
+                "files",
+                "user",
+                "security",
+                "status",
+                "layout",
+                "device",
+                "time",
+                "misc"
+              ]
+            },
+            "keywords": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "synonyms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
