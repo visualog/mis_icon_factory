@@ -6,13 +6,13 @@ const { buildLibraryEntries } = require('../font_factory/library-manifest');
 const { getOutputDir } = require('../font_factory/runtime-paths');
 
 const metadataPath = path.join(
-    '/Users/im_018/Documents/GitHub/Project/IconFont/.worktrees/codex-webfont-library',
+    process.cwd(),
     'font_factory',
     'icon-metadata.json'
 );
 
 const schemaPath = path.join(
-    '/Users/im_018/Documents/GitHub/Project/IconFont/.worktrees/codex-webfont-library',
+    process.cwd(),
     'font_factory',
     'icon-metadata.schema.json'
 );

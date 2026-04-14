@@ -1,9 +1,10 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const path = require('node:path');
 
 const indexHtml = fs.readFileSync(
-    '/Users/im_018/Documents/GitHub/Project/IconFont/.worktrees/codex-webfont-library/font_factory/public/index.html',
+    path.join(process.cwd(), 'font_factory', 'public', 'index.html'),
     'utf8'
 );
 
