@@ -9,7 +9,11 @@
     "dev:react": "vite --config vite.config.mjs",
     "build:react": "vite build --config vite.config.mjs",
     "build:react:agentation": "VITE_ENABLE_AGENTATION=1 vite build --config vite.config.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "harness:check": "node scripts/harness-check.js all",
+    "harness:check:staged": "node scripts/harness-check.js staged",
+    "harness:check:push": "node scripts/harness-check.js push",
+    "hooks:install": "git config core.hooksPath .githooks"
   },
   "keywords": [],
   "author": "",
