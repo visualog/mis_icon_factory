@@ -24,5 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Linux resvg native binding
+        if: runner.os == 'Linux'
+        run: npm install --no-save @resvg/resvg-js-linux-x64-gnu
+
       - name: Run harness checks
         run: npm run harness:check:push
