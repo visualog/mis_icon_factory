@@ -8,6 +8,21 @@ const {
     buildSourceLibraryEntries
 } = require('../font_factory/library-manifest');
 
+function pickCoreFields(entry = {}) {
+    return {
+        category: entry.category,
+        className: entry.className,
+        createdVersion: entry.createdVersion ?? null,
+        displayName: entry.displayName,
+        key: entry.key,
+        kind: entry.kind,
+        keywords: entry.keywords,
+        lastChangedVersion: entry.lastChangedVersion ?? null,
+        searchText: entry.searchText,
+        synonyms: entry.synonyms
+    };
+}
+
 test('extractBuiltGlyphNames returns sorted unique glyph names from generated css', () => {
     const css = `
         .icon--calendar_fill::before { content: "\\e001"; }
@@ -40,7 +55,7 @@ test('buildLibraryEntries returns card metadata for built glyphs', () => {
         .icon--document_line::before { content: "\\e002"; }
     `;
 
-    assert.deepEqual(buildLibraryEntries(css), [
+    assert.deepEqual(buildLibraryEntries(css).map(pickCoreFields), [
         {
             category: 'misc',
             className: 'icon--calendar_fill',
@@ -84,7 +99,7 @@ test('buildLibraryEntries merges metadata into category and search text', () => 
         }
     };
 
-    assert.deepEqual(buildLibraryEntries(css, metadata), [
+    assert.deepEqual(buildLibraryEntries(css, metadata).map(pickCoreFields), [
         {
             category: 'communication',
             className: 'icon--megaphone_line',
@@ -114,7 +129,7 @@ test('buildLibraryEntries falls back to the catalog version when icon-level vers
         }
     };
 
-    assert.deepEqual(buildLibraryEntries(css, metadata), [
+    assert.deepEqual(buildLibraryEntries(css, metadata).map(pickCoreFields), [
         {
             category: 'time',
             className: 'icon--calendar_fill',
@@ -152,7 +167,7 @@ test('buildSourceLibraryEntries creates line and fill entries from source SVG fi
         buildSourceLibraryEntries({
             lineFiles: ['calendar.svg'],
             fillFiles: ['shield.svg']
-        }, metadata),
+        }, metadata).map(pickCoreFields),
         [
             {
                 category: 'time',

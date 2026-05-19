@@ -179,6 +179,27 @@ button {
   overflow: visible;
 }
 
+.hero-download-dropdown {
+  width: auto;
+}
+
+.hero-download-trigger {
+  min-height: 40px;
+  width: auto;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(12px) saturate(135%);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(48, 41, 29, 0.08);
+  font-size: 12px;
+  line-height: var(--leading-12);
+}
+
+.hero-download-menu {
+  min-width: 180px;
+  z-index: 80;
+}
+
 .hero-view-toggle {
   min-height: 40px;
   padding: 0 12px;
@@ -1595,7 +1616,7 @@ button {
   min-height: 44px;
   padding: 0 14px;
   border: 1px solid rgba(30, 31, 36, 0.08);
-  border-radius: 16px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.52);
   color: var(--text);
   font-size: 13px;

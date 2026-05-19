@@ -42,7 +42,10 @@ export function createLibrarySummary({ resultCount = 0, totalCount = 0, category
 }
 
 export async function fetchLibraryIcons(fetchImpl = fetch) {
-  const response = await fetchImpl('/api/library-icons');
+  const cacheBuster = Date.now();
+  const response = await fetchImpl(`/api/library-icons?t=${cacheBuster}`, {
+    cache: 'no-store'
+  });
   if (!response.ok) {
     throw new Error(`Failed to load library icons (${response.status})`);
   }

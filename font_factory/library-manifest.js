@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const ACRONYMS = new Set(['api', 'cpu', 'id', 'ip', 'md', 'sm', 'lg', 'ui', 'ux']);
 
 function uniq(values = []) {
@@ -68,6 +71,29 @@ function normalizeVersionTag(versionValue) {
     return null;
 }
 
+function resolveSourceMeta(glyphName = '') {
+    const cwd = process.cwd();
+    const isLine = glyphName.endsWith('_line');
+    const isFill = glyphName.endsWith('_fill');
+    const stem = glyphName.replace(/_(line|fill)$/i, '');
+    const sourcePath = isLine
+        ? path.join(cwd, 'line', `${stem}.svg`)
+        : isFill
+            ? path.join(cwd, 'fill', `${stem}.svg`)
+            : null;
+
+    if (!sourcePath) {
+        return { sourceFile: null, sourceModifiedAt: 0 };
+    }
+
+    try {
+        const stat = fs.statSync(sourcePath);
+        return { sourceFile: sourcePath, sourceModifiedAt: stat.mtimeMs || 0 };
+    } catch (error) {
+        return { sourceFile: sourcePath, sourceModifiedAt: 0 };
+    }
+}
+
 function buildEntry(glyphName = '', metadataCatalog = {}) {
         const metadataEntry = getMetadataEntry(metadataCatalog, glyphName) || {};
         const displayName = metadataEntry.displayName || formatLibraryLabel(glyphName);
@@ -77,6 +103,7 @@ function buildEntry(glyphName = '', metadataCatalog = {}) {
         const fallbackVersion = normalizeVersionTag(metadataCatalog.version);
         const createdVersion = normalizeVersionTag(metadataEntry.createdVersion) || fallbackVersion;
         const lastChangedVersion = normalizeVersionTag(metadataEntry.lastChangedVersion) || fallbackVersion;
+        const { sourceFile, sourceModifiedAt } = resolveSourceMeta(glyphName);
         const searchText = uniq([
             displayName.toLowerCase(),
             ...keywords,
@@ -91,6 +118,8 @@ function buildEntry(glyphName = '', metadataCatalog = {}) {
             category,
             createdVersion,
             lastChangedVersion,
+            sourceFile,
+            sourceModifiedAt,
             keywords,
             synonyms,
             kind: getGlyphKind(glyphName),

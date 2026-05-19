@@ -332,7 +332,15 @@ app.use(express.static(resolveAppStaticDir()));
 app.use('/line-icons', express.static(LINE_DIR));
 app.use('/fill-icons', express.static(FILL_DIR));
 // 빌드된 폰트/스타일 서빙 (Vercel에서는 /tmp를 사용)
-app.use('/generated-fonts', express.static(OUTPUT_DIR));
+app.use('/generated-fonts', express.static(OUTPUT_DIR, {
+    etag: true,
+    lastModified: true,
+    setHeaders: (res) => {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+    }
+}));
 
 // 아이콘 목록 가져오기 API
 app.get('/api/icons', async (req, res) => {

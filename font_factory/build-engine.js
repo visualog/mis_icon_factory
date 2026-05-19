@@ -119,13 +119,13 @@ async function buildAllWeights(selectedIcons = []) {
         }
 
         // 2-5. Fantasticon 실행 (개별 웨이트용)
-        // 주의: WOFF2 만 생성하여 용량 절약 (필요시 추가)
+        // WOFF2 + TTF 동시 생성
         const generateFonts = await getGenerateFonts();
         const generationOptions = {
             inputDir: tempIconsDir,
             outputDir: outputDir,
             name: `MyIconFont-${config.name}`,
-            fontTypes: ['woff2'],
+            fontTypes: ['woff2', 'ttf'],
             assetTypes: [], // CSS는 마지막에 통합 생성
             prefix: 'icon--',
             formatOptions: { json: { indent: 2 } },
@@ -153,6 +153,7 @@ async function buildAllWeights(selectedIcons = []) {
 async function generateCombinedAssets(fonts) {
     const cssContent = [];
     const htmlDemoContent = [];
+    const buildVersion = Date.now();
 
     // 기본 CSS (아이콘 공통 스타일)
     cssContent.push(`
@@ -176,7 +177,7 @@ async function generateCombinedAssets(fonts) {
         cssContent.push(`
 @font-face {
     font-family: 'MyIconFont';
-    src: url('./MyIconFont-${f.name}.woff2') format('woff2');
+    src: url('./MyIconFont-${f.name}.woff2?v=${buildVersion}') format('woff2');
     font-weight: ${f.weight};
     font-style: normal;
 }

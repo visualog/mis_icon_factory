@@ -1,6 +1,19 @@
 function sortLibraryIcons(icons = [], sortMode = 'name') {
     const sorted = [...icons];
 
+    if (sortMode === 'created') {
+        sorted.sort((left, right) => {
+            return (
+                Number(right.sourceModifiedAt || 0) - Number(left.sourceModifiedAt || 0) ||
+                compareVersionLabel(String(right.createdVersion || '')) -
+                    compareVersionLabel(String(left.createdVersion || '')) ||
+                String(left.displayName || '').localeCompare(String(right.displayName || '')) ||
+                String(left.key || '').localeCompare(String(right.key || ''))
+            );
+        });
+        return sorted;
+    }
+
     if (sortMode === 'category') {
         sorted.sort((left, right) => {
             return (
@@ -19,6 +32,14 @@ function sortLibraryIcons(icons = [], sortMode = 'name') {
         );
     });
     return sorted;
+}
+
+function compareVersionLabel(label) {
+    const normalized = String(label || '').replace(/^v/i, '');
+    const [major = 0, minor = 0, patch = 0] = normalized
+        .split('.')
+        .map((part) => Number.parseInt(part, 10) || 0);
+    return major * 1000000 + minor * 1000 + patch;
 }
 
 function buildCategoryOptions(icons = []) {

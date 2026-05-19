@@ -24,6 +24,7 @@ import {
 
 const sortOptions = [
   { key: 'name', label: '이름순' },
+  { key: 'created', label: '생성순' },
   { key: 'category', label: '카테고리순' }
 ];
 const weightOptions = [
@@ -314,6 +315,26 @@ export default function App() {
     setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
   }
 
+  function downloadLineFontBundle(format) {
+    const normalizedFormat = format === 'ttf' ? 'ttf' : 'woff2';
+    const extension = normalizedFormat;
+    const weightNames = ['Light', 'Regular', 'Medium', 'SemiBold', 'Bold'];
+
+    weightNames.forEach((weightName, index) => {
+      window.setTimeout(() => {
+        const fileName = `MyIconFont-${weightName}.${extension}`;
+        const link = document.createElement('a');
+        link.href = `/generated-fonts/${fileName}?v=${Date.now()}`;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }, index * 120);
+    });
+
+    showToast(`Line Font ${extension.toUpperCase()} 5종 다운로드를 시작했습니다.`);
+  }
+
   async function copySvgSource(icon) {
     const svgSource = await fetchSourceIconSvg(icon);
     await navigator.clipboard.writeText(svgSource);
@@ -588,6 +609,7 @@ export default function App() {
             sortMode={sortMode}
             sortOptions={sortOptions}
             onChangeSortMode={setSortMode}
+            onDownloadLineFonts={downloadLineFontBundle}
             summary={summary}
           />
 
